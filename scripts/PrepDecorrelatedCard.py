@@ -41,7 +41,7 @@ if __name__ == "__main__":
                     else:
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-2]+"_"+args.year+"Up"
 		    # For the embedded sample, duplicate the tau ES for partial correlation
-		    if "CMS_scale_emb_t" in CopyHisto.GetName():
+		    if "_emb_" in CopyHisto.GetName():
 			if args.TrimYears:
 			   CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()
 			   NewNameTitle2 = CopyHisto.GetName().replace('_emb','')[:len(CopyHisto.GetName())-11]+"Up"
@@ -69,7 +69,7 @@ if __name__ == "__main__":
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-9]+"Down"
                     else:
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-4]+"_"+args.year+"Down"
-                    if "CMS_scale_emb_t" in CopyHisto.GetName():
+                    if "_emb_" in CopyHisto.GetName():
                         if args.TrimYears:
                            CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()
                            NewNameTitle2 = CopyHisto.GetName().replace("_emb","")[:len(CopyHisto.GetName())-13]+"Down"
