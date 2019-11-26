@@ -222,24 +222,31 @@ int main(int argc, char **argv)
       
       //Fake factors
       std::cout<<"Fake Factors"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_rawFF_mt_qcd_0jet_unc1_2016",
-	    "CMS_rawFF_mt_qcd_0jet_unc2_2016",
-	    "CMS_rawFF_mt_qcd_1jet_unc1_2016",
-	    "CMS_rawFF_mt_qcd_1jet_unc2_2016",
-	    "CMS_rawFF_mt_w_0jet_unc1_2016",
-	    "CMS_rawFF_mt_w_0jet_unc2_2016",
-	    "CMS_rawFF_mt_w_1jet_unc1_2016",
-	    "CMS_rawFF_mt_w_1jet_unc2_2016",
-	    "CMS_rawFF_mt_tt_unc1_2016",
-	    "CMS_rawFF_mt_tt_unc2_2016",
-	    "CMS_FF_closure_mvis_mt_qcd_unc1_2016",
-	    "CMS_FF_closure_mvis_mt_qcd_unc2_2016",
-	    "CMS_FF_closure_mvis_mt_w_unc1_2016",	    
-	    "CMS_FF_closure_mvis_mt_tt_unc1_2016",
-	    "CMS_FF_closure_mvis_mt_tt_unc2_2016",
-	    "CMS_FF_closure_OSSS_mvis_mt_qcd_unc1_2016",
-	    "CMS_FF_closure_mt_mt_w_unc1_2016",
-	    "CMS_FF_closure_mt_mt_w_unc2_2016"
+      AddShapesIfNotEmpty({
+	  "CMS_rawFF_mt_qcd_0jet_unc1_2016",
+            "CMS_rawFF_mt_qcd_0jet_unc2_2016",
+            "CMS_rawFF_mt_qcd_1jet_unc1_2016",
+            "CMS_rawFF_mt_qcd_1jet_unc2_2016",
+            "CMS_rawFF_mt_qcd_2jet_unc1_2016",
+            "CMS_rawFF_mt_qcd_2jet_unc2_2016",
+            "CMS_rawFF_mt_w_0jet_unc1_2016",
+            "CMS_rawFF_mt_w_0jet_unc2_2016",
+            "CMS_rawFF_mt_w_1jet_unc1_2016",
+            "CMS_rawFF_mt_w_1jet_unc2_2016",
+            "CMS_rawFF_mt_w_2jet_unc1_2016",
+            "CMS_rawFF_mt_w_2jet_unc2_2016",
+            "CMS_rawFF_mt_tt_unc1_2016",
+            "CMS_rawFF_mt_tt_unc2_2016",
+            "CMS_FF_closure_mvis_mt_qcd_0jet_2016",
+            "CMS_FF_closure_mvis_mt_qcd_1jet_2016",
+            "CMS_FF_closure_mvis_mt_qcd_2jet_2016",
+            "CMS_FF_closure_mvis_mt_w_0jet_2016",            
+            "CMS_FF_closure_mvis_mt_w_1jet_2016",
+            "CMS_FF_closure_mvis_mt_w_2jet_2016",
+            "CMS_FF_closure_mvis_mt_tt_0jet_2016",            
+            "CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
+            "CMS_FF_closure_mt_mt_w_unc1_2016",
+            "CMS_FF_closure_mt_mt_w_unc2_2016"
 	    },
 	{"jetFakes"},
 	&cb,
@@ -359,6 +366,26 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_1prong_2016", "shape", SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_1prong1pizero_2016", "shape", SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_3prong_2016", "shape", SystMap<>::init(0.500));
+
+      //Trigger uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_singlemutrg_emb_2016","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mutautrig_emb_2016","shape",SystMap<>::init(0.866));
+      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_singlemutrg_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mutautrig_2016","shape",SystMap<>::init(0.500));
+      
+      //MuonES uncertaity
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam2p4tom2p1_2016","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam2p1tom1p2_2016","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam1p2to1p2_2016","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1_2016","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta2p1to2p4_2016","shape",SystMap<>::init(0.866));
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam2p4tom2p1_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam2p1tom1p2_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam1p2to1p2_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2016","shape",SystMap<>::init(0.500));
     }
   //********************************************************************************************************************************                          
 

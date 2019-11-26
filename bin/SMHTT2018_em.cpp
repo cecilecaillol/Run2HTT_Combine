@@ -261,6 +261,24 @@ int main(int argc, char **argv) {
       // TTBar Contamination
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_emb_ttbar_2018", "shape", SystMap<>::init(1.00));
 
+      //muon energy scale
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam2p4tom2p1_2018","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam2p1tom1p2_2018","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etam1p2to1p2_2018","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1_2018","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta2p1to2p4_2018","shape",SystMap<>::init(0.866));
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam2p4tom2p1_2018","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam2p1tom1p2_2018","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etam1p2to1p2_2018","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2018","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2018","shape",SystMap<>::init(0.500));
+
+      //electron energy scale
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2018","shape",SystMap<>::init(0.866));      
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2018","shape",SystMap<>::init(0.500));      
+
     }
   //***********************************************************                          
 

@@ -178,8 +178,32 @@ int main(int argc, char **argv) {
 
 
 	// Fake factors
-      AddShapesIfNotEmpty({"CMS_rawFF_et_qcd_0jet_unc1_2018","CMS_rawFF_et_qcd_0jet_unc2_2018","CMS_rawFF_et_qcd_1jet_unc1_2018","CMS_rawFF_et_qcd_1jet_unc2_2018","CMS_rawFF_et_w_0jet_unc1_2018","CMS_rawFF_et_w_0jet_unc2_2018","CMS_rawFF_et_w_1jet_unc1_2018","CMS_rawFF_et_w_1jet_unc2_2018","CMS_rawFF_et_tt_unc1_2018","CMS_rawFF_et_tt_unc2_2018","CMS_FF_closure_mvis_et_qcd_unc1_2018","CMS_FF_closure_mvis_et_qcd_unc2_2018","CMS_FF_closure_mvis_et_w_unc1_2018","CMS_FF_closure_mvis_et_w_unc2_2018","CMS_FF_closure_mvis_et_tt_unc1_2018","CMS_FF_closure_mvis_et_tt_unc2_2018","CMS_FF_closure_OSSS_mvis_et_qcd_unc1_2018","CMS_FF_closure_OSSS_mvis_et_qcd_unc2_2018","CMS_FF_closure_mt_et_w_unc1_2018","CMS_FF_closure_mt_et_w_unc2_2018"},
-                          {"jetFakes"},
+      AddShapesIfNotEmpty({
+	  "CMS_rawFF_mt_qcd_0jet_unc1_2018",
+            "CMS_rawFF_mt_qcd_0jet_unc2_2018",
+            "CMS_rawFF_mt_qcd_1jet_unc1_2018",
+            "CMS_rawFF_mt_qcd_1jet_unc2_2018",
+            "CMS_rawFF_mt_qcd_2jet_unc1_2018",
+            "CMS_rawFF_mt_qcd_2jet_unc2_2018",
+            "CMS_rawFF_mt_w_0jet_unc1_2018",
+            "CMS_rawFF_mt_w_0jet_unc2_2018",
+            "CMS_rawFF_mt_w_1jet_unc1_2018",
+            "CMS_rawFF_mt_w_1jet_unc2_2018",
+            "CMS_rawFF_mt_w_2jet_unc1_2018",
+            "CMS_rawFF_mt_w_2jet_unc2_2018",
+            "CMS_rawFF_mt_tt_unc1_2018",
+            "CMS_rawFF_mt_tt_unc2_2018",
+            "CMS_FF_closure_mvis_mt_qcd_0jet_2018",
+            "CMS_FF_closure_mvis_mt_qcd_1jet_2018",
+            "CMS_FF_closure_mvis_mt_qcd_2jet_2018",
+            "CMS_FF_closure_mvis_mt_w_0jet_2018",            
+            "CMS_FF_closure_mvis_mt_w_1jet_2018",
+            "CMS_FF_closure_mvis_mt_w_2jet_2018",
+            "CMS_FF_closure_mvis_mt_tt_0jet_2018",            
+            "CMS_FF_closure_OSSS_mvis_mt_qcd_2018",            
+            "CMS_FF_closure_mt_mt_w_unc1_2018",
+            "CMS_FF_closure_mt_mt_w_unc2_2018"},
+	{"jetFakes"},
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
@@ -287,6 +311,11 @@ int main(int argc, char **argv) {
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_1prong_2018", "shape", SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_1prong1pizero_2018", "shape", SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_3prong_2018", "shape", SystMap<>::init(0.500));
+
+      //electron energy scale
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2018","shape",SystMap<>::init(0.866));      
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2018","shape",SystMap<>::init(0.500));      
 
     }
   //********************************************************************************************************************************                          
