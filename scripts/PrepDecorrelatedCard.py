@@ -41,7 +41,7 @@ if __name__ == "__main__":
                     else:
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-2]+"_"+args.year+"Up"
 		    # For the embedded sample, duplicate the tau ES for partial correlation
-		    if "_emb_" in CopyHisto.GetName():
+		    if "_emb" in CopyHisto.GetName():
 			if args.TrimYears:
 			   CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()
 			   NewNameTitle2 = CopyHisto.GetName().replace('_emb','')[:len(CopyHisto.GetName())-11]+"Up"
@@ -50,47 +50,54 @@ if __name__ == "__main__":
                            CopyHisto3 = TheDirectory.Get(Histogram.GetName()).Clone()
                            NewNameTitle3 = CopyHisto.GetName().replace('_emb','')
                            CopyHisto3.SetNameTitle(NewNameTitle3,NewNameTitle3)
-                           CopyHisto3.Write()
+                           CopyHisto3.Write()                           
 			else:
+                           #print("Prepping embedded up decorrelations: "+Histogram.GetName())
                            CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()                           
                            #NewNameTitle2 = CopyHisto.GetName().replace('_emb','')[:len(CopyHisto.GetName())-2]+"_"+args.year+"Up"
                            NewNameTitle2 = CopyHisto.GetName().replace('_emb','')
                            NewNameTitle2 = NewNameTitle2[:len(NewNameTitle2)-2]
                            NewNameTitle2+="_"+args.year+"Up"
+                           #print(NewNameTitle2)
                            CopyHisto2.SetNameTitle(NewNameTitle2,NewNameTitle2)
                            CopyHisto2.Write()
                            CopyHisto3 = TheDirectory.Get(Histogram.GetName()).Clone()
                            NewNameTitle3 = CopyHisto.GetName().replace('_emb','')
                            CopyHisto3.SetNameTitle(NewNameTitle3,NewNameTitle3)
                            CopyHisto3.Write()
+                           #print(NewNameTitle3)                           
 
                 elif re.search("Down",CopyHisto.GetName()):
                     if args.TrimYears:
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-9]+"Down"
                     else:
                         NewNameTitle = CopyHisto.GetName()[:len(CopyHisto.GetName())-4]+"_"+args.year+"Down"
-                    if "_emb_" in CopyHisto.GetName():
+                    if "_emb" in CopyHisto.GetName():
                         if args.TrimYears:
                            CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()
-                           NewNameTitle2 = CopyHisto.GetName().replace("_emb","")[:len(CopyHisto.GetName())-13]+"Down"
+                           NewNameTitle2 = CopyHisto.GetName().replace("_emb","")[:len(CopyHisto.GetName())-13]+"Down" 
                            CopyHisto2.SetNameTitle(NewNameTitle2,NewNameTitle2)
                            CopyHisto2.Write()
                            CopyHisto3 = TheDirectory.Get(Histogram.GetName()).Clone()
                            NewNameTitle3 = CopyHisto.GetName().replace("_emb","")
                            CopyHisto3.SetNameTitle(NewNameTitle3,NewNameTitle3)
-                           CopyHisto3.Write()
+                           CopyHisto3.Write()                           
                         else:
+                           #print("Prepping embedded down decorrelations: "+Histogram.GetName())
                            CopyHisto2 = TheDirectory.Get(Histogram.GetName()).Clone()
                            #NewNameTitle2 = CopyHisto.GetName().replace("_emb","")[:len(CopyHisto.GetName())-4]+"_"+args.year+"Down"
                            NewNameTitle2 = CopyHisto.GetName().replace("_emb","")
                            NewNameTitle2 = NewNameTitle2[:len(NewNameTitle2)-4 ]
                            NewNameTitle2+="_"+args.year+"Down"
+                           #print(NewNameTitle2)
                            CopyHisto2.SetNameTitle(NewNameTitle2,NewNameTitle2)
                            CopyHisto2.Write()
                            CopyHisto3 = TheDirectory.Get(Histogram.GetName()).Clone()
                            NewNameTitle3 = CopyHisto.GetName().replace("_emb","")
+                           #print(NewNameTitle3)
                            CopyHisto3.SetNameTitle(NewNameTitle3,NewNameTitle3)
                            CopyHisto3.Write()
+                           CopyHisto4 = TheDirectory.Get(Histogram.GetName()).Clone()                           
 
                 else:
                     raise RuntimeError("Something fell through the RE")
@@ -99,5 +106,5 @@ if __name__ == "__main__":
     NewDataCardFile.Write()
     NewDataCardFile.Close()
     DataCardFile.Close()
-                
+    
                 
