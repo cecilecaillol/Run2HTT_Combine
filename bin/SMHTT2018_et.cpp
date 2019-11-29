@@ -178,35 +178,99 @@ int main(int argc, char **argv) {
 
 
 	// Fake factors
+      /*
       AddShapesIfNotEmpty({
-	  "CMS_rawFF_mt_qcd_0jet_unc1_2018",
-            "CMS_rawFF_mt_qcd_0jet_unc2_2018",
-            "CMS_rawFF_mt_qcd_1jet_unc1_2018",
-            "CMS_rawFF_mt_qcd_1jet_unc2_2018",
-            "CMS_rawFF_mt_qcd_2jet_unc1_2018",
-            "CMS_rawFF_mt_qcd_2jet_unc2_2018",
-            "CMS_rawFF_mt_w_0jet_unc1_2018",
-            "CMS_rawFF_mt_w_0jet_unc2_2018",
-            "CMS_rawFF_mt_w_1jet_unc1_2018",
-            "CMS_rawFF_mt_w_1jet_unc2_2018",
-            "CMS_rawFF_mt_w_2jet_unc1_2018",
-            "CMS_rawFF_mt_w_2jet_unc2_2018",
-            "CMS_rawFF_mt_tt_unc1_2018",
-            "CMS_rawFF_mt_tt_unc2_2018",
-            "CMS_FF_closure_mvis_mt_qcd_0jet_2018",
-            "CMS_FF_closure_mvis_mt_qcd_1jet_2018",
-            "CMS_FF_closure_mvis_mt_qcd_2jet_2018",
-            "CMS_FF_closure_mvis_mt_w_0jet_2018",            
-            "CMS_FF_closure_mvis_mt_w_1jet_2018",
-            "CMS_FF_closure_mvis_mt_w_2jet_2018",
-            "CMS_FF_closure_mvis_mt_tt_0jet_2018",            
-            "CMS_FF_closure_OSSS_mvis_mt_qcd_2018",            
-            "CMS_FF_closure_mt_mt_w_unc1_2018",
-            "CMS_FF_closure_mt_mt_w_unc2_2018"},
+	  "CMS_rawFF_et_qcd_0jet_unc1_2018",
+            "CMS_rawFF_et_qcd_0jet_unc2_2018",
+            "CMS_rawFF_et_qcd_1jet_unc1_2018",
+            "CMS_rawFF_et_qcd_1jet_unc2_2018",
+            "CMS_rawFF_et_qcd_2jet_unc1_2018",
+            "CMS_rawFF_et_qcd_2jet_unc2_2018",
+            "CMS_rawFF_et_w_0jet_unc1_2018",
+            "CMS_rawFF_et_w_0jet_unc2_2018",
+            "CMS_rawFF_et_w_1jet_unc1_2018",
+            "CMS_rawFF_et_w_1jet_unc2_2018",
+            "CMS_rawFF_et_w_2jet_unc1_2018",
+            "CMS_rawFF_et_w_2jet_unc2_2018",
+            "CMS_rawFF_et_tt_unc1_2018",
+            "CMS_rawFF_et_tt_unc2_2018",
+            "CMS_FF_closure_mvis_et_qcd_0jet_2018",
+            "CMS_FF_closure_mvis_et_qcd_1jet_2018",
+            "CMS_FF_closure_mvis_et_qcd_2jet_2018",
+            "CMS_FF_closure_mvis_et_w_0jet_2018",            
+            "CMS_FF_closure_mvis_et_w_1jet_2018",
+            "CMS_FF_closure_mvis_et_w_2jet_2018",
+            "CMS_FF_closure_mvis_et_tt_0jet_2018",            
+            "CMS_FF_closure_OSSS_mvis_et_qcd_2018",            
+            "CMS_FF_closure_et_mt_w_unc1_2018",
+            "CMS_FF_closure_et_mt_w_unc2_2018"},
 	{"jetFakes"},
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
+      */
+      
+      //some of the uncerts are only relevant in certain categories. 
+      //and missing in all the others
+      //so the names have been explicitly hacked in
+      // we need a better way to handle uncertainties that may be explicit to certain categories only
+      AddShapesIfNotEmpty({
+	  "CMS_rawFF_et_qcd_0jet_unc1_2018",
+	    "CMS_rawFF_et_qcd_0jet_unc2_2018",
+	    "CMS_rawFF_et_w_0jet_unc1_2018",
+	    "CMS_rawFF_et_w_0jet_unc2_2018",
+       	    "CMS_rawFF_et_tt_unc1_2018",
+	    "CMS_rawFF_et_tt_unc2_2018",
+	    "CMS_FF_closure_mvis_et_qcd_0jet_2018",
+       	    "CMS_FF_closure_mvis_et_w_0jet_2018",
+       	    "CMS_FF_closure_mvis_et_tt_0jet_2018",            
+       	    "CMS_FF_closure_OSSS_mvis_et_qcd_2018",            
+	    "CMS_FF_closure_mt_et_w_unc1_2018",
+	    "CMS_FF_closure_mt_et_w_unc2_2018"},
+       	{"jetFakes"},
+       	&cb,
+       	1.00,
+       	TheFile,
+       	{"et_0jetlow","et_0jethigh"});
+
+      AddShapesIfNotEmpty({
+       	  "CMS_rawFF_et_qcd_1jet_unc1_2018",
+	    "CMS_rawFF_et_qcd_1jet_unc2_2018",
+       	    "CMS_rawFF_et_w_1jet_unc1_2018",
+	    "CMS_rawFF_et_w_1jet_unc2_2018",
+       	    "CMS_rawFF_et_tt_unc1_2018",
+	    "CMS_rawFF_et_tt_unc2_2018",
+       	    "CMS_FF_closure_mvis_et_qcd_1jet_2018",
+       	    "CMS_FF_closure_mvis_et_w_1jet_2018",
+	    "CMS_FF_closure_mvis_et_tt_1jet_2018",            
+	    "CMS_FF_closure_OSSS_mvis_et_qcd_2018",            
+	    "CMS_FF_closure_mt_et_w_unc1_2018",
+	    "CMS_FF_closure_mt_et_w_unc2_2018"},
+       	{"jetFakes"},
+       	&cb,
+       	1.00,
+       	TheFile,
+       	{"et_boosted1"});
+
+      AddShapesIfNotEmpty({
+       	  "CMS_rawFF_et_qcd_2jet_unc1_2018",
+	    "CMS_rawFF_et_qcd_2jet_unc2_2018",
+       	    "CMS_rawFF_et_w_2jet_unc1_2018",
+	    "CMS_rawFF_et_w_2jet_unc2_2018",
+       	    "CMS_rawFF_et_tt_unc1_2018",
+	    "CMS_rawFF_et_tt_unc2_2018",
+       	    "CMS_FF_closure_mvis_et_qcd_2jet_2018",
+       	    "CMS_FF_closure_mvis_et_w_2jet_2018",	    
+	    "CMS_FF_closure_mvis_et_tt_2jet_2018",            
+	    "CMS_FF_closure_OSSS_mvis_et_qcd_2018",            
+	    "CMS_FF_closure_mt_et_w_unc1_2018",
+	    "CMS_FF_closure_mt_et_w_unc2_2018"
+       	    },
+	{"jetFakes"},
+	&cb,
+	1.00,
+	TheFile,
+	{"et_boosted2","et_vbflow","et_vbfhigh"});
       
       //MET Unclustered Energy Scale      
       AddShapesIfNotEmpty({"CMS_scale_met_unclustered_2018"},
