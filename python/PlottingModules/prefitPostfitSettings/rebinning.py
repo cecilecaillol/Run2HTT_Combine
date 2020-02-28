@@ -22,9 +22,13 @@ def GetNSlices(category,year):
     elif (category == catConfig.et_boosted_1J_category
           or category == catConfig.et_boosted_GE2J_category):        
         nSlices = 5
+    elif (category == catConfig.et_vbf_low_category):
+        if year == "2016" or year == "Run2":
+            nSlices = 4
+        else:
+            nSlices = 5
     elif (category == catConfig.mt_vbf_low_category
-          or category == catConfig.em_vbf_low_category          
-          or category == catConfig.et_vbf_low_category 
+          or category == catConfig.em_vbf_low_category                    
           or category == catConfig.mt_boosted_1J_category
           or category == catConfig.mt_boosted_GE2J_category
           or category == catConfig.em_boosted_1J_category

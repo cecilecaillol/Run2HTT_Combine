@@ -9,7 +9,8 @@ def AddYearsTogether(collection,channel,category,prefitOrPostfit):
         for histogram in collection[channel]['2016'][category][prefitOrPostfit][dictType]:            
             #try:
             Run2Histo = collection[channel]['2016'][category][prefitOrPostfit][dictType][histogram].Clone()            
-            if channel == 'tt' and (category == 'tt_vbf_highHpT' or category == 'tt_vbf_lowHpT'):
+            if ((channel == 'tt' and (category == 'tt_vbf_highHpT' or category == 'tt_vbf_lowHpT')) 
+                or (channel == 'et' and category == "et_vbflow" )):
                 Run2Histo.Add(collection[channel]['2017-folded'][category][prefitOrPostfit][dictType][histogram])
                 Run2Histo.Add(collection[channel]['2018-folded'][category][prefitOrPostfit][dictType][histogram])
             else:
@@ -44,6 +45,29 @@ def PerformAllAdditions(collection):
                 collection['tt']['2018-folded'][category][prefitOrPostfit]= {}
                 for dictType in collection['tt']['2018'][category][prefitOrPostfit]:
                     collection['tt']['2018-folded'][category][prefitOrPostfit][dictType] = CreateRefoldedHistograms(collection['tt']['2018'][category][prefitOrPostfit][dictType])
+
+    try:
+        collection['et']['2017-folded']= {}
+    except KeyError:
+        pass
+    else:
+        for category in collection['et']['2017']:
+            collection['et']['2017-folded'][category]= {}
+            for prefitOrPostfit in collection['et']['2017'][category]:
+                collection['et']['2017-folded'][category][prefitOrPostfit]= {}
+                for dictType in collection['et']['2017'][category][prefitOrPostfit]:
+                    collection['et']['2017-folded'][category][prefitOrPostfit][dictType] = CreateRefoldedHistograms(collection['et']['2017'][category][prefitOrPostfit][dictType])
+    try:
+        collection['et']['2018-folded']= {}
+    except KeyError:
+        pass
+    else:
+        for category in collection['et']['2018']:
+            collection['et']['2018-folded'][category]= {}
+            for prefitOrPostfit in collection['et']['2018'][category]:
+                collection['et']['2018-folded'][category][prefitOrPostfit]= {}
+                for dictType in collection['et']['2018'][category][prefitOrPostfit]:
+                    collection['et']['2018-folded'][category][prefitOrPostfit][dictType] = CreateRefoldedHistograms(collection['et']['2018'][category][prefitOrPostfit][dictType])
 
     #we'll also need a full run 2 dictionary. Let's make that.
     for channel in collection:

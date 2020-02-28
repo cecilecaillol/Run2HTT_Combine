@@ -11,6 +11,7 @@ tautau_boosted_latex = ["p_{t}^{H} #leq 60","60 #leq p_{t}^{H} #leq 120","120 #l
 
 semileptonic_vbf_high_latex = ["350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1200","1200 #leq m_{jj}"]
 vbf_low_latex = ["350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1000","1000 #leq m_{jj} #leq 1500","1500 #leq m_{jj} #leq 1800","1800 #leq m_{jj}"]
+et_vbf_low_latex = ["350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1000","1000 #leq m_{jj} #leq 1500","1500 #leq m_{jj}"]
 
 tautau_vbf_high_latex_2016 = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj}"]
 tautau_vbf_high_latex = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1200","1200 #leq m_{jj}"]
@@ -54,9 +55,14 @@ def CreateSliceText(category,year):
         category == catConfig.em_vbf_high_category):        
         labels = semileptonic_vbf_high_latex
 
+    elif (category == catConfig.et_vbf_low_category):
+        if year == "2016" or year == "Run2":
+            labels = et_vbf_low_latex
+        else:
+            labels = vbf_low_latex
+
     elif (category == catConfig.mt_vbf_low_category or 
-          category == catConfig.em_vbf_low_category or 
-          category == catConfig.et_vbf_low_category):        
+          category == catConfig.em_vbf_low_category):        
         labels = vbf_low_latex
 
     elif (category == catConfig.tt_boosted_1J_category or 
