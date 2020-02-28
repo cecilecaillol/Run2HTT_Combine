@@ -160,7 +160,7 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False):
                     
                     
                     
-                    #raw_input("Press enter to continue...")
+                    raw_input("Press enter to continue...")
                     
                     theCanvas.SaveAs(outputDir+theCanvas.GetName()+".png")
                     theCanvas.SaveAs(outputDir+theCanvas.GetName()+".pdf")

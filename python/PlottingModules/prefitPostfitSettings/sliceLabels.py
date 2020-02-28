@@ -11,8 +11,10 @@ tautau_boosted_latex = ["p_{t}^{H} #leq 60","60 #leq p_{t}^{H} #leq 120","120 #l
 
 semileptonic_vbf_high_latex = ["350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1200","1200 #leq m_{jj}"]
 vbf_low_latex = ["350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1000","1000 #leq m_{jj} #leq 1500","1500 #leq m_{jj} #leq 1800","1800 #leq m_{jj}"]
+
 tautau_vbf_high_latex_2016 = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj}"]
 tautau_vbf_high_latex = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1200","1200 #leq m_{jj}"]
+
 tautau_vbf_low_latex_2016 = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1000","1000 #leq m_{jj} #leq 1500","1500 #leq m_{jj}"]
 tautau_vbf_low_latex = ["m_{jj} #leq 350","350 #leq m_{jj} #leq 700","700 #leq m_{jj} #leq 1000","1000 #leq m_{jj} #leq 1500","1500 #leq m_{jj} #leq 1800","1800 #leq m_{jj}"]
 
@@ -32,22 +34,19 @@ def CreateSliceText(category,year):
         sliceLatex.SetTextSize(0.12/(1.0*nSlices))        
     
     if (category ==  catConfig.tt_vbf_high_category):
-        if year == "2016":
+        if year == "2016" or year == "Run2":
             labels = tautau_vbf_high_latex_2016
         else:
             labels = tautau_vbf_high_latex
 
     elif (category == catConfig.tt_vbf_low_category):
-        if year == "2016":
+        if year == "2016" or year == "Run2":
             labels = tautau_vbf_low_latex_2016        
         else:
             labels = tautau_vbf_low_latex
     
     elif(category == catConfig.et_boosted_1J_category or 
-          category == catConfig.et_boosted_GE2J_category):
-        if year == "2016":
-            labels = tautau_boosted_latex
-        else:
+          category == catConfig.et_boosted_GE2J_category):        
             labels = boosted_latex
 
     elif (category ==  catConfig.mt_vbf_high_category or 
