@@ -308,26 +308,25 @@ if args.SplitInclusive:
 os.system("mv *"+DateTag+"*.root "+OutputDir)
 
 if not args.ComputeSignificance:
-    #run the signal samples
-    #okay, we're no longer doing individual fits. It's redundant. We just need one command that fits everything.
-    CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
-    if not args.Unblind:
-        CombineCommand+=" -t -1"
-    CombineCommand+=" --setParameters r_ggH=1,r_qqH=1,r_WH=1,r_ZH=1 -n "+DateTag+"_Signal"
-
-    if args.Timeout is True:
+    #run the signal samples    
+    for SignalName in ["r_ggH","r_qqH","r_WH","r_ZH"]:
+        CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
+        if not args.Unblind:
+            CombineCommand+=" -t -1"
+        CombineCommand+=" --setParameters r_ggH=1,r_qqH=1,r_WH=1,r_ZH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
+        if args.Timeout is True:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
-    logging.info("Signal Sample Signal Command: ")
-    logging.info('\n\n'+CombineCommand+'\n')
-    if args.RunParallel:
-        ThreadHandler.AddNewFit(CombineCommand,'Stage_0',OutputDir)
-    else:            
-        os.system(CombineCommand+" | tee -a "+outputLoggingFile)
-    if args.SplitSignals:
-        Splitter.SplitMeasurement(CombineCommand,OutputDir)    
+        logging.info("Signal Sample Signal Command: ")
+        logging.info('\n\n'+CombineCommand+'\n')
+        if args.RunParallel:
+            ThreadHandler.AddNewFit(CombineCommand,SignalName,OutputDir)
+        else:            
+            os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        if args.SplitSignals:
+            Splitter.SplitMeasurement(CombineCommand,OutputDir)    
     
-    #we need to remember to move and save the results file to something relevant    
-    os.system("mv *"+DateTag+"*.root "+OutputDir)
+            #we need to remember to move and save the results file to something relevant    
+            os.system("mv *"+DateTag+"*.root "+OutputDir)
 
 # run the STXS bins
 #if not (args.RunInclusiveggH or args.RunInclusiveqqH or args.ComputeSignificance):
