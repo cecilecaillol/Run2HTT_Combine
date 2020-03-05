@@ -45,10 +45,11 @@ void AddShapesIfNotEmpty(std::vector<string> Shapes,
 	  Float_t NominalIntegral = 0.0;
 	  if (NominalHisto==NULL)
 	    {
-	      std::cout<<"\033[1;31mError!\033[0m"<<std::endl;
-	      std::cout<<"Bad Histogram: "+*it<<std::endl;
+	      std::cout<<"\033[1;34mCheck Me?\033[0m"<<std::endl;
+	      std::cout<<"Non Existent Base Histogram: "+*it<<std::endl;
 	      std::cout<<"Directory: "<<DirectoryName<<std::endl;
-	      throw;
+	      std::cout<<"Continuing without doing anything..."<<std::endl;
+	      continue;
 	    }          
 	  NominalIntegral = NominalHisto->Integral();
           TH1F* UpHisto;

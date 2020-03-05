@@ -65,24 +65,33 @@ for year in args.years:
         if args.DecorrelateForMe:
             if args.ControlMode:
                 NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root"
-                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root "
+                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root "
+                SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root -y "+year                
             elif args.ComputeGOF:
                 print "Working on GOF with data outside signal region"
                 if not args.Unblind:
                     NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
-                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root "
+                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root "
+                    SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root -y "+year
+                    
                 else:
                     NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
-                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+".root "
+                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_corelated.root "
+                    SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
             else:
                 NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
-                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+".root "
+                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
+                SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
             if channel=="et" or channel=="em":
                 AddShapeCommand+="--TrimYears "
             print("Duplicating shapes for year correlations")
             logging.info("Shape duplication command:")
             logging.info('\n\n'+AddShapeCommand+'\n')
             os.system(AddShapeCommand+" | tee -a "+outputLoggingFile)            
+            print("Smoothing out signal JES shapes")
+            logging.info("Shape smoothing command:")
+            logging.info('\n\n'+SmoothingCommand+'\n')
+            os.system(SmoothingCommand+" | tee -a "+outputLoggingFile)
 
         DataCardCreationCommand="SMHTT"+year
         DataCardCreationCommand+="_"+channel+" "+OutputDir
