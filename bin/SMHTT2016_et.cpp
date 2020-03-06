@@ -273,28 +273,28 @@ int main(int argc, char **argv)
   // b-tagging efficiency: 5% in ttbar and 0.5% otherwise.
     // b-tagging efficiency
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.001));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(0.993));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(1.002));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(1.002));
   
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hfstats1_2016","lnN",SystMap<>::init(1.03));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_hfstats1_2016","lnN",SystMap<>::init(1.0000));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_hfstats1_2016","lnN",SystMap<>::init(1.0000));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hfstats2_2016","lnN",SystMap<>::init(1.015));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_hfstats2_2016","lnN",SystMap<>::init(1.000));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_hfstats2_2016","lnN",SystMap<>::init(1.000));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(0.98));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(1.003));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.90));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.999));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.999));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lfstats1_2016","lnN",SystMap<>::init(0.995));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats1_2016","lnN",SystMap<>::init(0.999));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats1_2016","lnN",SystMap<>::init(0.999));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lfstats2_2016","lnN",SystMap<>::init(0.995));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats2_2016","lnN",SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats2_2016","lnN",SystMap<>::init(1.001));
 
   // XSection Uncertainties
   cb.cp().process({"TTT","TTL"}).AddSyst(cb,"CMS_htt_tjXsec", "lnN", SystMap<>::init(1.042));
@@ -303,7 +303,11 @@ int main(int argc, char **argv)
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
 
   //Electron Fake Rate Uncertainty
-  //cb.cp().process({"ZL","VVL","TTL","STL"}).AddSyst(cb, "CMS_eFakeTau_2016 ", "lnN",SystMap<>::init(1.15));  
+  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+    {
+      std::cout<<"OLD STYLE NORM LNN STILL IN USE. FIXME"<<std::endl;
+      cb.cp().process({"ZL","VVL","TTL","STL"}).AddSyst(cb, "CMS_eFakeTau_2016 ", "lnN",SystMap<>::init(1.15));  
+    }
   cb.cp().process({"VVL","TTL","STL"}).AddSyst(cb, "CMS_eFakeTau_2016 ", "lnN",SystMap<>::init(1.15));    
   
   //Luminosity Uncertainty
@@ -342,30 +346,45 @@ int main(int argc, char **argv)
       //E to tau fake energy scale and e to tau energy fake scale            
       /*
 	std::cout<<"ZLShapes"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_2016","CMS_scale_efaket_1prong1pizero_2016"},
+	AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_2016","CMS_scale_efaket_1prong1pizero_2016"},
       {"ZL"},
 			  &cb,
 			  1.00,
 			  TheFile,CategoryArgs);
       */
-      std::cout<<"ZLShapes"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_barrel_2016",
-	    "CMS_scale_efaket_1prong1pizero_barrel_2016",
-	    "CMS_scale_efaket_1prong_endcap_2016",
-	    "CMS_scale_efaket_1prong1pizero_endcap_2016"},
-			  {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,CategoryArgs);
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+	{
+	  std::cout<<"OLD STYLE ZLSHAPES. FIXME"<<std::endl;
+	  AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_barrel_2016",
+		"CMS_scale_efaket_1prong1pizero_barrel_2016",
+		"CMS_scale_efaket_1prong_endcap_2016",
+		"CMS_scale_efaket_1prong1pizero_endcap_2016"},
+	    {"ZL"},
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	}
+      else
+	{
+	  std::cout<<"ZLShapes"<<std::endl;
+	  AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_barrel_2016",
+		"CMS_scale_efaket_1prong1pizero_barrel_2016",
+		"CMS_scale_efaket_1prong_endcap_2016",
+		"CMS_scale_efaket_1prong1pizero_endcap_2016"},
+	    {"ZL"},
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
       
       
-      AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2016",
-	    "CMS_norm_efaket_slice2_2016",
-	    "CMS_norm_efaket_slice3_2016"},
-			  {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,CategoryArgs);      
+	  AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2016",
+		"CMS_norm_efaket_slice2_2016",
+		"CMS_norm_efaket_slice3_2016"},
+	    {"ZL"},
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);      
+	}
       
       //Fake Factors
       /*
@@ -387,14 +406,7 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_2jet_unc1_2016",
 		"CMS_rawFF_et_w_2jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
-		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_0jet",
-		//"CMS_FF_closure_mvis_et_w_0jet",
-		//"CMS_FF_closure_mvis_et_qcd_1jet",
-		//"CMS_FF_closure_mvis_et_w_1jet",
-		//"CMS_FF_closure_mvis_et_qcd_2jet",
-		//"CMS_FF_closure_mvis_et_w_2jet",
-		//"CMS_FF_closure_mvis_et_tt",       
+		"CMS_rawFF_et_tt_unc2_2016",		   
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -423,9 +435,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_0jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_0jet",
-		//"CMS_FF_closure_mvis_et_w_0jet",
-		//"CMS_FF_closure_mvis_et_tt",      
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -447,10 +456,7 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_1jet_unc1_2016",
 		"CMS_rawFF_et_w_1jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
-		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_1jet",
-		//"CMS_FF_closure_mvis_et_w_1jet",
-		//"CMS_FF_closure_mvis_et_tt",            
+		"CMS_rawFF_et_tt_unc2_2016",      
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -475,9 +481,6 @@ int main(int argc, char **argv)
 		    "CMS_rawFF_et_w_2jet_unc2_2016",
 		    "CMS_rawFF_et_tt_unc1_2016",
 		    "CMS_rawFF_et_tt_unc2_2016",
-		    //"CMS_FF_closure_mvis_et_qcd_2jet",
-		    //"CMS_FF_closure_mvis_et_w_2jet",	    
-		    //"CMS_FF_closure_mvis_et_tt",            
 		    "CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		    "CMS_FF_closure_lpt_xtrg_et_w_2016",
 		    "CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -502,10 +505,7 @@ int main(int argc, char **argv)
 		    "CMS_rawFF_et_w_2jet_unc1_2016",
 		    "CMS_rawFF_et_w_2jet_unc2_2016",
 		    "CMS_rawFF_et_tt_unc1_2016",
-		    "CMS_rawFF_et_tt_unc2_2016",
-		    //"CMS_FF_closure_mvis_et_qcd_2jet",
-		    //"CMS_FF_closure_mvis_et_w_2jet",	    
-		    //"CMS_FF_closure_mvis_et_tt",            
+		    "CMS_rawFF_et_tt_unc2_2016",  
 		    "CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		    "CMS_FF_closure_lpt_xtrg_et_w_2016",
 		    "CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -535,10 +535,7 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_0jet_unc1_2016",
 		"CMS_rawFF_et_w_0jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
-		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_0jet",
-		//"CMS_FF_closure_mvis_et_w_0jet",
-		//"CMS_FF_closure_mvis_et_tt",      
+		"CMS_rawFF_et_tt_unc2_2016",		
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -560,10 +557,7 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_1jet_unc1_2016",
 		"CMS_rawFF_et_w_1jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
-		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_1jet",
-		//"CMS_FF_closure_mvis_et_w_1jet",
-		//"CMS_FF_closure_mvis_et_tt",            
+		"CMS_rawFF_et_tt_unc2_2016",		      
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -586,9 +580,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_2jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",
-		//"CMS_FF_closure_mvis_et_qcd_2jet",
-		//"CMS_FF_closure_mvis_et_w_2jet",	    
-		//"CMS_FF_closure_mvis_et_tt",            
 		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
 		"CMS_FF_closure_lpt_xtrg_et_w_2016",
 		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
@@ -635,7 +626,7 @@ int main(int argc, char **argv)
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"et_0jet","et_0jet"});
+			      {"et_0jet"});
       
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2016","CMS_htt_boson_scale_met_1jet_2016"},
 			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),

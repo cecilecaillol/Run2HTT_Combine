@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--channel', '-c', nargs='?',required = True,choices=['tt','mt','et','em'], default=None, help='channel to smooth')
 parser.add_argument('--InputFile','-i',nargs='?',required = True,help="File to smooth")
 parser.add_argument('--OutputFile','-o',nargs='?',required = True,help="Output file name")
-parser.add_argument('--Year','-y',nargs='?'required=True,choices=['2016','2017','2018'],help="Year to smooth. Used for figuring out differences in binning/rolling.")
+parser.add_argument('--Year','-y',nargs='?',required=True,choices=['2016','2017','2018'],help="Year to smooth. Used for figuring out differences in binning/rolling.")
 args = parser.parse_args()
 
 

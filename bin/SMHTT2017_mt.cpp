@@ -35,6 +35,7 @@ int main(int argc, char **argv)
   TFile* TheFile;
   if(Input.OptionExists("-c")) TheFile = new TFile((aux_shapes+"mt_controls_2017.root").c_str());
   else if (Input.OptionExists("-gf")) TheFile = new TFile((aux_shapes+"smh2017mt_GOF.root").c_str());
+  else if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")) TheFile = new TFile((aux_shapes+"smh2017mt_Differential.root").c_str());
   else TheFile = new TFile((aux_shapes+"smh2017mt.root").c_str());  
     
   //categories loaded from configurations
@@ -58,14 +59,56 @@ int main(int argc, char **argv)
   //! [part3]
   cb.AddObservations({"*"}, {"smh2017"}, {"13TeV"}, {"mt"}, cats);
 
-  vector<string> bkg_procs = {"VVT","STT","TTT","jetFakes","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"};
+  vector<string> bkg_procs = {"VVT","STT","TTT","jetFakes","ZL","VVL","STL","TTL"};
   if(Input.OptionExists("-e")) {bkg_procs.push_back("ZT");}
   else bkg_procs.push_back("embedded");
+  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+    {
+      bkg_procs.push_back("ggH_htt_nonfid125");
+      bkg_procs.push_back("qqH_htt_nonfid125");
+      bkg_procs.push_back("WH_htt_nonfid125");
+      bkg_procs.push_back("ZH_htt_nonfid125");
+    }
+  else
+    {
+      bkg_procs.push_back("ggH_hww125");
+      bkg_procs.push_back("qqH_hww125");
+      bkg_procs.push_back("WH_hww125");
+      bkg_procs.push_back("ZH_hww125");
+    }
 
   cb.AddProcesses({"*"}, {"smh2017"}, {"13TeV"}, {"mt"}, bkg_procs, cats, false);
 
   vector<string> ggH_STXS;
   if (Input.OptionExists("-g")) ggH_STXS = {"ggH_htt125"};
+  else if (Input.OptionExists("-dp")) ggH_STXS = {
+      "ggH_PTH_0_20_htt125",
+      "ggH_PTH_20_45_htt125",
+      "ggH_PTH_45_80_htt125",
+      "ggH_PTH_80_120_htt125",
+      "ggH_PTH_120_200_htt125",
+      "ggH_PTH_200_350_htt125",
+      "ggH_PTH_350_600_htt125",
+      "ggH_PTH_GE600_htt125",
+    };
+  //NJets differential Option
+  else if (Input.OptionExists("-dn")) ggH_STXS = {
+      "ggH_NJETS_0_htt125",
+      "ggH_NJETS_1_htt125",
+      "ggH_NJETS_2_htt125",
+      "ggH_NJETS_GE3_htt125",
+    };
+  //mjj differential option
+  else if (Input.OptionExists("-dm")) ggH_STXS = {
+      "ggH_MJJ_0_150_htt125",
+      "ggH_MJJ_150_300_htt125",
+      "ggH_MJJ_300_450_htt125",
+      "ggH_MJJ_450_600_htt125",
+      "ggH_MJJ_600_1000_htt125",
+      "ggH_MJJ_1000_1400_htt125",
+      "ggH_MJJ_1400_1800_htt125",
+      "ggH_MJJ_GE1800_htt125",
+    };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
 		   "ggH_PTH_0_200_1J_PTH_0_60_htt125",
@@ -86,6 +129,34 @@ int main(int argc, char **argv)
   
   vector<string> qqH_STXS; 
   if(Input.OptionExists("-q")) qqH_STXS = {"qqH_htt125"};
+  else if (Input.OptionExists("-dp")) qqH_STXS = {
+      "qqH_PTH_0_20_htt125",
+      "qqH_PTH_20_45_htt125",
+      "qqH_PTH_45_80_htt125",
+      "qqH_PTH_80_120_htt125",
+      "qqH_PTH_120_200_htt125",
+      "qqH_PTH_200_350_htt125",
+      "qqH_PTH_350_600_htt125",
+      "qqH_PTH_GE600_htt125",
+    };
+  //NJets differential Option
+  else if (Input.OptionExists("-dn")) qqH_STXS = {
+      "qqH_NJETS_0_htt125",
+      "qqH_NJETS_1_htt125",
+      "qqH_NJETS_2_htt125",
+      "qqH_NJETS_GE3_htt125",
+    };
+  //mjj differential option
+  else if (Input.OptionExists("-dm")) qqH_STXS = {
+      "qqH_MJJ_0_150_htt125",
+      "qqH_MJJ_150_300_htt125",
+      "qqH_MJJ_300_450_htt125",
+      "qqH_MJJ_450_600_htt125",
+      "qqH_MJJ_600_1000_htt125",
+      "qqH_MJJ_1000_1400_htt125",
+      "qqH_MJJ_1400_1800_htt125",
+      "qqH_MJJ_GE1800_htt125",
+    };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
 		   "qqH_GE2J_MJJ_0_60_htt125",
@@ -98,7 +169,67 @@ int main(int argc, char **argv)
 		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
 		   "qqH_FWDH_htt125"};
 
-  vector<string> sig_procs = ch::JoinStr({ggH_STXS,qqH_STXS,{"WH_htt125","ZH_htt125"}});
+  vector<string> WH_STXS = {"WH_htt125"};
+  if (Input.OptionExists("-dp")) WH_STXS = {
+      "WH_PTH_0_20_htt125",
+      "WH_PTH_20_45_htt125",
+      "WH_PTH_45_80_htt125",
+      "WH_PTH_80_120_htt125",
+      "WH_PTH_120_200_htt125",
+      "WH_PTH_200_350_htt125",
+      "WH_PTH_350_600_htt125",
+      "WH_PTH_GE600_htt125",
+    };
+  //NJets differential Option
+  else if (Input.OptionExists("-dn")) WH_STXS = {
+      "WH_NJETS_0_htt125",
+      "WH_NJETS_1_htt125",
+      "WH_NJETS_2_htt125",
+      "WH_NJETS_GE3_htt125",
+    };
+  //mjj differential option
+  else if (Input.OptionExists("-dm")) WH_STXS = {
+      "WH_MJJ_0_150_htt125",
+      "WH_MJJ_150_300_htt125",
+      "WH_MJJ_300_450_htt125",
+      "WH_MJJ_450_600_htt125",
+      "WH_MJJ_600_1000_htt125",
+      "WH_MJJ_1000_1400_htt125",
+      "WH_MJJ_1400_1800_htt125",
+      "WH_MJJ_GE1800_htt125",
+    };
+
+  vector<string> ZH_STXS = {"ZH_htt125"};
+  if (Input.OptionExists("-dp")) ZH_STXS = {
+      "ZH_PTH_0_20_htt125",
+      "ZH_PTH_20_45_htt125",
+      "ZH_PTH_45_80_htt125",
+      "ZH_PTH_80_120_htt125",
+      "ZH_PTH_120_200_htt125",
+      "ZH_PTH_200_350_htt125",
+      "ZH_PTH_350_600_htt125",
+      "ZH_PTH_GE600_htt125",
+    };
+  //NJets differential Option
+  else if (Input.OptionExists("-dn")) ZH_STXS = {
+      "ZH_NJETS_0_htt125",
+      "ZH_NJETS_1_htt125",
+      "ZH_NJETS_2_htt125",
+      "ZH_NJETS_GE3_htt125",
+    };
+  //mjj differential option
+  else if (Input.OptionExists("-dm")) ZH_STXS = {
+      "ZH_MJJ_0_150_htt125",
+      "ZH_MJJ_150_300_htt125",
+      "ZH_MJJ_300_450_htt125",
+      "ZH_MJJ_450_600_htt125",
+      "ZH_MJJ_600_1000_htt125",
+      "ZH_MJJ_1000_1400_htt125",
+      "ZH_MJJ_1400_1800_htt125",
+      "ZH_MJJ_GE1800_htt125",
+    };
+
+  vector<string> sig_procs = ch::JoinStr({ggH_STXS,qqH_STXS,WH_STXS,ZH_STXS});
   cb.AddProcesses(masses, {"smh2017"}, {"13TeV"}, {"mt"}, sig_procs, cats, true);
 
   //! [part4]
@@ -117,44 +248,44 @@ int main(int argc, char **argv)
   cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
   cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
   cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));  
-  cb.cp().process({"WH_htt125","WH_hww125"}).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
-  cb.cp().process({"ZH_htt125","ZH_hww125"}).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
+  cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
+  cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
   //cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "QCDScale_qqH", "lnN", SystMap<>::init(1.005));
-  cb.cp().process({"WH_htt125","WH_hww125"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
-  cb.cp().process({"ZH_htt125","ZH_hww125"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
-  cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
-  cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
+  cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
+  cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
+  cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
+  cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
   
   //Muon ID efficiency
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_eff_m_2017","lnN",SystMap<>::init(1.02));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_m_2017","lnN",SystMap<>::init(1.02));
 
   // Against ele and against mu for real taus
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_mt_2017","lnN",SystMap<>::init(1.01));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_mt_2017","lnN",SystMap<>::init(1.01));
 
   // b-tagging efficiency
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.001));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(0.993));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(1.002));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_hf","lnN",SystMap<>::init(1.002));
   
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hfstats1_2017","lnN",SystMap<>::init(1.03));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_hfstats1_2017","lnN",SystMap<>::init(1.0000));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_hfstats1_2017","lnN",SystMap<>::init(1.0000));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_hfstats2_2017","lnN",SystMap<>::init(1.015));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_hfstats2_2017","lnN",SystMap<>::init(1.000));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_hfstats2_2017","lnN",SystMap<>::init(1.000));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(0.98));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_jes","lnN",SystMap<>::init(1.003));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.90));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.999));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lf","lnN",SystMap<>::init(0.999));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lfstats1_2017","lnN",SystMap<>::init(0.995));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats1_2017","lnN",SystMap<>::init(0.999));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats1_2017","lnN",SystMap<>::init(0.999));
 
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_lfstats2_2017","lnN",SystMap<>::init(0.995));
-  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats2_2017","lnN",SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_lfstats2_2017","lnN",SystMap<>::init(1.001));
 
   // XSection Uncertainties
   cb.cp().process({"TTT","TTL"}).AddSyst(cb,"CMS_htt_tjXsec", "lnN", SystMap<>::init(1.042));
@@ -166,13 +297,13 @@ int main(int argc, char **argv)
   cb.cp().process({"ZL","TTL","STL","VVL"}).AddSyst(cb, "CMS_mFakeTau_2017", "lnN",SystMap<>::init(1.20));    
 
   //Luminosity Uncertainty
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_Run2017", "lnN", SystMap<>::init(1.020));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_XYfactorization", "lnN", SystMap<>::init(1.008));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.003));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_beamBeamDeflection", "lnN", SystMap<>::init(1.004));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_dynamicBeta", "lnN", SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.003));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_Run2017", "lnN", SystMap<>::init(1.020));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_XYfactorization", "lnN", SystMap<>::init(1.008));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_beamBeamDeflection", "lnN", SystMap<>::init(1.004));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_dynamicBeta", "lnN", SystMap<>::init(1.005));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.001));
 
   cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_0_10"}).AddSyst(cb,"CMS_jetFakesNorm_0jetlow_mt_2017","lnN",SystMap<>::init(1.05));
   cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_GE10"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_mt_2017","lnN",SystMap<>::init(1.05));
@@ -198,25 +329,25 @@ int main(int argc, char **argv)
       TopVector = {"TTL","TTT"};
       if(Input.OptionExists("-e"))
 	{	  
-	  RecoilVector = JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125"}});
+	  RecoilVector = JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}});
 	  ZPTVector = {"ZT","ZL"};	  
-	  TESVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","ZT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  JESVector = JoinStr({ggH_STXS,qqH_STXS,{"ZT","VVT","STT","TTT","WH_htt125","ZH_htt125","VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  MuESVector = JoinStr({ggH_STXS,qqH_STXS,{"ZT","VVT","STT","TTT","ZL","VVL","TTL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  PrefiringVector = JoinStr({sig_procs,{"VVL","STL","VVT","STT","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  TauIDVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","ZT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  TriggerVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","ZT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
+	  TESVector = JoinStr({sig_procs,{"VVT","STT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  JESVector = JoinStr({sig_procs,{"ZT","VVT","STT","TTT","VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  MuESVector = JoinStr({sig_procs,{"ZT","VVT","STT","TTT","ZL","VVL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  PrefiringVector = JoinStr({sig_procs,{"VVL","STL","VVT","STT","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  TauIDVector = JoinStr({sig_procs,{"VVT","STT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  TriggerVector = JoinStr({sig_procs,{"VVT","STT","ZT","TTT","VVL","STL","TTL","ZL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	}
       else
 	{	  
-	  RecoilVector = JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125"}});
+	  RecoilVector = JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}});
 	  ZPTVector = {"ZL"};	  
-	  TESVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  JESVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","WH_htt125","ZH_htt125","VVL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  MuESVector = JoinStr({ggH_STXS,qqH_STXS,{"ZL","VVT","STT","TTT","VVL","STL","TTL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  PrefiringVector = JoinStr({sig_procs,{"VVL","STL","VVT","STT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  TauIDVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
-	  TriggerVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}});
+	  TESVector = JoinStr({sig_procs,{"VVT","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  JESVector = JoinStr({sig_procs,{"VVT","STT","TTT","VVL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  MuESVector = JoinStr({sig_procs,{"ZL","VVT","STT","TTT","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  PrefiringVector = JoinStr({sig_procs,{"VVL","STL","VVT","STT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  TauIDVector = JoinStr({sig_procs,{"VVT","STT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
+	  TriggerVector = JoinStr({sig_procs,{"VVT","STT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	}
 
       // Prefiring
@@ -290,6 +421,115 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,
 	    CategoryArgs);
+	}
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+	{
+	  AddShapesIfNotEmpty({
+	      "CMS_rawFF_mt_qcd_0jet_unc1_2017",
+		"CMS_rawFF_mt_qcd_0jet_unc2_2017",
+		"CMS_rawFF_mt_w_0jet_unc1_2017",
+		"CMS_rawFF_mt_w_0jet_unc2_2017",
+		"CMS_rawFF_mt_tt_unc1_2017",
+		"CMS_rawFF_mt_tt_unc2_2017",
+		//"CMS_FF_closure_mvis_mt_qcd_0jet",
+		//"CMS_FF_closure_mvis_mt_w_0jet",
+		//"CMS_FF_closure_mvis_mt_tt",       
+		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
+		"CMS_FF_closure_lpt_mt_qcd",
+		"CMS_FF_closure_lpt_mt_w",
+		"CMS_FF_closure_lpt_mt_tt",
+		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
+		"CMS_FF_closure_mt_mt_w_unc1_2017",
+		"CMS_FF_closure_mt_mt_w_unc2_2017"},
+	    {"jetFakes"},
+	    &cb,
+	    1.00,
+	    TheFile,
+	    {"mt_0jet"});
+
+	  AddShapesIfNotEmpty({
+	      "CMS_rawFF_mt_qcd_1jet_unc1_2017",
+		"CMS_rawFF_mt_qcd_1jet_unc2_2017",
+		"CMS_rawFF_mt_w_1jet_unc1_2017",
+		"CMS_rawFF_mt_w_1jet_unc2_2017",
+		"CMS_rawFF_mt_tt_unc1_2017",
+		"CMS_rawFF_mt_tt_unc2_2017",
+		//"CMS_FF_closure_mvis_mt_qcd_1jet",
+		//"CMS_FF_closure_mvis_mt_w_1jet",
+		//"CMS_FF_closure_mvis_mt_tt",            
+		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
+		"CMS_FF_closure_lpt_mt_qcd",
+		"CMS_FF_closure_lpt_mt_w",
+		"CMS_FF_closure_lpt_mt_tt",
+		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
+		"CMS_FF_closure_mt_mt_w_unc1_2017",
+		"CMS_FF_closure_mt_mt_w_unc2_2017"},
+	    {"jetFakes"},
+	    &cb,
+	    1.00,
+	    TheFile,
+	    {"mt_1jet"});
+	  
+	  if(Input.OptionExists("-dm"))
+	    {
+	      AddShapesIfNotEmpty({
+		  "CMS_rawFF_mt_qcd_2jet_unc1_2017",
+		    "CMS_rawFF_mt_qcd_2jet_unc2_2017",
+		    "CMS_rawFF_mt_w_2jet_unc1_2017",
+		    "CMS_rawFF_mt_w_2jet_unc2_2017",
+		    "CMS_rawFF_mt_tt_unc1_2017",
+		    "CMS_rawFF_mt_tt_unc2_2017",
+		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
+		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
+		    //"CMS_FF_closure_mvis_mt_tt",            
+		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
+		    "CMS_FF_closure_lpt_xtrg_mt_w_2017",
+		    "CMS_FF_closure_lpt_xtrg_mt_tt_2017",
+		    "CMS_FF_closure_lpt_mt_qcd_2017",
+		    "CMS_FF_closure_lpt_mt_w_2017",
+		    "CMS_FF_closure_lpt_mt_tt_2017",
+		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
+		    "CMS_FF_closure_mt_mt_w_unc1_2017",
+		    "CMS_FF_closure_mt_mt_w_unc2_2017"
+		    },
+		{"jetFakes"},
+		&cb,
+		1.00,
+		TheFile,
+		{"mt_2jet"});
+	    }
+	  else
+	    {
+	      AddShapesIfNotEmpty({
+		  "CMS_rawFF_mt_qcd_2jet_unc1_2017",
+		    "CMS_rawFF_mt_qcd_2jet_unc2_2017",
+		    "CMS_rawFF_mt_w_2jet_unc1_2017",
+		    "CMS_rawFF_mt_w_2jet_unc2_2017",
+		    "CMS_rawFF_mt_tt_unc1_2017",
+		    "CMS_rawFF_mt_tt_unc2_2017",
+		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
+		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
+		    //"CMS_FF_closure_mvis_mt_tt",            
+		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
+		    "CMS_FF_closure_lpt_xtrg_mt_w_2017",
+		    "CMS_FF_closure_lpt_xtrg_mt_tt_2017",
+		    "CMS_FF_closure_lpt_mt_qcd_2017",
+		    "CMS_FF_closure_lpt_mt_w_2017",
+		    "CMS_FF_closure_lpt_mt_tt_2017",
+		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
+		    "CMS_FF_closure_mt_mt_w_unc1_2017",
+		    "CMS_FF_closure_mt_mt_w_unc2_2017"
+		    },
+		{"jetFakes"},
+		&cb,
+		1.00,
+		TheFile,
+		{"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
+	    }
 	}
       else
 	{
@@ -391,6 +631,41 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+	{
+	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017"},
+			      RecoilVector,
+			      &cb,
+			      1.00,
+			      TheFile,
+			      {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+      
+	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017"},
+			      RecoilVector,
+			      &cb,
+			      1.00,
+			      TheFile,
+			      {"mt_boosted_1J"});
+	  
+	  if(Input.OptionExists("-dm"))
+	    {
+	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
+			      RecoilVector,
+			      &cb,
+			      1.00,
+			      TheFile,
+			      {"mt_2jet"});
+	    }
+	  else
+	    {
+	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
+			      RecoilVector,
+			      &cb,
+			      1.00,
+			      TheFile,
+				  {"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
+	    }
+	}
       else
 	{
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017"},
@@ -481,7 +756,7 @@ int main(int argc, char **argv)
       std::cout<<"ggH theory uncerts"<<std::endl;
       AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
 	    "THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
-	JoinStr({ggH_STXS,{"ggH_hww125"}}),
+	JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);            
@@ -490,7 +765,7 @@ int main(int argc, char **argv)
       std::cout<<"qqH Theory"<<std::endl;
       AddShapesIfNotEmpty({"THU_qqH_yield","THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
 	    "THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
-	JoinStr({qqH_STXS,{"qqH_hww125"}}),
+	JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
@@ -580,6 +855,17 @@ int main(int argc, char **argv)
                       aux_shapes + "smh2017mt_GOF.root",
                       "$BIN/$PROCESS$MASS",
                       "$BIN/$PROCESS$MASS_$SYSTEMATIC");
+    }
+  else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm"))
+    {
+      cb.cp().backgrounds().ExtractShapes(
+      aux_shapes + "smh2017mt_Differential.root",
+      "$BIN/$PROCESS",
+      "$BIN/$PROCESS_$SYSTEMATIC");
+      cb.cp().signals().ExtractShapes(
+      aux_shapes + "smh2017mt_Differential.root",
+      "$BIN/$PROCESS$MASS",
+      "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
   else
     {

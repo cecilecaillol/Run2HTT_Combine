@@ -83,3 +83,73 @@ Categories = {'tt':tt_Categories,
               'mt':mt_Categories,
               'et':et_Categories,
               'em':em_Categories}
+
+#Let's do bin and rolling setup as well.
+standardRecoBinConfiguration = [50,70,90,110,130,150,170,210,250,290]
+recoBinConfiguration = {
+    'tt':{
+        tt_boosted_1J_category:standardRecoBinConfiguration,
+        tt_boosted_GE2J_category:standardRecoBinConfiguration,
+        tt_vbf_high_category:standardRecoBinConfiguration,
+        tt_vbf_low_category:standardRecoBinConfiguration,
+        tt_0jet_category:standardRecoBinConfiguration,
+    },
+    'mt':{
+        mt_boosted_1J_category:standardRecoBinConfiguration,
+        mt_boosted_GE2J_category:standardRecoBinConfiguration,
+        mt_vbf_low_category:standardRecoBinConfiguration,
+        mt_vbf_high_category:standardRecoBinConfiguration,
+        mt_0jet_low_category:standardRecoBinConfiguration,
+        mt_0jet_high_category:standardRecoBinConfiguration,
+    },
+    'et':{
+        et_0jet_low_category:standardRecoBinConfiguration,
+        et_0jet_high_category:standardRecoBinConfiguration,
+        et_boosted_1J_category:standardRecoBinConfiguration,
+        et_boosted_GE2J_category:standardRecoBinConfiguration,
+        et_vbf_low_category:standardRecoBinConfiguration,
+        et_vbf_high_category:standardRecoBinConfiguration,
+    },
+    'em':{
+        em_0jet_low_category:standardRecoBinConfiguration,
+        em_0jet_high_category:standardRecoBinConfiguration,
+        em_boosted_1J_category:standardRecoBinConfiguration,
+        em_boosted_GE2J_category:standardRecoBinConfiguration,
+        em_vbf_low_category:standardRecoBinConfiguration,
+        em_vbf_high_category:standardRecoBinConfiguration,
+    },
+}
+
+rollingBinConfiguration = {
+    'tt':{
+        tt_boosted_1J_category:[],
+        tt_boosted_GE2J_category:[],
+        tt_vbf_high_category:[],
+        tt_vbf_low_category:[],
+        tt_0jet_category:[],
+    },
+    'mt':{
+        mt_boosted_1J_category:[0,60,120,200,250,10000],
+        mt_boosted_GE2J_category:[0,60,120,200,250,10000],
+        mt_vbf_low_category:[350,700,1000,1500,1800,10000],
+        mt_vbf_high_category:[350,700,1200,10000],
+        mt_0jet_low_category:[30,40,50,10000],
+        mt_0jet_high_category:[30,40,50,10000],
+    },
+    'et':{
+        et_0jet_low_category:[30,40,50,9000],
+        et_0jet_high_category:[30,40,50,9000],
+        et_boosted_1J_category:[0,60,120,200,250,9000],
+        et_boosted_GE2J_category:[0,60,120,200,250,9000],
+        et_vbf_low_category:[350,700,1000,1500,1800,9000],
+        et_vbf_high_category:[350,700,1200,9000],
+    },
+    'em':{
+        em_0jet_low_category:[30,40,50,9000],
+        em_0jet_high_category:[30,40,50,9000],
+        em_boosted_1J_category:[0,60,120,200,250,9000],
+        em_boosted_GE2J_category:[0,60,120,200,250,9000],
+        em_vbf_low_category:[350,700,1000,1500,1800,9000],
+        em_vbf_high_category:[350,700,1000,1500,1800,9000],
+    },
+}
