@@ -70,10 +70,10 @@ int main(int argc, char **argv)
   }
   if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
     {      
-      bkg_procs.push_back("ggH_nonfid_htt125");
-      bkg_procs.push_back("qqH_nonfid_htt125");
-      bkg_procs.push_back("WH_nonfid_htt125");
-      bkg_procs.push_back("ZH_nonfid_htt125");
+      bkg_procs.push_back("ggH_htt_nonfid125");
+      bkg_procs.push_back("qqH_htt_nonfid125");
+      bkg_procs.push_back("WH_htt_nonfid125");
+      bkg_procs.push_back("ZH_htt_nonfid125");
     }
   else
     {
