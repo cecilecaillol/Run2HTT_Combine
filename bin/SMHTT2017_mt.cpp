@@ -638,14 +638,14 @@ int main(int argc, char **argv)
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+			      {"mt_0jet"});
       
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017"},
 			      RecoilVector,
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"mt_boosted_1J"});
+			      {"mt_1jet"});
 	  
 	  if(Input.OptionExists("-dm"))
 	    {

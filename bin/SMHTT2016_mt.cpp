@@ -68,10 +68,10 @@ int main(int argc, char **argv)
   else bkg_procs.push_back("embedded");
   if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
     {      
-      bkg_procs.push_back("ggH_nonfid_htt125");
-      bkg_procs.push_back("qqH_nonfid_htt125");
-      bkg_procs.push_back("WH_nonfid_htt125");
-      bkg_procs.push_back("ZH_nonfid_htt125");
+      bkg_procs.push_back("ggH_htt_nonfid125");
+      bkg_procs.push_back("qqH_htt_nonfid125");
+      bkg_procs.push_back("WH_htt_nonfid125");
+      bkg_procs.push_back("ZH_htt_nonfid125");
     }
   else
     {
@@ -427,6 +427,115 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
+      else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm"))
+	{
+	  AddShapesIfNotEmpty({
+	      "CMS_rawFF_mt_qcd_0jet_unc1_2016",
+		"CMS_rawFF_mt_qcd_0jet_unc2_2016",
+		"CMS_rawFF_mt_w_0jet_unc1_2016",
+		"CMS_rawFF_mt_w_0jet_unc2_2016",
+		"CMS_rawFF_mt_tt_unc1_2016",
+		"CMS_rawFF_mt_tt_unc2_2016",
+		//"CMS_FF_closure_mvis_mt_qcd_0jet",
+		//"CMS_FF_closure_mvis_mt_w_0jet",
+		//"CMS_FF_closure_mvis_mt_tt",            
+		"CMS_FF_closure_lpt_xtrg_mt_qcd_2016",
+		"CMS_FF_closure_lpt_xtrg_mt_w_2016",
+		"CMS_FF_closure_lpt_xtrg_mt_tt_2016",
+		"CMS_FF_closure_lpt_mt_qcd",
+		"CMS_FF_closure_lpt_mt_w",
+		"CMS_FF_closure_lpt_mt_tt",
+		"CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
+		"CMS_FF_closure_mt_mt_w_unc1_2016",
+		"CMS_FF_closure_mt_mt_w_unc2_2016"},
+	    {"jetFakes"},
+	    &cb,
+	    1.00,
+	    TheFile,
+	    {"mt_0jet"});
+
+	  AddShapesIfNotEmpty({
+	      "CMS_rawFF_mt_qcd_1jet_unc1_2016",
+		"CMS_rawFF_mt_qcd_1jet_unc2_2016",
+		"CMS_rawFF_mt_w_1jet_unc1_2016",
+		"CMS_rawFF_mt_w_1jet_unc2_2016",
+		"CMS_rawFF_mt_tt_unc1_2016",
+		"CMS_rawFF_mt_tt_unc2_2016",
+		//"CMS_FF_closure_mvis_mt_qcd_1jet",
+		//"CMS_FF_closure_mvis_mt_w_1jet",
+		//"CMS_FF_closure_mvis_mt_tt",  
+		"CMS_FF_closure_lpt_xtrg_mt_qcd_2016",
+		"CMS_FF_closure_lpt_xtrg_mt_w_2016",
+		"CMS_FF_closure_lpt_xtrg_mt_tt_2016",
+		"CMS_FF_closure_lpt_mt_qcd",
+		"CMS_FF_closure_lpt_mt_w",
+		"CMS_FF_closure_lpt_mt_tt",
+		"CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
+		"CMS_FF_closure_mt_mt_w_unc1_2016",
+		"CMS_FF_closure_mt_mt_w_unc2_2016"},
+	    {"jetFakes"},
+	    &cb,
+	    1.00,
+	    TheFile,
+	    {"mt_1jet"});
+
+	  if(Input.OptionExists("-dm"))
+	    {
+	      	      AddShapesIfNotEmpty({
+		  "CMS_rawFF_mt_qcd_2jet_unc1_2016",
+		    "CMS_rawFF_mt_qcd_2jet_unc2_2016",
+		    "CMS_rawFF_mt_w_2jet_unc1_2016",
+		    "CMS_rawFF_mt_w_2jet_unc2_2016",
+		    "CMS_rawFF_mt_tt_unc1_2016",
+		    "CMS_rawFF_mt_tt_unc2_2016",
+		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
+		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
+		    //"CMS_FF_closure_mvis_mt_tt",  
+		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2016",
+		    "CMS_FF_closure_lpt_xtrg_mt_w_2016",
+		    "CMS_FF_closure_lpt_xtrg_mt_tt_2016",
+		    "CMS_FF_closure_lpt_mt_qcd",
+		    "CMS_FF_closure_lpt_mt_w",
+		    "CMS_FF_closure_lpt_mt_tt",
+		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
+		    "CMS_FF_closure_mt_mt_w_unc1_2016",
+		    "CMS_FF_closure_mt_mt_w_unc2_2016"
+		    },
+		{"jetFakes"},
+		&cb,
+		1.00,
+		TheFile,
+		{"mt_2jet"});
+	    }
+	  else
+	    {
+	      AddShapesIfNotEmpty({
+		  "CMS_rawFF_mt_qcd_2jet_unc1_2016",
+		    "CMS_rawFF_mt_qcd_2jet_unc2_2016",
+		    "CMS_rawFF_mt_w_2jet_unc1_2016",
+		    "CMS_rawFF_mt_w_2jet_unc2_2016",
+		    "CMS_rawFF_mt_tt_unc1_2016",
+		    "CMS_rawFF_mt_tt_unc2_2016",
+		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
+		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
+		    //"CMS_FF_closure_mvis_mt_tt",  
+		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2016",
+		    "CMS_FF_closure_lpt_xtrg_mt_w_2016",
+		    "CMS_FF_closure_lpt_xtrg_mt_tt_2016",
+		    "CMS_FF_closure_lpt_mt_qcd",
+		    "CMS_FF_closure_lpt_mt_w",
+		    "CMS_FF_closure_lpt_mt_tt",
+		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
+		    "CMS_FF_closure_mt_mt_w_unc1_2016",
+		    "CMS_FF_closure_mt_mt_w_unc2_2016"
+		    },
+		{"jetFakes"},
+		&cb,
+		1.00,
+		TheFile,
+		{"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
+	    }
+	}
       else
 	{
 	  AddShapesIfNotEmpty({
@@ -478,7 +587,7 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,
 	    {"mt_boosted_1J"});
-
+	  
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_2jet_unc1_2016",
 		"CMS_rawFF_mt_qcd_2jet_unc2_2016",

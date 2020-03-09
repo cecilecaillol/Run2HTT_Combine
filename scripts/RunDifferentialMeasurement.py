@@ -76,15 +76,15 @@ for year in args.years:
         # we may not necessarily want all of these cards
         #mjj measurements do not use the high and low mjj categories
         #njets measurements do not use the mjj rolled category
-        CardCombiningCommand+=" "+channel+"_0jet="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
-        CardCombiningCommand+=" "+channel+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
+        CardCombiningCommand+=" "+channel+"_"+year+"_0jet="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
+        CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
         if not args.MeasurementType == "mjj":
-            CardCombiningCommand+=" "+channel+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_3jetlow="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_3jethigh="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_3jetlow="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_3jethigh="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
         if args.MeasurementType == "mjj":
-            CardCombiningCommand+=" "+channel+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
 
 CardCombiningCommand+=" > "+CombinedCardName
 logging.info("Final Card Combining Command:")
