@@ -7,7 +7,7 @@ import CombineHarvester.Run2HTT_Combine.PlottingModules.Utilities as Utils
 import CombineHarvester.Run2HTT_Combine.PlottingModules.globalSettings as globalSettings
 import CombineHarvester.Run2HTT_Combine.PlottingModules as plotModules
 
-def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False):
+def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= False):
     globalSettings.style.setPASStyle()    
     ROOT.gROOT.SetStyle('pasStyle')
     
@@ -74,11 +74,12 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False):
                     prefitPostfitSettings.dataSettings.ApplyDataSettings(histograms[channel][year][category][prefitOrPostfit]['Data']['data_obs'])
                     #perform blinding                    
                     print("blinding...")
-                    prefitPostfitSettings.blinding.BlindDataPoints(                        
-                        histograms[channel][year][category][prefitOrPostfit]['Data'],
-                        category,
-                        year
-                    )                    
+                    if not Unblind:                                        
+                        prefitPostfitSettings.blinding.BlindDataPoints(                        
+                            histograms[channel][year][category][prefitOrPostfit]['Data'],
+                            category,
+                            year
+                        )                    
 
                     #Create the canvas and pads needed
                     theCanvas = ROOT.TCanvas(channel+"_"+year+"_"+category+"_"+prefitOrPostfit,channel+"_"+year+"_"+category+"_"+prefitOrPostfit)
@@ -189,6 +190,7 @@ if __name__ == "__main__":
     parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="year of results to run.",required=True)
     parser.add_argument('--channels',nargs="+",choices=['mt','tt','et','em'],help="specify the channels to run",required=True)
     parser.add_argument('--DontRecalculate',help="Dont preform the PostfitShapesFromWorkspace step again.",action = 'store_true')
+    parser.add_argument('--Unblind',help='Unblind all datapoints. BE SURE ABOUT THIS',action='store_true')
 
     args = parser.parse_args()
-    MakePrefitPlots(args.tag,args.years,args.channels,args.DontRecalculate)
+    MakePrefitPlots(args.tag,args.years,args.channels,args.DontRecalculate,args.Unblind)
