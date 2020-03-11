@@ -452,6 +452,8 @@ if args.ComputeImpacts:
     print("final impact plot")
     FinalImpactName = "impacts_final_"+DateTag
     ImpactCommand = "plotImpacts.py -i "+ImpactJsonName+" -o "+FinalImpactName
+    if args.DontPrintResults:
+        ImpactsCommand += ' --blind'
     logging.info("Plotting Impact Command:")
     logging.info('\n\n'+ImpactCommand+'\n')
     if args.DontPrintResults:
