@@ -375,7 +375,7 @@ if args.RunSTXS:
         supplementaryCombineCommand = "combineTool.py -M FitDiagnostics "+PerSTXSName+" --robustFit=1 --preFitValue=1. --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -t -1 -n "+DateTag+"_STXS_Correlation --setParameters "
         for BinName in STXSBins:
             supplementaryCombineCommand += ("r_"+BinName+"=1,")
-        logging.info("Correlation matrix command:")
+        logging.info("STXS Correlation matrix command:")
         logging.info('\n\n'+supplementaryCombineCommand+'\n')
         if args.DontPrintResults:
             os.system(CombineCommand+" > /dev/null")
@@ -403,6 +403,18 @@ if args.RunSTXS:
             os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        os.system(" mv *"+DateTag+"*.root "+OutputDir)
+
+    if args.CorrelationMatrix:
+        supplementaryCombineCommand = "combineTool.py -M FitDiagnostics "+PerMergedBinName+" --robustFit=1 --preFitValue=1. --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -t -1 -n "+DateTag+"_Merged_Correlation --setParameters "
+        for BinName in MergedSignalNames:
+            supplementaryCombineCommand += ("r_"+BinName+"=1,")
+        logging.info("Merged POI Correlation matrix command:")
+        logging.info('\n\n'+supplementaryCombineCommand+'\n')
+        if args.DontPrintResults:
+            os.system(CombineCommand+" > /dev/null")
+        else:
+            os.system(supplementaryCombineCommand+" | tee -a "+outputLoggingFile)
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
 
 #run impact fitting
