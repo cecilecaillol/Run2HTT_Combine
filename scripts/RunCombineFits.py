@@ -42,6 +42,7 @@ parser.add_argument('--ControlMode',help="Run in control mode, for making accura
 parser.add_argument('--ExperimentalSpeedup',help="Run experimental acceleration options. May speed up fits at slight cost to accuracy",action = "store_true")
 parser.add_argument('--CorrelationMatrix',help="Generate correlation matrices for the STXS fits",action="store_true")
 parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. BE SURE ABOUT THIS.",action="store_true")
+parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
 print("Parsing command line arguments.")
 args = parser.parse_args() 
 
@@ -309,6 +310,8 @@ logging.info("Inclusive combine command:")
 logging.info('\n\n'+InclusiveCommand+'\n')
 if args.RunParallel:
     ThreadHandler.AddNewFit(InclusiveCommand,"r",OutputDir)
+elif args.DontPrintResults:
+    os.system(InclusiveCommand+" > /dev/null")
 else:
     os.system(InclusiveCommand+" | tee -a "+outputLoggingFile)
 if args.SplitInclusive:
@@ -327,15 +330,19 @@ if not args.ComputeSignificance:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
         logging.info("Signal Sample Signal Command: ")
         logging.info('\n\n'+CombineCommand+'\n')
+        
         if args.RunParallel:
             ThreadHandler.AddNewFit(CombineCommand,SignalName,OutputDir)
+        elif args.DontPrintResults:
+            os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        os.system("mv *"+DateTag+"*.root "+OutputDir)
+
         if args.SplitSignals:
             Splitter.SplitMeasurement(CombineCommand,OutputDir)    
     
-            #we need to remember to move and save the results file to something relevant    
-            os.system("mv *"+DateTag+"*.root "+OutputDir)
+        #we need to remember to move and save the results file to something relevant           
 
 # run the STXS bins
 #if not (args.RunInclusiveggH or args.RunInclusiveqqH or args.ComputeSignificance):
@@ -355,9 +362,11 @@ if args.RunSTXS:
         logging.info('\n\n'+CombineCommand+'\n')    
         if args.RunParallel:
             ThreadHandler.AddNewFit(CombineCommand,"STXS_"+STXSBin,OutputDir)
+        elif args.DontPrintResults:
+            os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
-            os.system(" mv *"+DateTag+"*.root "+OutputDir)
+        os.system(" mv *"+DateTag+"*.root "+OutputDir)
         if args.SplitSTXS:
             Splitter.SplitMeasurement(CombineCommand,OutputDir)            
 
@@ -368,7 +377,10 @@ if args.RunSTXS:
             supplementaryCombineCommand += ("r_"+BinName+"=1,")
         logging.info("Correlation matrix command:")
         logging.info('\n\n'+supplementaryCombineCommand+'\n')
-        os.system(supplementaryCombineCommand+" | tee -a "+outputLoggingFile)
+        if args.DontPrintResults:
+            os.system(CombineCommand+" > /dev/null")
+        else:
+            os.system(supplementaryCombineCommand+" | tee -a "+outputLoggingFile)
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
     
     #run the merged bins
@@ -387,9 +399,11 @@ if args.RunSTXS:
         logging.info('\n\n'+CombineCommand+'\n')
         if args.RunParallel:
             ThreadHandler.AddNewFit(CombineCommand,"MergedScheme_"+MergedBin,OutputDir)
+        elif args.DontPrintResults:
+            os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
-            os.system(" mv *"+DateTag+"*.root "+OutputDir)
+        os.system(" mv *"+DateTag+"*.root "+OutputDir)
 
 #run impact fitting
 if args.ComputeImpacts:
@@ -405,7 +419,10 @@ if args.ComputeImpacts:
         ImpactCommand += ' --X-rtd FAST_VERTICAL_MORPH --cminDefaultMinimizerStrategy 0 '
     logging.info("Initial Fit Impact Command:")
     logging.info('\n\n'+ImpactCommand+'\n')
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)        
         
     print("Full fit")
     ImpactCommand = "combineTool.py -M Impacts -d "+CombinedWorkspaceName+" -m 125 --robustFit 1 --doFits --expectSignal=1"
@@ -417,21 +434,30 @@ if args.ComputeImpacts:
         ImpactCommand += ' --X-rtd FAST_VERTICAL_MORPH --cminDefaultMinimizerStrategy 0 '
     logging.info("Full Fit Impact Command:")
     logging.info('\n\n'+ImpactCommand+'\n')
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     print("json-ifying")
     ImpactJsonName = "impacts_final_"+DateTag+".json"
     ImpactCommand = "combineTool.py -M Impacts -d "+CombinedWorkspaceName+" -m 125 -o "+ImpactJsonName
     logging.info("JSON Output Impact Command:")
     logging.info('\n\n'+ImpactCommand+'\n')
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     print("final impact plot")
     FinalImpactName = "impacts_final_"+DateTag
     ImpactCommand = "plotImpacts.py -i "+ImpactJsonName+" -o "+FinalImpactName
     logging.info("Plotting Impact Command:")
     logging.info('\n\n'+ImpactCommand+'\n')
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     os.chdir("../../")
 
@@ -439,16 +465,28 @@ if args.ComputeGOF:
     os.chdir(OutputDir)
     GOFJsonName = "gof_final_"+DateTag+".json"
     ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + CombinedWorkspaceName+" -n '.saturated.toys'  -t 25 -s 0:19:1 --parallel 12"
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + CombinedWorkspaceName+" -n '.saturated'"
-    os.system(ImpactCommand)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     ImpactCommand = "combineTool.py -M CollectGoodnessOfFit --input higgsCombine.saturated.GoodnessOfFit.mH125.root higgsCombine.saturated.toys.GoodnessOfFit.mH125.*.root -o "+GOFJsonName
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     ImpactCommand = "python ../../../CombineTools/scripts/plotGof.py --statistic saturated --mass 125.0 "+GOFJsonName+" --title-right='' --output='saturated' --title-left='All GoF'"
-    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     for year in args.years:
        for channel in args.channels:
@@ -466,19 +504,31 @@ if args.ComputeGOF:
           for Directory in TheFile.GetListOfKeys():
               if Directory.GetName() in cfg.Categories[channel]:
                  ImpactCommand = "text2workspace.py -m 125 smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt "
-                 os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                 if args.DontPrintResults:
+                     os.system(ImpactCommand+" > /dev/null")
+                 else:
+                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
                  GOFJsonName = "gof_"+channel+"_"+year+"_"+str(CardNum)+"_"+DateTag+".json"
                  ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys'  -t 25 -s 0:19:1 --parallel 12"
-                 os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                 if args.DontPrintResults:
+                     os.system(ImpactCommand+" > /dev/null")
+                 else:
+                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
                  ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+"'"
-                 os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                 if args.DontPrintResults:
+                     os.system(ImpactCommand+" > /dev/null")
+                 else:
+                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
                  ImpactCommand = "combineTool.py -M CollectGoodnessOfFit --input higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".GoodnessOfFit.mH125.root higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys.GoodnessOfFit.mH125.*.root -o "+GOFJsonName
                  os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
                  ImpactCommand = "python ../../../CombineTools/scripts/plotGof.py --statistic saturated --mass 125.0 "+GOFJsonName+" --title-right='' --output='saturated_"+year+"_"+channel+"_"+str(CardNum)+"' --title-left='"+year+" "+channelTitle+"' --title-right='"+CategoryMaps.mapTDir[Directory.GetName()]+"'"
-                 os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                 if args.DontPrintResults:
+                     os.system(ImpactCommand+" > /dev/null")
+                 else:
+                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
                  CardNum+=1
 
@@ -551,10 +601,6 @@ if (args.RunKappaVKappaF and args.RealData):
 if args.RunParallel:
     ThreadHandler.BeginFits()
     ThreadHandler.WaitForAllThreadsToFinish()
-
-#I think had been rendered obsolete by the general results moving commands?
-#if args.StoreShapes:
-#    os.system('mv '+os.environ['CMSSW_BASE']+"/src/CombineHarvester/Run2HTT_Combine/fitDiagnostics.Test.root "+OutputDir)
 
 #move the log file into output
 os.system('mv '+outputLoggingFile+' '+OutputDir)
