@@ -77,7 +77,7 @@ for year in args.years:
                     
                 else:
                     NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
-                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_corelated.root "
+                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
                     SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
             else:
                 NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
