@@ -513,7 +513,10 @@ if args.ComputeGOF:
           if channel=="em":
             channelTitle = "e#mu"
           CardNum = 1
-          TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
+          if args.Unblind:
+              TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
+          else:
+              TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
           print "Working on GOF with data outside signal region ",os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
           for Directory in TheFile.GetListOfKeys():
               if Directory.GetName() in cfg.Categories[channel]:
