@@ -93,6 +93,10 @@ for year in args.years:
             logging.info("Shape smoothing command:")
             logging.info('\n\n'+SmoothingCommand+'\n')
             os.system(SmoothingCommand+" | tee -a "+outputLoggingFile)
+            print("Removing Negative Bins")
+            logging.info("Negative Bin Removal Command:")
+            logging.info('\n\n'+NegativeBinCommand+'\n')
+            os.system(NegativeBinCommand+" | tee -a "+outputLoggingFile)
 
         DataCardCreationCommand="SMHTT"+year
         DataCardCreationCommand+="_"+channel+" "+OutputDir
