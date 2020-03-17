@@ -296,7 +296,7 @@ int main(int argc, char **argv) {
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
 
   //Muon Fake Rate Uncertainty
-  cb.cp().process({"ZL","TTL","VVL","STL"}).AddSyst(cb, "CMS_mFakeTau_2018", "lnN",SystMap<>::init(1.20));    
+  //cb.cp().process({"ZL","TTL","VVL","STL"}).AddSyst(cb, "CMS_mFakeTau_2018", "lnN",SystMap<>::init(1.20));    
   
   //Luminosity Uncertainty
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_Run2018", "lnN", SystMap<>::init(1.015));
@@ -345,6 +345,14 @@ int main(int argc, char **argv) {
 	  TauIDVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	  TriggerVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	}
+
+      AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2018","CMS_m_FakeTau_eta0p4to0p8_2018",
+	    "CMS_m_FakeTau_eta0p8to1p2_2018","CMS_m_FakeTau_eta1p2to1p7_2018",
+	    "CMS_m_FakeTau_etagt1p7_2018"},
+	{"ZL"},
+	&cb,
+	1.00,
+	TheFile,CategoryArgs);
 
       // Tau ID eff in pt bins
       std::cout<<"Tau ID eff"<<std::endl;
