@@ -314,8 +314,22 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_dynamicBeta", "lnN", SystMap<>::init(1.005));
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.004));
 
+  cb.cp().process({"TTL","TTT"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"TTL","TTT"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"TTL","TTT"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.05));
+  cb.cp().process({"TTL","TTT"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+  cb.cp().process({"TTL","TTT"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+  cb.cp().process({"TTL","TTT"}).bin({"em_vbfhigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+
+  cb.cp().process({"QCD"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_QCDsyst_0jetlow_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"QCD"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_QCDsyst_0jethigh_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"QCD"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_QCDsyst_boosted1_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"QCD"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_QCDsyst_boosted2_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"QCD"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_QCDsyst_vbflow_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"QCD"}).bin({"em_vbfhigh"}).AddSyst(cb,"CMS_QCDsyst_vbfhigh_2016","lnN",SystMap<>::init(1.10));
+
   //Trigger uncertainties
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "CMS_trg_emu_2016", "lnN", SystMap<>::init(1.02));
+  //cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "CMS_trg_emu_2016", "lnN", SystMap<>::init(1.02));
 
   //***********************************************************
   //shape uncertainties
@@ -335,14 +349,14 @@ int main(int argc, char **argv)
       // QCD shape            
       if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
-	  AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2016","CMS_QCD_njet0_slope_2016","CMS_QCD_antiiso_2016"},
+	  AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2016","CMS_QCD_njet0_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 			      {"QCD"},
 			      &cb,
 			      1.00,
 			      TheFile,
 			      {"em_0jet"});
       
-	  AddShapesIfNotEmpty({"CMS_QCD_njet1_intercept_2016","CMS_QCD_njet1_slope_2016","CMS_QCD_antiiso_2016"},
+	  AddShapesIfNotEmpty({"CMS_QCD_njet1_intercept_2016","CMS_QCD_njet1_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 			      {"QCD"},
 			      &cb,
 			      1.00,
@@ -351,7 +365,7 @@ int main(int argc, char **argv)
 	  
 	  if(Input.OptionExists("-dm"))
 	    {
-	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_antiiso_2016"},
+	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 				  {"QCD"},
 				  &cb,
 				  1.00,
@@ -360,7 +374,7 @@ int main(int argc, char **argv)
 	    }
 	  else
 	    {
-	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_antiiso_2016"},
+	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 				  {"QCD"},
 				  &cb,
 				  1.00,
@@ -370,20 +384,20 @@ int main(int argc, char **argv)
 	}
       else
 	{
-	  AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2016","CMS_QCD_njet0_slope_2016","CMS_QCD_antiiso_2016"},
+	  AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2016","CMS_QCD_njet0_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 			      {"QCD"},
 			      &cb,
 			      1.00,
 			      TheFile,
 			      {"em_0jetlow","em_0jethigh"});
       
-	  AddShapesIfNotEmpty({"CMS_QCD_njet1_intercept_2016","CMS_QCD_njet1_slope_2016","CMS_QCD_antiiso_2016"},
+	  AddShapesIfNotEmpty({"CMS_QCD_njet1_intercept_2016","CMS_QCD_njet1_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 			      {"QCD"},
 			      &cb,
 			      1.00,
 			      TheFile,
 			      {"em_boosted1"});
-	  AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_antiiso_2016"},
+	  AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2016","CMS_QCD_njet2_slope_2016","CMS_QCD_stat_pte15to25_ptmu15to25_2016","CMS_QCD_stat_pte15to25_ptmugt25_2016","CMS_QCD_stat_pte25to35_ptmu15to25_2016","CMS_QCD_stat_pte25to35_ptmugt25_2016","CMS_QCD_stat_ptegt35_ptmu15to25_2016","CMS_QCD_stat_ptegt35_ptmugt25_2016"},
 			      {"QCD"},
 			      &cb,
 			      1.00,
@@ -536,6 +550,14 @@ int main(int argc, char **argv)
         &cb,
         1.00,
         TheFile,CategoryArgs);
+
+      // Trigger uncertainties
+      AddShapesIfNotEmpty({"CMS_mu8e23trg_2016","CMS_mu23e12trg_2016","CMS_bothmuetrg_2016"},
+                          JoinStr({sig_procs,{"ZT","VVT","TTT","ZL","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
+
     }
 
   //**********************************************************************************************************
@@ -557,18 +579,29 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_emb_ttbar_2016", "shape", SystMap<>::init(1.00));
       
       //muon energy scale      
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etalt1p2_2016","shape",SystMap<>::init(0.866));
+      /*cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etalt1p2_2016","shape",SystMap<>::init(0.866));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1_2016","shape",SystMap<>::init(0.866));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta2p1to2p4_2016","shape",SystMap<>::init(0.866));
       
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etalt1p2_2016","shape",SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2016","shape",SystMap<>::init(0.500));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2016","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2016","shape",SystMap<>::init(0.500));*/
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etalt1p2_2016","shape",SystMap<>::init(1.0));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1_2016","shape",SystMap<>::init(1.0));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta2p1to2p4_2016","shape",SystMap<>::init(1.0));
 
       //electron energy scale
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2016","shape",SystMap<>::init(0.866));      
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2016","shape",SystMap<>::init(0.866));      
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2016","shape",SystMap<>::init(0.500));      
 
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2016","shape",SystMap<>::init(0.500));      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_barrel_2016","shape",SystMap<>::init(1.0));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_endcap_2016","shape",SystMap<>::init(1.0));
+
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu8e23trg_emb_2016","shape",SystMap<>::init(1.0));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu23e12trg_emb_2016","shape",SystMap<>::init(1.0));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_bothmuetrg_emb_2016","shape",SystMap<>::init(1.0));
+
     }
 
   //****************************************************************************************************
