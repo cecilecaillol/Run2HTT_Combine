@@ -356,7 +356,7 @@ int main(int argc, char **argv)
 	    "CMS_m_FakeTau_eta0p8to1p2_2016","CMS_m_FakeTau_eta1p2to1p7_2016",
 	    "CMS_m_FakeTau_etagt1p7_2016","CMS_m_FakeTau_taupt30to40_2016",
 	    "CMS_m_FakeTau_taupt40to50_2016","CMS_m_FakeTau_tauptgt50_2016"},
-	{"ZL"},
+	{"ZL","TTL","VVL","STL"},
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);

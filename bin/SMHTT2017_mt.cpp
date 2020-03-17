@@ -352,8 +352,9 @@ int main(int argc, char **argv)
       
       AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2017","CMS_m_FakeTau_eta0p4to0p8_2017",
 	    "CMS_m_FakeTau_eta0p8to1p2_2017","CMS_m_FakeTau_eta1p2to1p7_2017",
-	    "CMS_m_FakeTau_etagt1p7_2017"},
-	{"ZL"},
+	    "CMS_m_FakeTau_etagt1p7_2017","CMS_m_FakeTau_taupt30to40_2017",
+	    "CMS_m_FakeTau_taupt40to50_2017","CMS_m_FakeTau_tauptgt50_2017"},
+	{"ZL","TTL","VVL","STL"},
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
