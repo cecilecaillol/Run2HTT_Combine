@@ -265,12 +265,12 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.02));
 
   // Against ele and against mu for real taus
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_et_2016","lnN",SystMap<>::init(1.01));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_et_2016","lnN",SystMap<>::init(1.03));
 
   // Trg efficiency. Can be a single lnN because only single ele trigger
   cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_singleeletrg_2016","lnN",SystMap<>::init(1.02));
 
-  // b-tagging efficiency: 5% in ttbar and 0.5% otherwise.
+  // b-tagging efficiency
     // b-tagging efficiency
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.005));
   cb.cp().process(JoinStr({{"W","ZT","VVT","ZL","VVL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.001));
@@ -302,14 +302,6 @@ int main(int argc, char **argv)
   cb.cp().process({"STT","STL"}).AddSyst(cb,"CMS_htt_stXsec", "lnN", SystMap<>::init(1.05));
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
 
-  //Electron Fake Rate Uncertainty
-  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
-    {
-      std::cout<<"OLD STYLE NORM LNN STILL IN USE. FIXME"<<std::endl;
-      cb.cp().process({"ZL","VVL","TTL","STL"}).AddSyst(cb, "CMS_eFakeTau_2016 ", "lnN",SystMap<>::init(1.15));  
-    }
-  cb.cp().process({"VVL","TTL","STL"}).AddSyst(cb, "CMS_eFakeTau_2016 ", "lnN",SystMap<>::init(1.15));    
-  
   //Luminosity Uncertainty
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_Run2016", "lnN", SystMap<>::init(1.022));
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_XYfactorization", "lnN", SystMap<>::init(1.009));
@@ -319,6 +311,14 @@ int main(int argc, char **argv)
 
   cb.cp().process({"jetFakes"}).bin({"et_0jetlow"}).AddSyst(cb,"CMS_jetFakesNorm_0jetlow_et_2016","lnN",SystMap<>::init(1.05));
   cb.cp().process({"jetFakes"}).bin({"et_0jethigh"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_et_2016","lnN",SystMap<>::init(1.05));
+
+  cb.cp().process({"TTL","TTT"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"TTL","TTT"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"TTL","TTT"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.05));
+  cb.cp().process({"TTL","TTT"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+  cb.cp().process({"TTL","TTT"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+  cb.cp().process({"TTL","TTT"}).bin({"em_vbfhigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
+
 
   //***********************************************************
   //shape uncertainties
@@ -377,14 +377,21 @@ int main(int argc, char **argv)
 	    TheFile,CategoryArgs);
       
       
-	  AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2016",
+	  /*AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2016",
 		"CMS_norm_efaket_slice2_2016",
 		"CMS_norm_efaket_slice3_2016"},
 	    {"ZL"},
 	    &cb,
 	    1.00,
-	    TheFile,CategoryArgs);      
+	    TheFile,CategoryArgs);      */
+
 	}
+
+        AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2016","CMS_efaket_norm_pt40to50_2016","CMS_efaket_norm_ptgt50_2016","CMS_etauFR_barrel_2016","CMS_etauFR_endcap_2016"},
+        {"ZL","STL","TTL","VVL"},
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
       
       //Fake Factors
       /*
@@ -407,9 +414,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_2jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",		   
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -435,9 +439,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_0jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -457,9 +458,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_1jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",      
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -481,9 +479,6 @@ int main(int argc, char **argv)
 		    "CMS_rawFF_et_w_2jet_unc2_2016",
 		    "CMS_rawFF_et_tt_unc1_2016",
 		    "CMS_rawFF_et_tt_unc2_2016",
-		    "CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		    "CMS_FF_closure_lpt_xtrg_et_w_2016",
-		    "CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		    "CMS_FF_closure_lpt_et_qcd",
 		    "CMS_FF_closure_lpt_et_w",
 		    "CMS_FF_closure_lpt_et_tt",
@@ -506,9 +501,6 @@ int main(int argc, char **argv)
 		    "CMS_rawFF_et_w_2jet_unc2_2016",
 		    "CMS_rawFF_et_tt_unc1_2016",
 		    "CMS_rawFF_et_tt_unc2_2016",  
-		    "CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		    "CMS_FF_closure_lpt_xtrg_et_w_2016",
-		    "CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		    "CMS_FF_closure_lpt_et_qcd",
 		    "CMS_FF_closure_lpt_et_w",
 		    "CMS_FF_closure_lpt_et_tt",
@@ -536,9 +528,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_0jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",		
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -558,9 +547,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_1jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",		      
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -580,9 +566,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_et_w_2jet_unc2_2016",
 		"CMS_rawFF_et_tt_unc1_2016",
 		"CMS_rawFF_et_tt_unc2_2016",
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2016",
-		"CMS_FF_closure_lpt_xtrg_et_w_2016",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2016",
 		"CMS_FF_closure_lpt_et_qcd",
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
@@ -756,13 +739,12 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_singleeletrg_embedded_2016","lnN",SystMap<>::init(1.020));
 
       //Tau ID eff
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_2016", "lnN", SystMap<>::init(1.020));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_pt30to35_2016", "shape", SystMap<>::init(1.00));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_pt35to40_2016", "shape", SystMap<>::init(1.00));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_ptgt40_2016", "shape", SystMap<>::init(1.00));
 
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_1ProngPi0Eff","lnN",ch::syst::SystMapAsymm<>::init(0.9934,1.011));
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_3ProngEff","lnN",ch::syst::SystMapAsymm<>::init(0.969,1.005));
+      // Against ele and against mu for real taus
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_againstemu_embedded_et_2016","lnN",SystMap<>::init(1.05));
 
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_doublemutrg_2016", "lnN", SystMap<>::init(1.04));
 
@@ -781,9 +763,8 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_3prong1pizero_2016", "shape", SystMap<>::init(0.500));
 
       //electron energy scale
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2016","shape",SystMap<>::init(0.866));      
-
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2016","shape",SystMap<>::init(0.500));      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_barrel_2016","shape",SystMap<>::init(1.0));      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_endcap_2016","shape",SystMap<>::init(1.0));
 
     }
   //*************************************************************                          

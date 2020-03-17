@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
   cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_e_2018","lnN",SystMap<>::init(1.02));  
 
   // Against ele and against mu for real taus
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_et_2018","lnN",SystMap<>::init(1.01));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_t_againstemu_et_2018","lnN",SystMap<>::init(1.03));
 
   // b-tagging efficiency
   cb.cp().process({"STT","STL","TTT","TTL"}).AddSyst(cb,"CMS_btag_eta","lnN",SystMap<>::init(1.005));
@@ -298,12 +298,12 @@ int main(int argc, char **argv) {
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
 
   //Electron Fake Rate Uncertainty
-  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+  /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
     {
       std::cout<<"OLD STYLE NORM LNN STILL IN USE. FIXME"<<std::endl;
       cb.cp().process({"ZL","STL","TTL","VVL"}).AddSyst(cb, "CMS_eFakeTau_2018", "lnN",SystMap<>::init(1.15)); 
     }
-  cb.cp().process({"STL","TTL","VVL"}).AddSyst(cb, "CMS_eFakeTau_2018", "lnN",SystMap<>::init(1.15));    
+  cb.cp().process({"STL","TTL","VVL"}).AddSyst(cb, "CMS_eFakeTau_2018", "lnN",SystMap<>::init(1.15));    */
   
   //Luminosity Uncertainty
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_Run2018", "lnN", SystMap<>::init(1.015));
@@ -370,15 +370,20 @@ int main(int argc, char **argv) {
 	    TheFile,CategoryArgs);
 
       
-	  AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2018",
+	  /*AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2018",
 		"CMS_norm_efaket_slice2_2018",
 		"CMS_norm_efaket_slice3_2018"},
 	    {"ZL"},
 	    &cb,
 	    1.00,
-	    TheFile,CategoryArgs);
+	    TheFile,CategoryArgs);*/
 	}
 
+        AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2018","CMS_efaket_norm_pt40to50_2018","CMS_efaket_norm_ptgt50_2018","CMS_etauFR_barrel_2018","CMS_etauFR_endcap_2018"},
+        {"ZL","STL","TTL","VVL"},
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
 
 	// Fake factors
       if(Input.OptionExists("-c"))
@@ -732,13 +737,12 @@ int main(int argc, char **argv) {
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_embedded_2018","lnN",SystMap<>::init(1.01732));
 
       //Tau ID eff
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_2018", "lnN", SystMap<>::init(1.020));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_pt30to35_2018", "shape", SystMap<>::init(1.00));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_pt35to40_2018", "shape", SystMap<>::init(1.00));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_ptgt40_2018", "shape", SystMap<>::init(1.00));
 
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_1ProngPi0Eff","lnN",ch::syst::SystMapAsymm<>::init(0.9934,1.011));
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_3ProngEff","lnN",ch::syst::SystMapAsymm<>::init(0.969,1.005));
+      // Against ele and against mu for real taus
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_againstemu_embedded_et_2018","lnN",SystMap<>::init(1.05));
 
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_doublemutrg_2018", "lnN", SystMap<>::init(1.04));
 
@@ -757,9 +761,8 @@ int main(int argc, char **argv) {
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_t_3prong1pizero_2018", "shape", SystMap<>::init(0.500));
 
       //electron energy scale
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_2018","shape",SystMap<>::init(0.866));      
-
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_e_2018","shape",SystMap<>::init(0.500));      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_barrel_2018","shape",SystMap<>::init(1.0));      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_e_endcap_2018","shape",SystMap<>::init(1.0));
 
     }
   //********************************************************************************************************************************                          
