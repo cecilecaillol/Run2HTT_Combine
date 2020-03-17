@@ -71,7 +71,7 @@ if args.channel == "tt":
   else:
     bins_vbflow=[0,350,700,1000,1500,1800,9000]
     bins_vbfhigh=[0,350,700,1200,9000]
-  slices=[(len(bins_0jetlow)-1),(len(bins_0jethigh)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
+  slices=[(len(bins_0)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
 
 file_in.cd()
 nslices=0
