@@ -343,15 +343,7 @@ int main(int argc, char **argv)
                           1.00,
                           TheFile,CategoryArgs);
 
-      //E to tau fake energy scale and e to tau energy fake scale            
-      /*
-	std::cout<<"ZLShapes"<<std::endl;
-	AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_2016","CMS_scale_efaket_1prong1pizero_2016"},
-      {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,CategoryArgs);
-      */
+      //E to tau fake energy scale and e to tau energy fake scale                  
       if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
 	  std::cout<<"OLD STYLE ZLSHAPES. FIXME"<<std::endl;
@@ -386,7 +378,8 @@ int main(int argc, char **argv)
 	    TheFile,CategoryArgs);      */
 
 	}
-
+      
+      
         AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2016","CMS_efaket_norm_pt40to50_2016","CMS_efaket_norm_ptgt50_2016","CMS_etauFR_barrel_2016","CMS_etauFR_endcap_2016"},
         {"ZL","STL","TTL","VVL"},
         &cb,

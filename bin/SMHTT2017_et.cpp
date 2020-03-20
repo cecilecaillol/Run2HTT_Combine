@@ -347,15 +347,6 @@ int main(int argc, char **argv)
 
       
       // e to tau energy fake scale            
-      /*
-      std::cout<<"Adding Shapes..."<<std::endl;
-      AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_2017","CMS_scale_efaket_1prong1pizero_2017"},
-			  {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,CategoryArgs);
-      */
-
       if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
 	  std::cout<<"OLD STYLE ZL SHAPES. FIXME"<<std::endl;
@@ -395,6 +386,7 @@ int main(int argc, char **argv)
         &cb,
         1.00,
         TheFile,CategoryArgs);
+
       
 
       if (Input.OptionExists("-c"))
@@ -702,26 +694,6 @@ int main(int argc, char **argv)
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);
-      /*
-      AddShapesIfNotEmpty({"CMS_JetEta3to5_2017","CMS_JetEta0to5_2017","CMS_JetRelativeBal_2017",
-	    "CMS_JetEta0to3_2017"},
-	    JoinStr({ggH_STXS,qqH_STXS,{"ZT","WH_htt125","ZH_htt125","VVL","STL","ZL","TTL","VVT","STT"}}),
-	&cb,
-	0.707,
-	TheFile,CategoryArgs);            
-
-      AddShapesIfNotEmpty({"CMS_JetRelativeSample","CMS_JetEC2"},
-        JoinStr({ggH_STXS,qqH_STXS,{"ZT","WH_htt125","ZH_htt125","VVL","STL","ZL","TTL","VVT","STT"}}),
-        &cb,
-        0.707,
-        TheFile,CategoryArgs);
-
-      AddShapesIfNotEmpty({"CMS_JetRelativeSample_2017","CMS_JetEC2_2017"},
-        JoinStr({ggH_STXS,qqH_STXS,{"ZT","WH_htt125","ZH_htt125","VVL","STL","ZL","TTL","VVT","STT"}}),
-        &cb,
-        1.000,
-        TheFile,CategoryArgs);
-      */
 
       //JER      
       AddShapesIfNotEmpty({"CMS_JER_2017"},

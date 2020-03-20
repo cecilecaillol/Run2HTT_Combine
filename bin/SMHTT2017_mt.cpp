@@ -354,10 +354,16 @@ int main(int argc, char **argv)
 	    "CMS_m_FakeTau_eta0p8to1p2_2017","CMS_m_FakeTau_eta1p2to1p7_2017",
 	    "CMS_m_FakeTau_etagt1p7_2017","CMS_m_FakeTau_taupt30to40_2017",
 	    "CMS_m_FakeTau_taupt40to50_2017","CMS_m_FakeTau_tauptgt50_2017"},
-	{"ZL","TTL","VVL","STL"},
+	{"ZL"},
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
+
+      AddShapesIfNotEmpty({"CMS_etauFR_barrel_2017","CMS_etauFR_endcap_2017"},
+        {"STL","TTL","VVL"},
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
 
       // Prefiring
       AddShapesIfNotEmpty({"CMS_prefiring"},
@@ -839,6 +845,12 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etalt1p2_2017","shape",SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2017","shape",SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2017","shape",SystMap<>::init(0.500));
+
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2017","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2017","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2017","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2017","shape",SystMap<>::init(1.00));
     }
 
   //********************************************************************************************************************************                          

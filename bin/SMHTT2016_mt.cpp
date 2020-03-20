@@ -356,10 +356,16 @@ int main(int argc, char **argv)
 	    "CMS_m_FakeTau_eta0p8to1p2_2016","CMS_m_FakeTau_eta1p2to1p7_2016",
 	    "CMS_m_FakeTau_etagt1p7_2016","CMS_m_FakeTau_taupt30to40_2016",
 	    "CMS_m_FakeTau_taupt40to50_2016","CMS_m_FakeTau_tauptgt50_2016"},
-	{"ZL","TTL","VVL","STL"},
+	{"ZL"},
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
+      
+      AddShapesIfNotEmpty({"CMS_etauFR_barrel_2016","CMS_etauFR_endcap_2016"},
+        {"STL","TTL","VVL"},
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
 
       // Prefiring
       std::cout<<"Prefiring..."<<std::endl;
@@ -767,6 +773,12 @@ int main(int argc, char **argv)
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
+      
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2016","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
     }
   //**************************************
   //embedded uncertainties. 

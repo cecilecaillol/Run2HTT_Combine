@@ -346,14 +346,20 @@ int main(int argc, char **argv) {
 	  TriggerVector = JoinStr({ggH_STXS,qqH_STXS,{"VVT","STT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	}
 
-      AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2018","CMS_m_FakeTau_eta0p4to0p8_2018",
+	AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2018","CMS_m_FakeTau_eta0p4to0p8_2018",
 	    "CMS_m_FakeTau_eta0p8to1p2_2018","CMS_m_FakeTau_eta1p2to1p7_2018",
 	    "CMS_m_FakeTau_etagt1p7_2018","CMS_m_FakeTau_taupt30to40_2018",
 	    "CMS_m_FakeTau_taupt40to50_2018","CMS_m_FakeTau_tauptgt50_2018"},
-	{"ZL","TTL","VVL","STL"},
+	{"ZL"},
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
+
+	AddShapesIfNotEmpty({"CMS_etauFR_barrel_2018","CMS_etauFR_endcap_2018"},
+        {"STL","TTL","VVL"},
+        &cb,
+        1.00,
+        TheFile,CategoryArgs);
 
       // Tau ID eff in pt bins
       std::cout<<"Tau ID eff"<<std::endl;
@@ -815,6 +821,12 @@ int main(int argc, char **argv) {
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etalt1p2_2018","shape",SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2018","shape",SystMap<>::init(0.500));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2018","shape",SystMap<>::init(0.500));
+
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2018","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2018","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
 
     }
   //********************************************************************************************************************************                          

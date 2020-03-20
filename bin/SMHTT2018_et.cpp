@@ -338,13 +338,6 @@ int main(int argc, char **argv) {
                           TheFile,CategoryArgs);
 
       // e to tau energy fake scale            
-      /*
-	AddShapesIfNotEmpty({"CMS_scale_efaket_1prong_2018","CMS_scale_efaket_1prong1pizero_2018"},
-			  {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,CategoryArgs);
-      */
       if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
 	  std::cout<<"OLD STLYE ZLSHAPES. FIXME"<<std::endl;
@@ -384,6 +377,7 @@ int main(int argc, char **argv) {
         &cb,
         1.00,
         TheFile,CategoryArgs);
+
 
 	// Fake factors
       if(Input.OptionExists("-c"))
@@ -656,15 +650,6 @@ int main(int argc, char **argv) {
 			      TheFile,
 			      {"et_boosted2","et_vbflow","et_vbfhigh"});
 	}
-      /*
-      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2018","CMS_htt_boson_scale_met_0jet_2018",
-	    "CMS_htt_boson_reso_met_1jet_2018","CMS_htt_boson_scale_met_1jet_2018",
-	    "CMS_htt_boson_reso_met_2jet_2018","CMS_htt_boson_scale_met_2jet_2018"},
-	JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL"}}),
-	&cb,
-	1.00,
-	TheFile,CategoryArgs);
-      */
 
       //ZPT Reweighting Shapes:      
       AddShapesIfNotEmpty({"CMS_htt_dyShape"},
