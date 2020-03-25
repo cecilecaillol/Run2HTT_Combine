@@ -724,6 +724,12 @@ int main(int argc, char **argv)
   //*********************************************************
   if(not Input.OptionExists("-e"))
     {
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2016","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
+
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_2018","lnN",SystMap<>::init(1.010));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_embedded_2018","lnN",SystMap<>::init(1.01732));

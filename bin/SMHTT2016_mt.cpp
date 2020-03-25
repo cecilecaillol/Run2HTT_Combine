@@ -773,12 +773,7 @@ int main(int argc, char **argv)
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
-      
-      //Tracking Uncertainty
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2016","shape",SystMap<>::init(1.00));
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2016","shape",SystMap<>::init(1.00));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
+            
     }
   //**************************************
   //embedded uncertainties. 
@@ -788,6 +783,12 @@ int main(int argc, char **argv)
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_2018","lnN",SystMap<>::init(1.010));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_embedded_2018","lnN",SystMap<>::init(1.01732));
+
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2016","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2016","shape",SystMap<>::init(1.00));
 
       //Tau ID eff
       //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_2016", "lnN", SystMap<>::init(1.020));

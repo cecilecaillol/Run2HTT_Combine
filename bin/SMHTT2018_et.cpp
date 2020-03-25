@@ -319,6 +319,12 @@ int main(int argc, char **argv) {
   //**************************************************
   if(not Input.OptionExists("-s"))
     {
+      //Tracking Uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2018","shape",SystMap<>::init(1.00));
+      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_2018","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
+
       //uses custom defined utility function that only adds the shape if at least one shape inside is not empty.
       
       // Tau ID eff in pt bins
