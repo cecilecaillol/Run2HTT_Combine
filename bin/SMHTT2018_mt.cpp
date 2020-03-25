@@ -355,7 +355,7 @@ int main(int argc, char **argv) {
 	1.00,
 	TheFile,CategoryArgs);
 
-	AddShapesIfNotEmpty({"CMS_etauFR_barrel_2018","CMS_etauFR_endcap_2018"},
+	AddShapesIfNotEmpty({"CMS_etauFR_vloose_barrel_2018","CMS_etauFR_vloose_endcap_2018"},
         {"STL","TTL","VVL"},
         &cb,
         1.00,
