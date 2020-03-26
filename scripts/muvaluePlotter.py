@@ -21,9 +21,9 @@ def add_lumi(year):
     elif year=="2017":
        lumi.AddText("2017, 41.5 fb^{-1} (13 TeV)")
     elif year=="2018":
-       lumi.AddText("2018, 59.5 fb^{-1} (13 TeV)")
+       lumi.AddText("2018, 59.7 fb^{-1} (13 TeV)")
     elif year=="all":
-       lumi.AddText("139.9 fb^{-1} (13 TeV)")
+       lumi.AddText("137.1 fb^{-1} (13 TeV)")
     return lumi
 
 def add_channel(channel):
@@ -164,7 +164,7 @@ def is_included(mycat,type, upUncertainty,downUncertainty):
                                     or translate_categ(mycat)=="qqH-2j/mJJ>700"
                                     or translate_categ(mycat)=="qqH-2j/mJJ>350/pT>200"):
         included=1                
-    if type=="stage1-select" and (upUncertainty < 3.0 and downUncertainty < 3.0) and (not (translate_categ(mycat)=="WH" 
+    if type=="stage1-select" and (abs(upUncertainty) < 3.0 and abs(downUncertainty) < 3.0) and (not (translate_categ(mycat)=="WH" 
                                                                                            or translate_categ(mycat)=="ZH" 
                                                                                            or translate_categ(mycat)=="qqH" 
                                                                                            or translate_categ(mycat)=="ggH")):
@@ -189,6 +189,9 @@ f = open(args.input, "r")
 
 nlines=0
 
+maxUp = 0.0
+minDown = 0.0
+
 k=0
 for x in f:
   if ":" in x:
@@ -199,6 +202,10 @@ for x in f:
     else:
         up= round(float(x.split("+")[1][:5]),2)
         down=round(float(x.split("-")[1].split("/")[0]),2)
+    if up > maxUp:
+        maxUp = up
+    if down > minDown:
+        minDown 
     mycat=""
     if k>0:
        mycat=x.split("r_")[1].split(" ")[0]
@@ -207,11 +214,14 @@ for x in f:
        nlines=nlines+1
     k=k+1
 
+#figure out how big our axes should be
+bounds = max(abs(maxUp),abs(minDown))
+
 print nlines
 
 f.seek(0)
 
-axis = ROOT.TH2F('axis', '', 1, -10, 10, 10, 0.01, nlines)
+axis = ROOT.TH2F('axis', '', 1, -1*bounds, bounds, 10, 0.01, nlines)
 axis.GetXaxis().SetTitle("#mu")
 axis.GetYaxis().SetLabelSize(0)
 axis.GetYaxis().SetTickLength(0)
@@ -237,7 +247,7 @@ for x in f:
     mean=round(1.0, 2)
     if "N/A" in x:
         up=24.0
-        down=-26.0
+        down=26.0
     else:
         up= round(float(x.split("+")[1][:5]),2)
         down=round(float(x.split("-")[1].split("/")[0]),2)
@@ -255,9 +265,11 @@ for x in f:
     elif ii==0:
       combineMu= mean; lowBnad=down; highBand=up;
 
-    myresult=str(mean)+" -"+str(down)+"/+"+str(up)
+    myresult=str(mean)+" -"+str(down)+"/+"+str(up)    
 
     print mycat2,is_included(mycat2,args.type,up,down)
+    print("Down: "+str(down))
+    print("Up: "+str(up))
     if is_included(mycat2,args.type,up,down):
 
       if args.type=="stage0":

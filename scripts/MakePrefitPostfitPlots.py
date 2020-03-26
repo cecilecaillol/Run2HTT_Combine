@@ -17,13 +17,13 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
         raise RuntimeError("Couldn't find the output directory. Check the tag to make sure you have the right one.")
     os.chdir(theDirectory)
     
-    fileName = "fitDiagnostics"+tag+"_Inclusive.root"
+    fileName = "fitDiagnostics"+args.tag+"_Inclusive.root"
     if not os.path.exists(fileName):
         raise RuntimeError("Coudn't find the output file. Are you sure you have the right directory and ran the option to store plots?")
 
     #let's go find the final card
-    finalCardName = 'FinalCard_'+tag+'.root'
-    finalTextCardName = 'FinalCard_'+tag+'.txt'
+    finalCardName = 'FinalCard_'+args.tag+'.root'
+    finalTextCardName = 'FinalCard_'+args.tag+'.txt'
     if not os.path.exists(finalCardName) or not os.path.exists(finalTextCardName):
         raise RuntimeError("Failed to find the one of the original workspace cards (root/txt). Are you sure the fit all the way through?")
 

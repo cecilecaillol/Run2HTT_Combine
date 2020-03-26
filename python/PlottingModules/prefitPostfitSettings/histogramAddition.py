@@ -46,6 +46,7 @@ def PerformAllAdditions(collection):
                 for dictType in collection['tt']['2018'][category][prefitOrPostfit]:
                     collection['tt']['2018-folded'][category][prefitOrPostfit][dictType] = CreateRefoldedHistograms(collection['tt']['2018'][category][prefitOrPostfit][dictType])
 
+    """
     try:
         collection['et']['2017-folded']= {}
     except KeyError:
@@ -68,6 +69,7 @@ def PerformAllAdditions(collection):
                 collection['et']['2018-folded'][category][prefitOrPostfit]= {}
                 for dictType in collection['et']['2018'][category][prefitOrPostfit]:
                     collection['et']['2018-folded'][category][prefitOrPostfit][dictType] = CreateRefoldedHistograms(collection['et']['2018'][category][prefitOrPostfit][dictType])
+    """
 
     #we'll also need a full run 2 dictionary. Let's make that.
     for channel in collection:

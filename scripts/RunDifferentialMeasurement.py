@@ -18,6 +18,7 @@ parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Spe
 parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create data cards for",required=True)
 parser.add_argument('--MeasurementType',nargs = '?', choices=['mjj','pth','njets'],help="Specify the kind of differential measurement to make",required=True)
 parser.add_argument('--DecorrelateForMe',help="Run the decorrelator as part of the overall run.",action="store_true")
+parser.add_argument('--MakePlots',help="run a special fit dedicated to extracting relevant",action="store_true")
 
 args = parser.parse_args()
 
@@ -163,6 +164,17 @@ for parameter in parametersToMeasure:
     logging.info("Measurement Command:")
     logging.info("\n\n"+MeasurementCommand+"\n")
     os.system(MeasurementCommand+" | tee -a "+outputLoggingFile)
+    os.system(" mv *"+DateTag+"* "+OutputDir)
+
+if args.MakePlots:
+    plotMakingCommand = "combineTool.py -M FitDiagnostics "+WorkspaceName+" -t -1 --robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -n "+DateTag+"_Plots --setParameters "
+    
+    for parameterName in parametersToMeasure:
+        plotMakingCommand+=parameterName+"=1,"
+    logging.info("General plot making command:")
+    logging.info('\n\n'+plotMakingCommand+'\n')
+    os.system(plotMakingCommand+" | tee -a "+outputLoggingFile)
+    os.system(" mv *"+DateTag+"* "+OutputDir)
 
 outputArea.PrintSessionInfo(DateTag)
 

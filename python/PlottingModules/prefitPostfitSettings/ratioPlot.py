@@ -11,7 +11,7 @@ ratioYAxisTitleOffset = 0.62
 ratioYAxisLabelSize = 0.1
 ratioYAxisNDivisions = (6,0,0)
 
-errorFillStyle = 3001
+errorFillStyle = 3444
 errorFillColor = 15
 
 def poisson_errors(N,coverage=0.6827):

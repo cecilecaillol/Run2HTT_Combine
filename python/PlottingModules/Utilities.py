@@ -29,7 +29,8 @@ def MakeStackErrors(TheStack):
     TheErrorHisto.SetLineColor(0)
     TheErrorHisto.SetLineWidth(0)
     TheErrorHisto.SetMarkerSize(0)
-    TheErrorHisto.SetFillStyle(3001)
+    #TheErrorHisto.SetFillStyle(3001)
+    TheErrorHisto.SetFillStyle(3444)
     TheErrorHisto.SetFillColor(15)
     return TheErrorHisto
 

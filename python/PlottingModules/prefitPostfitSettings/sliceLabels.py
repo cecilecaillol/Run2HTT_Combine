@@ -56,10 +56,10 @@ def CreateSliceText(category,year):
         labels = semileptonic_vbf_high_latex
 
     elif (category == catConfig.et_vbf_low_category):
-        if year == "2016" or year == "Run2":
-            labels = et_vbf_low_latex
-        else:
-            labels = vbf_low_latex
+        #if year == "2016" or year == "Run2":
+        #    labels = et_vbf_low_latex
+        #else:
+        labels = vbf_low_latex
 
     elif (category == catConfig.mt_vbf_low_category or 
           category == catConfig.em_vbf_low_category):        

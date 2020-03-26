@@ -166,7 +166,8 @@ def DrawControls(tag,year,channel,DontPerformCalculation=False):
         Other.SetFillColor(ROOT.TColor.GetColor("#12cadd"))
 
         AllHiggs.SetLineColor(ROOT.kRed)
-        AllHiggs.Scale(30)
+        AllHiggs.SetLineWidth(3)
+        AllHiggs.Scale(50)
 
         backgroundStack = ROOT.THStack("backgroundStack","backgroundStack")
 
@@ -248,6 +249,7 @@ def DrawControls(tag,year,channel,DontPerformCalculation=False):
         legend.AddEntry(TT,"t#bar{t} + Jets","f")
         legend.AddEntry(jetFakes,"Jet mis-ID",'f')
         legend.AddEntry(ratioErrors,"Bkg. uncertainty","f")
+        legend.AddEntry(AllHiggs,"Standard Model Higgs (#times 50)","l")
 
         legend.SetBorderSize(0)
         
