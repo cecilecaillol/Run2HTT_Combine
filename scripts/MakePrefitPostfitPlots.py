@@ -49,12 +49,17 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
         for year in years:
             dataCard = ROOT.TFile.Open(prefitPostfitSettings.RetrievePlots.RetrieveOriginalDatacardPath(channel,year))
             dataCards.append(dataCard)
-            for category in histograms[channel][year]:
-                dataHistogram = dataCard.Get(category).Get("data_obs")
-                for prefitOrPostfit in ['prefit','postfit']:
-                    #retrieve original data                    
-                    #print(dataHistogram)
-                    histograms[channel][year][category][prefitOrPostfit]['Data']={'data_obs':dataHistogram}                    
+            for category in histograms[channel][year]:                
+                for prefitOrPostfit in ['prefit','postfit']:                        
+                    if not Unblind:
+                        dataHistogram = dataCard.Get(category).Get("data_obs")                    
+                    else:
+                        dataDirectory = plotFile.Get(category+'_'+year+'_'+prefitOrPostfit)
+                        dataHistogram = dataDirectory.Get("data_obs")
+                        #retrieve original data                    
+                        #print(dataHistogram)
+                    histograms[channel][year][category][prefitOrPostfit]['Data']={'data_obs':dataHistogram}                                            
+                        
     outputRootFile.cd()                                        
     #let's do the rebinning
     prefitPostfitSettings.rebinning.RebinCollection(histograms)    

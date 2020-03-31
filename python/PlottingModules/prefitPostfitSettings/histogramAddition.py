@@ -9,8 +9,7 @@ def AddYearsTogether(collection,channel,category,prefitOrPostfit):
         for histogram in collection[channel]['2016'][category][prefitOrPostfit][dictType]:            
             #try:
             Run2Histo = collection[channel]['2016'][category][prefitOrPostfit][dictType][histogram].Clone()            
-            if ((channel == 'tt' and (category == 'tt_vbf_highHpT' or category == 'tt_vbf_lowHpT')) 
-                or (channel == 'et' and category == "et_vbflow" )):
+            if ((channel == 'tt' and (category == 'tt_vbf_highHpT' or category == 'tt_vbf_lowHpT'))):
                 Run2Histo.Add(collection[channel]['2017-folded'][category][prefitOrPostfit][dictType][histogram])
                 Run2Histo.Add(collection[channel]['2018-folded'][category][prefitOrPostfit][dictType][histogram])
             else:

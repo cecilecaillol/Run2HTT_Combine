@@ -11,7 +11,8 @@ def RetrievePlotsFromDirectory(channel, directory):
         W = directory.Get("W")
         QCD = directory.Get("QCD")
     ZT = directory.Get("embedded")    
-    ZL = directory.Get("ZL")    
+    if channel != 'em':
+        ZL = directory.Get("ZL")    
     TTL = directory.Get("TTL")
     VVL = directory.Get("VVL")
     STL = directory.Get("STL")
@@ -23,14 +24,17 @@ def RetrievePlotsFromDirectory(channel, directory):
     qqH = directory.Get("qqH_htt125")
     WH = directory.Get("WH_htt125")
     ZH = directory.Get("ZH_htt125")
-    if not ZL:
-        ZL = ZT.Clone()        
-        ZL.Reset()
-        ZL.SetNameTitle("ZL","ZL")
+    if channel != 'em':
+        if not ZL:
+            ZL = ZT.Clone()        
+            ZL.Reset()
+            ZL.SetNameTitle("ZL","ZL")
     if not STL:
         STL = ZT.Clone()
         STL.Reset()
-
+    if not TTL:
+        TTL = ZT.Clone()
+        TTL.Reset()    
     TT = TTL.Clone()
     TT.SetNameTitle("TT","TT")
     if channel != 'tt' and channel != 'em':
@@ -65,8 +69,6 @@ def RetrievePlotsFromDirectory(channel, directory):
     #create the Full histogram list
     fullDictionary = {        
         'ZT':ZT,
-        'ZL':ZL,
-        'TTL':TTL,        
         'VVL':VVL,        
         'STL':STL,        
         'ggH':ggH,
@@ -74,17 +76,25 @@ def RetrievePlotsFromDirectory(channel, directory):
         'WH':WH,
         'ZH':ZH,
         }
+    if not TTL == None:
+        fullDictionary['TTL'] = TTL
+    if channel != 'em':
+        fullDictionary['ZL'] = ZL
     slimmedDictionary = {        
         'ZT':ZT,
-        'ZL':ZL,
-        'Top':Top,        
         'Other':Other
         }
+    if not Top == None:
+        slimmedDictionary['Top'] = Top
+    if channel != 'em':
+        slimmedDictionary['ZL'] = ZL
     if channel == 'em':
         fullDictionary['W'] = W
-        fullDictionary['QCD'] = QCD
+        if not QCD == None: #this is no longer included in some em categories
+            fullDictionary['QCD'] = QCD
         slimmedDictionary['W'] = W
-        slimmedDictionary['QCD'] = QCD
+        if not QCD == None:
+            slimmedDictionary['QCD'] = QCD
     else:
         fullDictionary['jetFakes'] = jetFakes
         slimmedDictionary['jetFakes'] = jetFakes
