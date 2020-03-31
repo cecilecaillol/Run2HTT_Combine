@@ -59,7 +59,7 @@ int main(int argc, char **argv)
   //! [part3]
   cb.AddObservations({"*"}, {"smh2017"}, {"13TeV"}, {"em"}, cats);
 
-  vector<string> bkg_procs = {"W","QCD","ZL","VVL","STL","TTL"};
+  vector<string> bkg_procs = {"W","QCD",/*"ZL",*/"VVL","STL","TTL"};
   if(Input.OptionExists("-e")) 
     {
       bkg_procs.push_back("ZT");      
