@@ -136,7 +136,7 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
                     plotModules.CMStext.DrawCMSText()
                     #Titles                    
                     prefitPostfitSettings.title.CreateTitle(year,channel,category,backgroundStack)
-                    plotModules.prefitText.CreatePrefitText()
+                    plotModules.prefitText.CreatePrefitPostfitText(prefitOrPostfit)
                     prefitPostfitSettings.channelText.DrawCategoryName(category)
                     prefitPostfitSettings.channelText.DrawChannelName(channel)
 
