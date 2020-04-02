@@ -43,6 +43,9 @@ parser.add_argument('--ExperimentalSpeedup',help="Run experimental acceleration 
 parser.add_argument('--CorrelationMatrix',help="Generate correlation matrices for the STXS fits",action="store_true")
 parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. BE SURE ABOUT THIS.",action="store_true")
 parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
+parser.add_argument('--UseGrid',help='Sweep grid points to generate results, instead of using the approximate singles algorithm',action='store_true')
+parser.add_argument('--nGridPoints',help='Number of grid points to use when using grid algorithms.',type=int,default=100)
+
 print("Parsing command line arguments.")
 args = parser.parse_args() 
 
@@ -289,13 +292,16 @@ logging.info('\n\n'+TextWorkspaceCommand+'\n')
 os.system(TextWorkspaceCommand+" | tee -a "+outputLoggingFile)
 
 PhysModel = 'MultiDimFit'
-ExtraCombineOptions = '--robustFit=1 --preFitValue=1. --X-rtd MINIMIZER_analytic --algo=singles --cl=0.68 '
+if args.UseGrid:
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --algo=grid --points='+str(args.nGridPoints)
+else:
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --algo=singles '
 if args.ComputeSignificance:
     PhysModel = 'Significance'
     ExtraCombineOptions = '--X-rtd MINIMIZER_analytic --cl=0.68 '
 if args.StoreShapes:
     PhysModel = 'FitDiagnostics'
-    ExtraCombineOptions = '--robustFit=1 --preFitValue=1. --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes '
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --justFit '
 if args.ExperimentalSpeedup:
     ExtraCombineOptions += ' --X-rtd FAST_VERTICAL_MORPH --cminDefaultMinimizerStrategy 0 '
 if args.ControlMode:
@@ -303,9 +309,9 @@ if args.ControlMode:
     
 #run the inclusive
 CombinedWorkspaceName = CombinedCardName[:len(CombinedCardName)-3]+"root"
-InclusiveCommand="combineTool.py -M "+PhysModel+" "+CombinedWorkspaceName+" "+ExtraCombineOptions+" --expectSignal=1 " 
+InclusiveCommand="combineTool.py -M "+PhysModel+" "+CombinedWorkspaceName+" "+ExtraCombineOptions+" " 
 if not args.Unblind:
-    InclusiveCommand+="-t -1 "
+    InclusiveCommand+="--preFitValue=1. --expectSignal=1 -t -1 "
 InclusiveCommand+="-n "+DateTag+"_Inclusive"
     
 if args.Timeout is True:
@@ -318,6 +324,20 @@ elif args.DontPrintResults:
     os.system(InclusiveCommand+" > /dev/null")
 else:
     os.system(InclusiveCommand+" | tee -a "+outputLoggingFile)
+if args.UseGrid:
+    outputScanName = "scan_Inclusive_"+DateTag
+    outputScanFileName = outputScanName+".root"
+    os.system("plot1DScan.py higgsCombine"+DateTag+"_Inclusive.MultiDimFit.mH120.root --output "+outputScanName)#let's draw the scans for the thing we just made
+
+    theScanFile = ROOT.TFile(outputScanFileName)
+    theResult = theScanFile.Get(outputScanName).GetXaxis().GetTitle()
+    theResult = theResult.replace(" =",":")
+    print(theResult)
+    appendFile = open(outputLoggingFile,'a')
+    appendFile.write(theResult+'\n')
+    appendFile.close()
+    theScanFile.Close()
+
 if args.SplitInclusive:
     Splitter.SplitMeasurement(InclusiveCommand,OutputDir)
 
@@ -328,7 +348,7 @@ if not args.ComputeSignificance:
     for SignalName in ["r_ggH","r_qqH","r_WH","r_ZH"]:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
         if not args.Unblind:
-            CombineCommand+=" -t -1"
+            CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
         CombineCommand+=" --setParameters r_ggH=1,r_qqH=1,r_WH=1,r_ZH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
         if args.Timeout is True:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
@@ -341,6 +361,20 @@ if not args.ComputeSignificance:
             os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        if args.UseGrid:
+            outputScanName = "scan_"+SignalName+"_"+DateTag
+            outputScanFileName = outputScanName+".root"
+            os.system("plot1DScan.py higgsCombine"+DateTag+"_"+SignalName+".MultiDimFit.mH120.root --output "+outputScanName+" --POI "+SignalName)#let's draw the scans for the thing we just made
+            
+            theScanFile = ROOT.TFile(outputScanFileName)
+            theResult = theScanFile.Get(outputScanName).GetXaxis().GetTitle()
+            theResult = theResult.replace(" =",":")
+            print(theResult)
+            appendFile = open(outputLoggingFile,'a')
+            appendFile.write(theResult+'\n')
+            appendFile.close()
+            theScanFile.Close()
+            
         os.system("mv *"+DateTag+"*.root "+OutputDir)
 
         if args.SplitSignals:
@@ -354,7 +388,7 @@ if args.RunSTXS:
     for STXSBin in STXSBins:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSTXSName+" "+ExtraCombineOptions
         if not args.Unblind:
-            CombineCommand+=" -t -1"
+            CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
         CombineCommand+=" -n "+DateTag+"_"+STXSBin+"_STXS --saveFitResult --setParameters "
 
         for BinName in STXSBins:
@@ -370,6 +404,20 @@ if args.RunSTXS:
             os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        if args.UseGrid:
+            outputScanName = "scan_"+BinName+"_"+DateTag
+            outputScanFileName = outputScanName+".root"
+            os.system("plot1DScan.py higgsCombine"+DateTag+"_"+STXSBin+".MultiDimFit.mH120.root --output "+outputScanName+' --POI r_'+BinName)#let's draw the scans for the thing we just made
+            
+            theScanFile = ROOT.TFile(outputScanFileName)
+            theResult = theScanFile.Get(outputScanName).GetXaxis().GetTitle()
+            theResult = theResult.replace(" =",":")
+            print(theResult)
+            appendFile = open(outputLoggingFile,'a')
+            appendFile.write(theResult+'\n')
+            appendFile.close()
+            theScanFile.Close()
+            
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
         if args.SplitSTXS:
             Splitter.SplitMeasurement(CombineCommand,OutputDir)            
@@ -391,7 +439,7 @@ if args.RunSTXS:
     for MergedBin in MergedSignalNames:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerMergedBinName+" "+ExtraCombineOptions
         if not args.Unblind:
-            CombineCommand+=" -t -1"
+            CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
         CombineCommand+=" -n "+DateTag+"_"+MergedBin+"_Merged --setParameters "
         
         for BinName in MergedSignalNames:
@@ -407,6 +455,19 @@ if args.RunSTXS:
             os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+        if args.UseGrid:
+            outputScanName = "scan_"+BinName+"_"+DateTag
+            outputScanFileName = outputScanName+".root"
+            os.system("plot1DScan.py higgsCombine"+DateTag+"_"+STXSBin+".MultiDimFit.mH120.root --output "+outputScanName+' --POI r_'+BinName)#let's draw the scans for the thing we just made
+            
+            theScanFile = ROOT.TFile(outputScanFileName)
+            theResult = theScanFile.Get(outputScanName).GetXaxis().GetTitle()
+            theResult = theResult.replace(" =",":")
+            print(theResult)
+            appendFile = open(outputLoggingFile,'a')
+            appendFile.write(theResult+'\n')
+            appendFile.close()
+            theScanFile.Close()
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
 
     if args.CorrelationMatrix:
