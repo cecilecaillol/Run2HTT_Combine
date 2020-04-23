@@ -121,7 +121,6 @@ int main(int argc, char **argv)
 		   "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",		   
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",		   
-		   "ggH_FWDH_htt125",
 		   "ggH_PTH_200_300_htt125",
 		   "ggH_PTH_300_450_htt125",
 		   "ggH_PTH_450_650_htt125",
@@ -166,8 +165,7 @@ int main(int argc, char **argv)
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-		   "qqH_FWDH_htt125"};
+		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"};
 
   vector<string> WH_STXS = {"WH_htt125"};
   if (Input.OptionExists("-dp")) WH_STXS = {
@@ -388,7 +386,7 @@ int main(int argc, char **argv)
 			  {"ZL"},
 			  &cb,
 			  1.00,
-			  TheFile,CategoryArgs);
+			  TheFile,{"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10","mt_boosted_1J","mt_boosted_GE2J"});
 
       // Trg eff. It is a shape because the 2 triggers affect the mu pT spectrum differently
       std::cout<<"Trigger eff"<<std::endl;
@@ -787,7 +785,7 @@ int main(int argc, char **argv)
 
       //Muon Energy scale uncertainties
       std::cout<<"Muon Energy Scale"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_scale_m_etalt1p2","CMS_scale_m_eta1p2to2p1","CMS_scale_m_eta2p1to2p4"},
+      AddShapesIfNotEmpty({"CMS_scale_m_etalt1p2","CMS_scale_m_eta1p2to2p1"},
 	MuESVector,
 	&cb,
 	1.00,
@@ -838,13 +836,10 @@ int main(int argc, char **argv)
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mutautrg_2017","shape",SystMap<>::init(0.500));
 
       //MuonES uncertaity
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etalt1p2_2017","shape",SystMap<>::init(0.866));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1_2017","shape",SystMap<>::init(0.866));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta2p1to2p4_2017","shape",SystMap<>::init(0.866));
-      
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etalt1p2_2017","shape",SystMap<>::init(0.500));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2017","shape",SystMap<>::init(0.500));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta2p1to2p4_2017","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_etalt1p2","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_emb_m_eta1p2to2p1","shape",SystMap<>::init(0.866));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_etalt1p2","shape",SystMap<>::init(0.500));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1","shape",SystMap<>::init(0.500));
       
       //Tracking Uncertainty
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2017","shape",SystMap<>::init(1.00));

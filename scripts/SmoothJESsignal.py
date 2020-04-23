@@ -50,13 +50,19 @@ if args.channel == "em":
   categories=catConfig.Categories['em']
   ncategories = len(categories)
   bins_mtt=[50,70,90,110,130,150,170,210,250,290]
-  bins_0jetlow=[30,40,50,9000]
-  bins_0jethigh=[30,40,50,9000]
-  bins_boosted1=[0,60,120,200,250,9000]
-  bins_boosted2=[0,60,120,200,250,9000]
-  bins_vbflow=[350,700,1000,1500,1800,9000]
-  bins_vbfhigh=[350,700,1200,9000]
-  slices=[(len(bins_0jetlow)-1),(len(bins_0jethigh)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
+  #bins_0jetlow=[30,40,50,9000]
+  #bins_0jethigh=[30,40,50,9000]
+  #bins_boosted1=[0,60,120,200,250,9000]
+  #bins_boosted2=[0,60,120,200,250,9000]
+  #bins_vbflow=[350,700,1000,1500,1800,9000]
+  #bins_vbfhigh=[350,700,1200,9000]
+  #slices=[(len(bins_0jetlow)-1),(len(bins_0jethigh)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
+  bins_0jet=[0,9000]
+  bins_boosted1=[0,60,120,200,9000]
+  bins_boosted2=[0,60,120,200,9000]
+  bins_vbflow=[350,700,1000,1500,9000]
+  bins_vbfhigh=[350,700,1000,9000]
+  slices=[(len(bins_0jet)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
   
 if args.channel == "tt":
   categories=catConfig.Categories['tt']
@@ -91,7 +97,7 @@ for k1 in dirList:
          for k2 in dirList2:
 	    h2 = k2.ReadObj()
 	    h_shape=h2.Clone()
-	    if (("CMS_Jet" in k2.GetName() or "JER" in k2.GetName()) and ("ggH" in k2.GetName() or "qqH" in k2.GetName())):
+	    if (("CMS_Jet" in k2.GetName() or "JER" in k2.GetName()) and ("ggH" in k2.GetName() or "qqH" in k2.GetName() or "TTT" in k2.GetName() or "TTL" in k2.GetName() or "VVL" in k2.GetName() or "VVT" in k2.GetName() or "STL" in k2.GetName() or "STT" in k2.GetName() or "ZL" in k2.GetName())) or (("boson_reso" in k2.GetName() or "boson_scale" in k2.GetName()) and ("ZL" in k2.GetName() or "hww" in k2.GetName())):
 	      shortname=k2.GetName().split("_")[0]
 	      if shortname=="ggH" or shortname=="qqH" or shortname=="WH" or shortname=="ZH":
 		shortname=k2.GetName().split("_")[0]+"_"+k2.GetName().split("_")[1]
