@@ -183,8 +183,6 @@ PerSignalName = OutputDir+"Workspace_per_signal_breakdown_cmb_"+DateTag+".root"
 PerSignalWorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
 PerSignalWorkspaceCommand+= "--PO 'map=.*/ggH.*htt125.*:r_ggH[1,-25,25]' "
 PerSignalWorkspaceCommand+= "--PO 'map=.*/qqH.*htt125.*:r_qqH[1,-25,25]' "
-PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_htt125.*:r_WH[1,-25,25]' "
-PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_htt125.*:r_ZH[1,-25,25]' "
 PerSignalWorkspaceCommand+= CombinedCardName +" -o "+PerSignalName+" -m 125"
 
 logging.info("Per Signal Workspace Command:")
@@ -197,20 +195,18 @@ if args.RunSTXS:
     print("Setting up STXS commands")
     
     unMergedSTXSBins = [
+    ]
+    mergedSTXSBins = [
         "ggH_PTH_0_200_0J_PTH_10_200_htt125",
         "ggH_PTH_0_200_0J_PTH_0_10_htt125",
         "ggH_PTH_0_200_1J_PTH_0_60_htt125",
         "ggH_PTH_0_200_1J_PTH_60_120_htt125",
         "ggH_PTH_0_200_1J_PTH_120_200_htt125",
-        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
-        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
-        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125",		   
+        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",
+        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",
+        "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125",
         "ggH_PTH_200_300_htt125",
         "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-        #"ggH_FWDH_htt125", #buggy?
-        #"qqH_FWDH_htt125", #buggy?
-    ]
-    mergedSTXSBins = [
         "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",		   
         "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
         "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",		   
@@ -230,31 +226,29 @@ if args.RunSTXS:
     ]
 
     STXSBins = unMergedSTXSBins + mergedSTXSBins
-    PerSTXSName = OutputDir+"workspace_per_STXS_breakdown_cmb_"+DateTag+".root"
-    PerSTXSBinsWorkSpaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
-    STXSSignalNames=[]
-    for Bin in STXSBins:
-        STXSSignalNames.append("r_"+Bin)
-        PerSTXSBinsWorkSpaceCommand += "--PO 'map=.*/"+Bin+":"+"r_"+Bin+"[1,-25,25]' "
-    PerSTXSBinsWorkSpaceCommand += CombinedCardName+" -o "+PerSTXSName+" -m 125"
+    #PerSTXSName = OutputDir+"workspace_per_STXS_breakdown_cmb_"+DateTag+".root"
+    #PerSTXSBinsWorkSpaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
+    #STXSSignalNames=[]
+    #for Bin in STXSBins:
+    #    STXSSignalNames.append("r_"+Bin)
+    #    PerSTXSBinsWorkSpaceCommand += "--PO 'map=.*/"+Bin+":"+"r_"+Bin+"[1,-25,25]' "
+    #PerSTXSBinsWorkSpaceCommand += CombinedCardName+" -o "+PerSTXSName+" -m 125"
 
-    logging.info("Per STXS Bins Work Space Command")
-    logging.info('\n\n'+PerSTXSBinsWorkSpaceCommand+'\n')
-    os.system(PerSTXSBinsWorkSpaceCommand+" | tee -a "+outputLoggingFile)
+    #logging.info("Per STXS Bins Work Space Command")
+    #logging.info('\n\n'+PerSTXSBinsWorkSpaceCommand+'\n')
+    #os.system(PerSTXSBinsWorkSpaceCommand+" | tee -a "+outputLoggingFile)
 
     #add in the merged ones
     PerMergedBinName = OutputDir+"workspace_per_Merged_breakdown_cmb_"+DateTag+".root"
     PerMergedBinWorkSpaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
     MergedSignalNames=[]
-    #qqH, less than 2 Jets
-    MergedSignalNames.append("qqH_LT2J")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_0J_htt125:r_qqH_LT2J[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_1J_htt125:r_qqH_LT2J[1,-25,25]' "
-    #qqH mjj 0-350
-    MergedSignalNames.append("qqH_GE2J_MJJ_0_350")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_0_60_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_60_120_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_120_350_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
+    ##qqH, non-VBF-topology
+    MergedSignalNames.append("qqH_NONVBFTOPO")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_0J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_1J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_0_60_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_60_120_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_120_350_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
     #qqH mjj 350-700, all PtH
     MergedSignalNames.append("qqH_GE2J_MJJ_350_700_PTH_0_200")
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
@@ -263,22 +257,77 @@ if args.RunSTXS:
     MergedSignalNames.append("qqH_GE2J_MJJ_GE700_PTH_0_200")
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
-    #ggH 2Jets, mjj 350+
-    MergedSignalNames.append("ggH_PTH_0_200_GE2J_MJJ_GE350")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' " 
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "     
-    ##ggH, PTH 300+
-    MergedSignalNames.append("ggH_PTH_GE300")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_300_450_htt125:r_ggH_PTH_GE300[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_450_600_htt125:r_ggH_PTH_GE300[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_GE650_htt125:r_ggH_PTH_GE300[1,-25,25]' "
+    #qqH ptH>200, BSM topo
+    MergedSignalNames.append("qqH_BSM")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_GE200_htt125:r_qqH_BSM[1,-25,25]' "
+    #ggH 2jets
+    MergedSignalNames.append("ggH_PTH_0_200_GE2J")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' " 
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "     
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
+    #ggH, PTH 200+
+    MergedSignalNames.append("ggH_PTH_GE200")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_200_300_htt125:r_ggH_PTH_GE200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_300_450_htt125:r_ggH_PTH_GE200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_450_650_htt125:r_ggH_PTH_GE200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_GE650_htt125:r_ggH_PTH_GE200[1,-25,25]' "
+    #ggH, 0j low
+    MergedSignalNames.append("ggH_0J_PTH_0_10")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_0J_PTH_0_10_htt125:r_ggH_0J_PTH_0_10[1,-25,25]' "
+    #ggH, 0j high
+    MergedSignalNames.append("ggH_0J_PTH_10_200")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_0J_PTH_10_200_htt125:r_ggH_0J_PTH_10_200[1,-25,25]' "
+    #ggH, 1j low
+    MergedSignalNames.append("ggH_1J_PTH_0_60")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_1J_PTH_0_60_htt125:r_ggH_1J_PTH_0_60[1,-25,25]' "
+    #ggH, 1j med
+    MergedSignalNames.append("ggH_1J_PTH_60_120")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_1J_PTH_60_120_htt125:r_ggH_1J_PTH_60_120[1,-25,25]' "
+    #ggH, 1j high
+    MergedSignalNames.append("ggH_1J_PTH_120_200")
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_1J_PTH_120_200_htt125:r_ggH_1J_PTH_120_200[1,-25,25]' "
 
-    #we also need to add in the unmerged STXS bins so we perform a fit across all parameters
-    for Bin in unMergedSTXSBins:
-        MergedSignalNames.append(Bin)
-        PerMergedBinWorkSpaceCommand += "--PO 'map=.*/"+Bin+":r_"+Bin+"[1,-25,25]' "
+    ##add in the merged ones
+    #PerMergedBinName = OutputDir+"workspace_per_Merged_breakdown_cmb_"+DateTag+".root"
+    #PerMergedBinWorkSpaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
+    #MergedSignalNames=[]
+    ##qqH, less than 2 Jets
+    #MergedSignalNames.append("qqH_LT2J")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_0J_htt125:r_qqH_LT2J[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_1J_htt125:r_qqH_LT2J[1,-25,25]' "
+    ##qqH mjj 0-350
+    #MergedSignalNames.append("qqH_GE2J_MJJ_0_350")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_0_60_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_60_120_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_120_350_htt125:r_qqH_GE2J_MJJ_0_350[1,-25,25]' "
+    ##qqH mjj 350-700, all PtH
+    #MergedSignalNames.append("qqH_GE2J_MJJ_350_700_PTH_0_200")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
+    ##qqH mjj 700+, all PtH
+    #MergedSignalNames.append("qqH_GE2J_MJJ_GE700_PTH_0_200")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
+    ##ggH 2Jets, mjj 350+
+    #MergedSignalNames.append("ggH_PTH_0_200_GE2J_MJJ_GE350")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' " 
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125:r_ggH_PTH_0_200_GE2J_MJJ_GE350[1,-25,25]' "     
+    ###ggH, PTH 300+
+    #MergedSignalNames.append("ggH_PTH_GE300")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_300_450_htt125:r_ggH_PTH_GE300[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_450_650_htt125:r_ggH_PTH_GE300[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_GE650_htt125:r_ggH_PTH_GE300[1,-25,25]' "
+
+    ##we also need to add in the unmerged STXS bins so we perform a fit across all parameters
+    #for Bin in unMergedSTXSBins:
+    #    MergedSignalNames.append(Bin)
+    #    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/"+Bin+":r_"+Bin+"[1,-25,25]' "
 
     PerMergedBinWorkSpaceCommand += CombinedCardName+" -o "+PerMergedBinName+" -m 125"
 
@@ -345,11 +394,11 @@ os.system("mv *"+DateTag+"*.root "+OutputDir)
 
 if not args.ComputeSignificance:
     #run the signal samples    
-    for SignalName in ["r_ggH","r_qqH","r_WH","r_ZH"]:
+    for SignalName in ["r_ggH","r_qqH"]:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
         if not args.Unblind:
             CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
-        CombineCommand+=" --setParameters r_ggH=1,r_qqH=1,r_WH=1,r_ZH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
+        CombineCommand+=" --setParameters r_ggH=1,r_qqH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
         if args.Timeout is True:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
         logging.info("Signal Sample Signal Command: ")

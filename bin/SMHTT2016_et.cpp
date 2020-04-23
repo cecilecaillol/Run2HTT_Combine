@@ -125,7 +125,6 @@ int main(int argc, char **argv)
 		   "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",		   
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",		   
-		   "ggH_FWDH_htt125",
 		   "ggH_PTH_200_300_htt125",
 		   "ggH_PTH_300_450_htt125",
 		   "ggH_PTH_450_650_htt125",
@@ -170,8 +169,7 @@ int main(int argc, char **argv)
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-		   "qqH_FWDH_htt125"};
+		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"};
 
   vector<string> WH_STXS = {"WH_htt125"};
   if (Input.OptionExists("-dp")) WH_STXS = {
@@ -366,17 +364,7 @@ int main(int argc, char **argv)
 	    {"ZL"},
 	    &cb,
 	    1.00,
-	    TheFile,CategoryArgs);
-      
-      
-	  /*AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2016",
-		"CMS_norm_efaket_slice2_2016",
-		"CMS_norm_efaket_slice3_2016"},
-	    {"ZL"},
-	    &cb,
-	    1.00,
-	    TheFile,CategoryArgs);      */
-
+	    TheFile,{"et_0jetlow","et_0jethigh","et_boosted1","et_boosted2"});
 	}
       
       
@@ -485,7 +473,7 @@ int main(int argc, char **argv)
 		TheFile,
 		{"et_2jet"});
 	    }
-	  else
+	  else 
 	    {
 	      AddShapesIfNotEmpty({
 		  "CMS_rawFF_et_qcd_2jet_unc1_2016",
@@ -514,7 +502,7 @@ int main(int argc, char **argv)
 	  //and missing in all the others
 	  //so the names have been explicitly hacked in
 	  // we need a better way to handle uncertainties that may be explicit to certain categories only
-	  AddShapesIfNotEmpty({
+	  AddShapesIfNotEmpty({//STXS
 	      "CMS_rawFF_et_qcd_0jet_unc1_2016",
 		"CMS_rawFF_et_qcd_0jet_unc2_2016",
 		"CMS_rawFF_et_w_0jet_unc1_2016",

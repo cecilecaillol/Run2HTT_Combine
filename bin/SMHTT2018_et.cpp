@@ -124,7 +124,6 @@ int main(int argc, char **argv) {
 		   "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",		   
 		   "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",		   
-		   "ggH_FWDH_htt125",
 		   "ggH_PTH_200_300_htt125",
 		   "ggH_PTH_300_450_htt125",
 		   "ggH_PTH_450_650_htt125",
@@ -169,8 +168,7 @@ int main(int argc, char **argv) {
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
 		   "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-		   "qqH_FWDH_htt125"};
+		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"};
 
   vector<string> WH_STXS = {"WH_htt125"};
   if (Input.OptionExists("-dp")) WH_STXS = {
@@ -366,16 +364,7 @@ int main(int argc, char **argv) {
 	    {"ZL"},
 	    &cb,
 	    1.00,
-	    TheFile,CategoryArgs);
-
-      
-	  /*AddShapesIfNotEmpty({"CMS_norm_efaket_slice1_2018",
-		"CMS_norm_efaket_slice2_2018",
-		"CMS_norm_efaket_slice3_2018"},
-	    {"ZL"},
-	    &cb,
-	    1.00,
-	    TheFile,CategoryArgs);*/
+	    TheFile,{"et_0jetlow","et_0jethigh","et_boosted1","et_boosted2"});
 	}
 
         AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2018","CMS_efaket_norm_pt40to50_2018","CMS_efaket_norm_ptgt50_2018","CMS_etauFR_barrel_2018","CMS_etauFR_endcap_2018"},
