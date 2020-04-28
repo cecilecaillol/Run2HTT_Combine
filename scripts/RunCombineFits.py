@@ -182,7 +182,7 @@ print("Setting up per signal workspace")
 PerSignalName = OutputDir+"Workspace_per_signal_breakdown_cmb_"+DateTag+".root"
 PerSignalWorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
 PerSignalWorkspaceCommand+= "--PO 'map=.*/ggH.*htt125.*:r_ggH[1,-25,25]' "
-PerSignalWorkspaceCommand+= "--PO 'map=.*/qqH.*htt125.*:r_qqH[1,-25,25]' "
+PerSignalWorkspaceCommand+= "--PO 'map=.*/qqH.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/ZH_had.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/WH_had.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/ZH_0J.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/ZH_1J.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/ZH_GE2J.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/WH_0J.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/WH_1J.*htt125.*:r_qqH[1,-25,25]' --PO 'map=.*/WH_GE2J.*htt125.*:r_qqH[1,-25,25]'"
 PerSignalWorkspaceCommand+= CombinedCardName +" -o "+PerSignalName+" -m 125"
 
 logging.info("Per Signal Workspace Command:")
@@ -244,22 +244,22 @@ if args.RunSTXS:
     MergedSignalNames=[]
     ##qqH, non-VBF-topology
     MergedSignalNames.append("qqH_NONVBFTOPO")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_0J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_1J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_0_60_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_60_120_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_120_350_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_0J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_1J_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_0_60_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_60_120_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_120_350_htt125:r_qqH_NONVBFTOPO[1,-25,25]' "
     #qqH mjj 350-700, all PtH
     MergedSignalNames.append("qqH_GE2J_MJJ_350_700_PTH_0_200")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_350_700_PTH_0_200[1,-25,25]' "
     #qqH mjj 700+, all PtH
     MergedSignalNames.append("qqH_GE2J_MJJ_GE700_PTH_0_200")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125:r_qqH_GE2J_MJJ_GE700_PTH_0_200[1,-25,25]' "
     #qqH ptH>200, BSM topo
     MergedSignalNames.append("qqH_BSM")
-    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/qqH_GE2J_MJJ_GE350_PTH_GE200_htt125:r_qqH_BSM[1,-25,25]' "
+    PerMergedBinWorkSpaceCommand += "--PO 'map=.*/*H_GE2J_MJJ_GE350_PTH_GE200_htt125:r_qqH_BSM[1,-25,25]' "
     #ggH 2jets
     MergedSignalNames.append("ggH_PTH_0_200_GE2J")
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125:r_ggH_PTH_0_200_GE2J[1,-25,25]' "
