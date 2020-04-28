@@ -275,6 +275,10 @@ if args.RunSTXS:
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_300_450_htt125:r_ggH_PTH_GE200[1,-25,25]' "
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_450_650_htt125:r_ggH_PTH_GE200[1,-25,25]' "
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_GE650_htt125:r_ggH_PTH_GE200[1,-25,25]' "
+    #0 jet general parameter
+    #MergedSignalNames.append("ggH_0J")
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_0J_PTH_0_10_htt125:r_ggH_0J[1,-25,25]' "
+    #PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_0J_PTH_10_200_htt125:r_ggH_0J[1,-25,25]' "
     #ggH, 0j low
     MergedSignalNames.append("ggH_0J_PTH_0_10")
     PerMergedBinWorkSpaceCommand += "--PO 'map=.*/ggH_PTH_0_200_0J_PTH_0_10_htt125:r_ggH_0J_PTH_0_10[1,-25,25]' "
@@ -350,7 +354,7 @@ if args.ComputeSignificance:
     ExtraCombineOptions = '--X-rtd MINIMIZER_analytic --cl=0.68 '
 if args.StoreShapes:
     PhysModel = 'FitDiagnostics'
-    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --justFit '
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes '
 if args.ExperimentalSpeedup:
     ExtraCombineOptions += ' --X-rtd FAST_VERTICAL_MORPH --cminDefaultMinimizerStrategy 0 '
 if args.ControlMode:
@@ -434,6 +438,7 @@ if not args.ComputeSignificance:
 # run the STXS bins
 #if not (args.RunInclusiveggH or args.RunInclusiveqqH or args.ComputeSignificance):
 if args.RunSTXS:
+    """
     for STXSBin in STXSBins:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSTXSName+" "+ExtraCombineOptions
         if not args.Unblind:
@@ -470,8 +475,10 @@ if args.RunSTXS:
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
         if args.SplitSTXS:
             Splitter.SplitMeasurement(CombineCommand,OutputDir)            
+    """
 
     # at the moment multi dim fit methods to get covariance matrices are not working, so this will serve as stop-gap.
+    """
     if args.CorrelationMatrix:
         supplementaryCombineCommand = "combineTool.py -M FitDiagnostics "+PerSTXSName+" --robustFit=1 --preFitValue=1. --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -t -1 -n "+DateTag+"_STXS_Correlation --setParameters "
         for BinName in STXSBins:
@@ -483,6 +490,7 @@ if args.RunSTXS:
         else:
             os.system(supplementaryCombineCommand+" | tee -a "+outputLoggingFile)
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
+    """
     
     #run the merged bins
     for MergedBin in MergedSignalNames:
