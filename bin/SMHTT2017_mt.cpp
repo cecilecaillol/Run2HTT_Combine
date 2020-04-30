@@ -597,7 +597,7 @@ int main(int argc, char **argv)
 	    &cb,
 	    1.00,
 	    TheFile,
-	    {"mt_0jet_PTH"});
+	    {"mt_0jet"});
 
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_1jet_unc1_2017",
