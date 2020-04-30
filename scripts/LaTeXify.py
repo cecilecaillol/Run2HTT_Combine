@@ -102,90 +102,68 @@ Lines_2018 = File_2018.readlines()
 Run2Lines = Run2File.readlines()
 
 for i in range(len(Lines_2016)):
-    resultLine_2016 = re.findall("((\+|-)[0-9]+\.[0-9]+)|N/A",Lines_2016[i])
-    resultLine_2017 = re.findall("((\+|-)[0-9]+\.[0-9]+)|N/A",Lines_2017[i])
-    resultLine_2018 = re.findall("((\+|-)[0-9]+\.[0-9]+)|N/A",Lines_2018[i])
-    Run2resultLine = re.findall("((\+|-)[0-9]+\.[0-9]+)|N/A",Run2Lines[i])        
-    if resultLine_2016:        
-        #print(Lines_2016[i])
-        #print(Lines_2017[i])
-        #print(Lines_2018[i])
-        #print(Run2Lines[i])
-        #print ''
-        #print(resultLine_2016)
-        #print(resultLine_2017)
-        #print(resultLine_2018)
-        #print(Run2resultLine)
+    resultLine_2016 = re.findall("([+\-][0-9]+\.[0-9]+)|N/A",Lines_2016[i])
+    resultLine_2017 = re.findall("([+\-][0-9]+\.[0-9]+)|N/A",Lines_2017[i])
+    resultLine_2018 = re.findall("([+\-][0-9]+\.[0-9]+)|N/A",Lines_2018[i])
+    Run2resultLine = re.findall("([+\-][0-9]+\.[0-9]+)|N/A",Run2Lines[i])                    
+    if resultLine_2016:                        
+        category = re.search("r\S*",Lines_2016[i])        
+        category = LaTeXifyCategory(category.group(0))
+        #print category
+        #print resultLine_2016
+        #print resultLine_2017
+        #print resultLine_2018
+        #print Run2resultLine
         if "N/A" in Lines_2016[i]:
             upUncert_2016 = 24.000
             downUncert_2016 = -26.000
         else:
-            upUncert_2016 = float(resultLine_2016[1][0])
-            downUncert_2016 = float(resultLine_2016[0][0])                        
+            upUncert_2016 = float(resultLine_2016[2])
+            downUncert_2016 = float(resultLine_2016[1])                        
         if "N/A" in Lines_2017[i]:
             upUncert_2017 = 24.000
             downUncert_2017 = -26.000
         else:
-            upUncert_2017 = float(resultLine_2017[1][0])
-            downUncert_2017 = float(resultLine_2017[0][0])                        
+            upUncert_2017 = float(resultLine_2017[2])
+            downUncert_2017 = float(resultLine_2017[1])                        
         if "N/A" in Lines_2018[i]:
             upUncert_2018 = 24.000
             downUncert_2018 = -26.000
         else:
-            upUncert_2018 = float(resultLine_2018[1][0])
-            downUncert_2018 = float(resultLine_2018[0][0])                        
+            upUncert_2018 = float(resultLine_2018[2])
+            downUncert_2018 = float(resultLine_2018[1])                        
         if "N/A" in Run2Lines[i]:
             Run2upUncert = 24.000
             Run2downUncert = -26.000
         else:
-            Run2upUncert = float(Run2resultLine[1][0])
-            Run2downUncert = float(Run2resultLine[0][0])                        
-        category = re.search("r\S*",Lines_2016[i])        
-        category = LaTeXifyCategory(category.group(0))
+            Run2upUncert = float(Run2resultLine[2])
+            Run2downUncert = float(Run2resultLine[1])                                
         if ("Forward Higgs" in category):
             print ''
         tableLine = category 
+        #let's extract the results now from the output
+        #print resultLine_2016[0][0]
+        #2016_result = ''#resultLine_2016[0][0]
+        #2017_result = ''#resultLine_2017[0][0]
+        #2018_result = ''#resultLine_2018[0][0]
+        #Run2_result = ''#Run2resultLine[0][0]
         #Let's make the up and down contribution strings before hand
-        #2016
-        if upUncert_2016 >= 24.0:
-            upUncertString_2016 = "\\geq 25.000"
-        else:
-            upUncertString_2016 = "%.3f"%upUncert_2016
-        if downUncert_2016 <= -26.0:
-            downUncertString_2016 = "\\leq -25.000"
-        else:
-            downUncertString_2016 = "%.3f"%downUncert_2016
+        #2016                
+        upUncertString_2016 = "%.3f"%upUncert_2016
+        downUncertString_2016 = "%.3f"%downUncert_2016
         #2017
-        if upUncert_2017 >= 24.0:
-            upUncertString_2017 = "\\geq 25.000"
-        else:
-            upUncertString_2017 = "%.3f"%upUncert_2017
-        if downUncert_2017 <= -26.0:
-            downUncertString_2017 = "\\leq -25.000"
-        else:
-            downUncertString_2017 = "%.3f"%downUncert_2017
+        upUncertString_2017 = "%.3f"%upUncert_2017
+        downUncertString_2017 = "%.3f"%downUncert_2017
         #2018
-        if upUncert_2018 >= 24.0:
-            upUncertString_2018 = "\\geq 25.000"
-        else:
-            upUncertString_2018 = "%.3f"%upUncert_2018
-        if downUncert_2018 <= -26.0:
-            downUncertString_2018 = "\\leq -25.000"
-        else:
-            downUncertString_2018 = "%.3f"%downUncert_2018
+        upUncertString_2018 = "%.3f"%upUncert_2018
+        downUncertString_2018 = "%.3f"%downUncert_2018
         #Run 2
-        if Run2upUncert >= 24.0:
-            upUncertString_Run2 = "\\geq 25.000"
-        else:
-            upUncertString_Run2 = "%.3f"%Run2upUncert
-        if Run2downUncert <= -26.0:
-            downUncertString_Run2 = "\\leq -25.000"
-        else:
-            downUncertString_Run2 = "%.3f"%Run2downUncert
+        upUncertString_Run2 = "%.3f"%Run2upUncert
+        downUncertString_Run2 = "%.3f"%Run2downUncert
         #construct the string
-        tableLine += " & "+" $1.0^{"+upUncertString_2016+"}_{"+downUncertString_2016+"}$"
-        tableLine += " & "+" $1.0^{"+upUncertString_2017+"}_{"+downUncertString_2017+"}$"
-        tableLine += " & "+" $1.0^{"+upUncertString_2018+"}_{"+downUncertString_2018+"}$"
-        tableLine += " & "+" $1.0^{"+upUncertString_Run2+"}_{"+downUncertString_Run2+"}$"        
+        tableLine += " & "+" $"+resultLine_2016[0]+"^{+"+upUncertString_2016+"}_{"+downUncertString_2016+"}$"
+        tableLine += " & "+" $"+resultLine_2017[0]+"^{+"+upUncertString_2017+"}_{"+downUncertString_2017+"}$"
+        tableLine += " & "+" $"+resultLine_2018[0]+"^{+"+upUncertString_2018+"}_{"+downUncertString_2018+"}$"
+        tableLine += " & "+" $"+Run2resultLine[0]+"^{+"+upUncertString_Run2+"}_{"+downUncertString_Run2+"}$"        
         tableLine += "\\\\"
         print(tableLine)

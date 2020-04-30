@@ -1,25 +1,41 @@
 #!/usr/bin/env python
 import sys
+import re
 
 limits = open(sys.argv[1], "r")
 #limits = open("testsorting2017.txt", "r")
 
 UncertaintiesDic = {}
 GapDic = {}
+FitDic = {}
 dashLine = '---------------------------------------------------------------------------------------------------'
 
 # Store POI and expected uncertainties
 for line in limits:
-  indexSpace = line.find(" :")
-  POI = line[3:indexSpace]
-  indexBeginUnc = line.find("-")
-  indexEndUnc = line.find(" (")
-  Uncertainty = line[indexBeginUnc:indexEndUnc]
-  indexSlash = Uncertainty.find("/")
-  LowerLimit = Uncertainty[0:indexSlash]
-  UpperLimit = Uncertainty[indexSlash+1:-1]
-  UncertaintiesDic[POI] = Uncertainty
-  GapDic[POI] = float(UpperLimit)-float(LowerLimit)
+  resultLine = re.search('r.*:\s+[+\-][0-9]+\.[0-9]+\s+-[0-9]+\.[0-9]+/\+[0-9]+\.[0-9]+',line)  
+  if not resultLine:
+    continue
+  #print resultLine.group(0)
+  POI = re.search('r.*(?=\s+:)',line).group(0)
+  #print(POI)
+  results = re.findall('[+\-][0-9]+\.[0-9]+',line)
+  #print results[0]
+  #print results[1]
+  #print results[2]
+  #indexSpace = line.find(" :")
+  #POI = line[3:indexSpace]  
+  #indexBeginUnc = line.find("-")
+  #indexEndUnc = line.find(" (")
+  #Uncertainty = line[indexBeginUnc:indexEndUnc]
+  #indexSlash = Uncertainty.find("/")
+  #LowerLimit = Uncertainty[0:indexSlash]
+  LowerLimit = results[1]
+  #UpperLimit = Uncertainty[indexSlash+1:-1]
+  UpperLimit = results[2]
+  #UncertaintiesDic[POI] = Uncertainty
+  UncertaintiesDic[POI] = results[1]+'/'+results[2]
+  GapDic[POI] = float(UpperLimit)-float(LowerLimit)  
+  FitDic[POI] = results[0]
 #print UncertaintiesDic
 
 # Bins
@@ -83,6 +99,7 @@ for dic in allDics:
   for missingPOI in dic:
     if missingPOI not in UncertaintiesDic.keys():
       UncertaintiesDic[missingPOI] = "N/A"
+      FitDic[missingPOI] = 'N/A'
       GapDic[missingPOI] = -1
 
 print ""
@@ -92,13 +109,13 @@ for poi in UncertaintiesDic.keys():
   if poi == 'r':
     gap = gapComputer(poi,0)
     colorCode = '\33[93m'
-    print (colorCode + poi + '\33[0m \t:\t' + UncertaintiesDic[poi] + gap)
+    print (colorCode + poi + '\33[0m \t:\t'+FitDic[poi]+'\t'+ UncertaintiesDic[poi] + gap)
 
 # Stage 0
 for poi in STXSBin_stage0:
   colorCode = '\33[96m'
   gap = gapComputer(poi,0)
-  print (colorCode + poi + '\33[0m \t:\t' + UncertaintiesDic[poi] + gap)
+  print (colorCode + poi + '\33[0m \t:\t'+FitDic[poi]+'\t'+ UncertaintiesDic[poi] + gap)
 print ""
 # Stage 1.2 ggH 
 print ""
@@ -109,7 +126,7 @@ for poi in singleSTXSBin_ggH:
   if poi == 'r_ggH_PTH_0_200_0J_PTH_0_10_htt125' or poi == 'r_ggH_PTH_0_200_1J_PTH_0_60_htt125' or poi == 'r_ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125' or poi == 'r_ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125' or poi == "r_ggH_PTH_200_300_htt125" or poi == "r_ggH_FWDH_htt125":
     print dashLine
   gap = gapComputer(poi,30)
-  print (colorCode + poi + '\33[0m \t:\t' + UncertaintiesDic[poi] + gap)
+  print (colorCode + poi + '\33[0m \t:\t'+FitDic[poi]+'\t' + UncertaintiesDic[poi] + gap)
 
   # merged bins
   mergedPOI = ""
@@ -119,7 +136,7 @@ for poi in singleSTXSBin_ggH:
     mergedPOI = 'r_ggH_PTH_GE300'
   if mergedPOI != "":
     colorCode = '\33[1;37;44m'
-    print (colorCode + mergedPOI + '\33[0m \t:\t' + UncertaintiesDic[mergedPOI] + gap)
+    print (colorCode + mergedPOI + '\33[0m \t:\t'+FitDic[mergedPOI]+'\t' + UncertaintiesDic[mergedPOI] + gap)
 
 # Stage 1.2 qqH 
 for poi in singleSTXSBin_qqH:
@@ -127,7 +144,7 @@ for poi in singleSTXSBin_qqH:
   if poi == 'r_qqH_0J_htt125' or poi == 'r_qqH_GE2J_MJJ_0_60_htt125' or poi == 'r_qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125' or poi == 'r_qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125' or poi == 'r_qqH_GE2J_MJJ_GE350_PTH_GE200_htt125' or poi == "r_qqH_FWDH_htt125":
     print dashLine
   gap = gapComputer(poi,30)
-  print (colorCode + poi + '\33[0m \t:\t' + UncertaintiesDic[poi] + gap)
+  print (colorCode + poi + '\33[0m \t:\t'+FitDic[poi]+'\t' + UncertaintiesDic[poi] + gap)
 
   # merged bins
   mergedPOI = ""
@@ -142,7 +159,7 @@ for poi in singleSTXSBin_qqH:
   if mergedPOI!= "":
     colorCode = '\33[1;37;41m'
     gap = gapComputer(mergedPOI,5)
-    print (colorCode + mergedPOI + '\33[0m \t:\t' + UncertaintiesDic[mergedPOI] + gap)
+    print (colorCode + mergedPOI + '\33[0m \t:\t'+FitDic[mergedPOI]+'\t' + UncertaintiesDic[mergedPOI] + gap)
 
 print dashLine
 print ""

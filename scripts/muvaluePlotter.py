@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import ROOT
 import argparse
+import re
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
@@ -102,14 +103,17 @@ def translate_categ(i):
    elif "ZH" in i: return "ZH"
    elif "ggH" in i: return "ggH"
    elif "qqH" in i: return "qqH"
-   else: return ""
+#elif "r" == i: return "Inclusive"
+   else: return "Inclusive"
 
 def is_included(mycat,type, upUncertainty,downUncertainty):
     included=0
-    if type=="stage0" and (translate_categ(mycat)=="WH" 
-                           or translate_categ(mycat)=="ZH" 
-                           or translate_categ(mycat)=="qqH" 
-                           or translate_categ(mycat)=="ggH"): 
+    if type=="stage0" and (#translate_categ(mycat)=="WH" 
+                           #or translate_categ(mycat)=="ZH" 
+            #or translate_categ(mycat)=="qqH" 
+            translate_categ(mycat)=="qqH" 
+            or translate_categ(mycat)=="ggH"
+            or translate_categ(mycat)=='Inclusive'): 
        included=1
     if type=="stage1-all" and not (translate_categ(mycat)=="WH" 
                                    or translate_categ(mycat)=="ZH" 
@@ -167,7 +171,8 @@ def is_included(mycat,type, upUncertainty,downUncertainty):
     if type=="stage1-select" and (abs(upUncertainty) < 3.0 and abs(downUncertainty) < 3.0) and (not (translate_categ(mycat)=="WH" 
                                                                                            or translate_categ(mycat)=="ZH" 
                                                                                            or translate_categ(mycat)=="qqH" 
-                                                                                           or translate_categ(mycat)=="ggH")):
+                                                                                           or translate_categ(mycat)=="ggH"
+                                                                                           or translate_categ(mycat)=='Inclusive')):
        included=1
     return included
 
@@ -194,34 +199,37 @@ minDown = 0.0
 
 k=0
 for x in f:
-  if ":" in x:
-    mean=round(1.0, 2)
-    if "N/A" in x:
-        up=24.0
-        down=26.0
+  if ":" in x:      
+    results = re.findall("[+\-][0-9]+\.[0-9]+|N/A",x)    
+    if "N/A" in results[1]:        
+        down=25.0
+        up = 25.0
+        theResultParam = -100
     else:
-        up= round(float(x.split("+")[1][:5]),2)
-        down=round(float(x.split("-")[1].split("/")[0]),2)
-    if up > maxUp:
-        maxUp = up
-    if down > minDown:
-        minDown 
+        up= round(abs(float(results[2])),2)
+        down=round(abs(float(results[1])),2)
+        theResultParam = float(results[0])
+    mean=round(theResultParam, 2)    
     mycat=""
     if k>0:
        mycat=x.split("r_")[1].split(" ")[0]
     print mycat,is_included(mycat,args.type,up,down)    
     if is_included(mycat,args.type,up,down):
        nlines=nlines+1
+       if mean+up > maxUp:
+           maxUp = mean+up
+       if abs(mean-down) > minDown:
+           minDown = down
     k=k+1
 
 #figure out how big our axes should be
-bounds = max(abs(maxUp),abs(minDown))
+bounds = max(abs(maxUp),abs(minDown))*1.01
 
 print nlines
 
 f.seek(0)
 
-axis = ROOT.TH2F('axis', '', 1, -1*bounds, bounds, 10, 0.01, nlines)
+axis = ROOT.TH2F('axis', '', 1, 1-bounds, 1+bounds, 10, 0.01, nlines)
 axis.GetXaxis().SetTitle("#mu")
 axis.GetYaxis().SetLabelSize(0)
 axis.GetYaxis().SetTickLength(0)
@@ -243,33 +251,40 @@ categ=[]
 result=[]
 
 for x in f:
+  #print x
+  #print ":" in x
   if ":" in x:
-    mean=round(1.0, 2)
-    if "N/A" in x:
-        up=24.0
-        down=26.0
+    results = re.findall("[+\-][0-9]+\.[0-9]+|N/A",x)    
+    if "N/A" in results[1]:        
+        down=25.0
+        up = 25.0
+        theResultParam = -100
     else:
-        up= round(float(x.split("+")[1][:5]),2)
-        down=round(float(x.split("-")[1].split("/")[0]),2)
+        up= round(abs(float(results[2])),2)
+        down=round(abs(float(results[1])),2)
+        theResultParam = float(results[0])
+    mean=round(theResultParam, 2)
 
     mycat=""
     mycat2=""
-    if ii>0:
-       mycat=translate_categ(x.split("r_")[1].split(" ")[0])
-       mycat2=x.split("r_")[1].split(" ")[0]
+    if ii>=0:        
+        #print x
+        #print results
+        mycat=translate_categ(re.search('r\S*',x).group(0))
+        mycat2=re.search('r\S*',x).group(0)
 
-    if ii>0 and is_included(mycat2,args.type,up,down):
+    if ii>=0 and is_included(mycat2,args.type,up,down):
       gr.SetPoint(i, mean, y_pos)
       gr.SetPointError(i,down ,up, 0, 0)
 
     elif ii==0:
       combineMu= mean; lowBnad=down; highBand=up;
 
-    myresult=str(mean)+" -"+str(down)+"/+"+str(up)    
+    myresult=str(mean)+" "+str(down)+"/+"+str(up)    
 
     print mycat2,is_included(mycat2,args.type,up,down)
-    print("Down: "+str(down))
-    print("Up: "+str(up))
+    #print("Down: "+str(down))
+    #print("Up: "+str(up))
     if is_included(mycat2,args.type,up,down):
 
       if args.type=="stage0":
@@ -285,7 +300,7 @@ for x in f:
       categ[i].SetTextColor(    1 )
       categ[i].SetTextFont (   42 )
       categ[i].AddText(mycat)
-      if ii>0:
+      if ii>=0:
          categ[i].Draw("same")
 
       if args.type=="stage0":
@@ -301,7 +316,7 @@ for x in f:
       result[i].SetTextColor(    1 )
       result[i].SetTextFont (   42 )
       result[i].AddText(myresult)
-      if ii>0:
+      if ii>=0:
          result[i].Draw("same")
 
       i += 1
@@ -310,12 +325,13 @@ for x in f:
 
 gr.Draw('P')
 
-
-theory_band = ROOT.TBox(combineMu-lowBnad,0,combineMu+highBand,nlines-0.1)
+#theory_band = ROOT.TBox(combineMu-lowBnad,0,combineMu+highBand,nlines-0.1)
+theory_band = ROOT.TBox(1-lowBnad,0,1+highBand,nlines-0.1)
 theory_band.SetFillColor(ROOT.kYellow)
 theory_band.Draw('same')
 
-l=ROOT.TLine(combineMu,0,combineMu,nlines)
+#l=ROOT.TLine(combineMu,0,combineMu,nlines)
+l=ROOT.TLine(1,0,1,nlines)
 l.SetLineColor(ROOT.kOrange)
 l.Draw('sameL')
 
