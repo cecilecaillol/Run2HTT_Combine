@@ -7,7 +7,7 @@ import CombineHarvester.Run2HTT_Combine.PlottingModules.Utilities as Utils
 import CombineHarvester.Run2HTT_Combine.PlottingModules.globalSettings as globalSettings
 import CombineHarvester.Run2HTT_Combine.PlottingModules as plotModules
 
-def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= False):
+def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= False,noLog=False):
     globalSettings.style.setPASStyle()    
     ROOT.gROOT.SetStyle('pasStyle')
     
@@ -18,6 +18,7 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
     os.chdir(theDirectory)
     
     fileName = "fitDiagnostics"+args.tag+"_Inclusive.root"
+    #fileName = "higgsCombine"+args.tag+"_Inclusive.FitDiagnostics.mH120.root"
     if not os.path.exists(fileName):
         raise RuntimeError("Coudn't find the output file. Are you sure you have the right directory and ran the option to store plots?")
 
@@ -91,7 +92,7 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
                     theCanvas.SetFillColor(0)
                     print("Performing pad set-up...")
                     plotPad,ratioPad = prefitPostfitSettings.plotPad.CreatePads(theCanvas)
-                    prefitPostfitSettings.plotPad.SetupPad(plotPad)
+                    prefitPostfitSettings.plotPad.SetupPad(plotPad,args.noLog)
                     #make the ratio plots
                     prefitPostfitSettings.ratioPad.SetUpRatioPad(ratioPad)
                     
@@ -116,8 +117,12 @@ def MakePrefitPlots(tag,years,channels,DontPerformCalculation = False,Unblind= F
                     print("Drawing...")
                     plotPad.cd()
                     plotPad.SetFillColor(0)
-                    backgroundStack.SetMinimum(max(backgroundStack.GetMinimum()*0.9,0.1))
-                    backgroundStack.SetMaximum(backgroundStack.GetMaximum()*10)
+                    if args.noLog:
+                        backgroundStack.SetMinimum(0)
+                        backgroundStack.SetMaximum(backgroundStack.GetMaximum())
+                    else:
+                        backgroundStack.SetMinimum(max(backgroundStack.GetMinimum()*0.9,0.1))                    
+                        backgroundStack.SetMaximum(backgroundStack.GetMaximum()*10)                    
                     backgroundStack.Draw()
                     backgroundStackErrors.Draw("SAME e2")
                     histograms[channel][year][category][prefitOrPostfit]['Signals']['Higgs'].Draw("SAME HIST")
@@ -196,6 +201,7 @@ if __name__ == "__main__":
     parser.add_argument('--channels',nargs="+",choices=['mt','tt','et','em'],help="specify the channels to run",required=True)
     parser.add_argument('--DontRecalculate',help="Dont preform the PostfitShapesFromWorkspace step again.",action = 'store_true')
     parser.add_argument('--Unblind',help='Unblind all datapoints. BE SURE ABOUT THIS',action='store_true')
+    parser.add_argument('--noLog',help='make plots in linear scales, not logarithmic',action='store_true')
 
     args = parser.parse_args()
-    MakePrefitPlots(args.tag,args.years,args.channels,args.DontRecalculate,args.Unblind)
+    MakePrefitPlots(args.tag,args.years,args.channels,args.DontRecalculate,args.Unblind,args.noLog)
