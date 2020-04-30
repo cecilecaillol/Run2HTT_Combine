@@ -334,8 +334,8 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_dynamicBeta", "lnN", SystMap<>::init(1.005));
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.004));
 
-  cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_0_10"}).AddSyst(cb,"CMS_jetFakesNorm_0jetlow_mt_2016","lnN",SystMap<>::init(1.05));
-  cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_GE10"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_mt_2016","lnN",SystMap<>::init(1.05));
+  cb.cp().process({"jetFakes"}).bin({"mt_0jet"}).AddSyst(cb,"CMS_jetFakesNorm_0jet_mt_2016","lnN",SystMap<>::init(1.05));
+  //cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_GE10"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_mt_2016","lnN",SystMap<>::init(1.05));
 
   //*******************************************************
   //shape uncertainties
@@ -416,7 +416,7 @@ int main(int argc, char **argv)
 			  {"ZL"},
 			  &cb,
 			  1.00,
-			  TheFile,{"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10","mt_boosted_1J","mt_boosted_GE2J"});
+			  TheFile,{"mt_0jet","mt_boosted_1J","mt_boosted_GE2J"});
 
       // Trg eff. It is a shape because the 2 triggers affect the ele pT spectrum differently
       std::cout<<"Trigger eff"<<std::endl;
@@ -601,7 +601,7 @@ int main(int argc, char **argv)
 	    &cb,
 	    1.00,
 	    TheFile,
-	    {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+	    {"mt_0jet"});
 
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_1jet_unc1_2016",
@@ -718,7 +718,7 @@ int main(int argc, char **argv)
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+			      {"mt_0jet"});
       
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2016","CMS_htt_boson_scale_met_1jet_2016"},
 			      RecoilVector,

@@ -330,8 +330,8 @@ int main(int argc, char **argv) {
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.002));
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.002));
   
-  cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_0_10"}).AddSyst(cb,"CMS_jetFakesNorm_0jetlow_mt_2018","lnN",SystMap<>::init(1.05));
-  cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_GE10"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_mt_2018","lnN",SystMap<>::init(1.05));
+  cb.cp().process({"jetFakes"}).bin({"mt_0jet"}).AddSyst(cb,"CMS_jetFakesNorm_0jet_mt_2018","lnN",SystMap<>::init(1.05));
+  //cb.cp().process({"jetFakes"}).bin({"mt_0jet_PTH_GE10"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_mt_2018","lnN",SystMap<>::init(1.05));
 
   //***************************************************
   //shape uncertainties
@@ -408,7 +408,7 @@ int main(int argc, char **argv) {
 			  {"ZL"},
 			  &cb,
 			  1.00,
-			  TheFile,{"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10","mt_boosted_1J","mt_boosted_GE2J"});
+			  TheFile,{"mt_0jet","mt_boosted_1J","mt_boosted_GE2J"});
             
       //Fake factors      
       if(Input.OptionExists("-c"))
@@ -584,7 +584,7 @@ int main(int argc, char **argv) {
 	    &cb,
 	    1.00,
 	    TheFile,
-	    {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+	    {"mt_0jet"});
 
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_1jet_unc1_2018",
@@ -699,7 +699,7 @@ int main(int argc, char **argv) {
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"mt_0jet_PTH_0_10","mt_0jet_PTH_GE10"});
+			      {"mt_0jet"});
       
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2018","CMS_htt_boson_scale_met_1jet_2018"},
 			      RecoilVector,

@@ -333,9 +333,9 @@ cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb,
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.003));
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.001));
 
-  cb.cp().process({"QCD"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_QCDsyst_0jetlow_2017","lnN",SystMap<>::init(1.10));
-  cb.cp().process({"QCD"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_QCDsyst_0jethigh_2017","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_0jet"}).AddSyst(cb,"CMS_QCDsyst_0jet_2017","lnN",SystMap<>::init(1.10));
+  //cb.cp().process({"QCD"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_QCDsyst_0jethigh_2017","lnN",SystMap<>::init(1.10));
+  //cb.cp().process({"QCD"}).bin({"em_0jet"}).AddSyst(cb,"CMS_QCDsyst_0jet_2017","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_QCDsyst_boosted1_2017","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_QCDsyst_boosted2_2017","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_QCDsyst_vbflow_2017","lnN",SystMap<>::init(1.10));

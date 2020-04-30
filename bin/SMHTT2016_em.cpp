@@ -325,16 +325,16 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_dynamicBeta", "lnN", SystMap<>::init(1.005));
   cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.004));
 
-  cb.cp().process({"TTL","TTT"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
-  cb.cp().process({"TTL","TTT"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  cb.cp().process({"TTL","TTT"}).bin({"em_0jet"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
+  //cb.cp().process({"TTL","TTT"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
   cb.cp().process({"TTL","TTT"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.05));
   cb.cp().process({"TTL","TTT"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
   cb.cp().process({"TTL","TTT"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
   cb.cp().process({"TTL","TTT"}).bin({"em_vbfhigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(0.95));
 
-  cb.cp().process({"QCD"}).bin({"em_0jetlow"}).AddSyst(cb,"CMS_QCDsyst_0jetlow_2016","lnN",SystMap<>::init(1.10));
-  cb.cp().process({"QCD"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_QCDsyst_0jethigh_2016","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_0jet"}).AddSyst(cb,"CMS_QCDsyst_0jet_2016","lnN",SystMap<>::init(1.10));
+  //cb.cp().process({"QCD"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_QCDsyst_0jethigh_2016","lnN",SystMap<>::init(1.10));
+  //cb.cp().process({"QCD"}).bin({"em_0jet"}).AddSyst(cb,"CMS_QCDsyst_0jet_2016","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_boosted1"}).AddSyst(cb,"CMS_QCDsyst_boosted1_2016","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_boosted2"}).AddSyst(cb,"CMS_QCDsyst_boosted2_2016","lnN",SystMap<>::init(1.10));
   cb.cp().process({"QCD"}).bin({"em_vbflow"}).AddSyst(cb,"CMS_QCDsyst_vbflow_2016","lnN",SystMap<>::init(1.10));

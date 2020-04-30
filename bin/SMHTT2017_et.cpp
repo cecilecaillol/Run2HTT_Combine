@@ -339,8 +339,8 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.003));
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.001));
 
-  cb.cp().process({"jetFakes"}).bin({"et_0jetlow"}).AddSyst(cb,"CMS_jetFakesNorm_0jetlow_et_2017","lnN",SystMap<>::init(1.05));
-  cb.cp().process({"jetFakes"}).bin({"et_0jethigh"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_et_2017","lnN",SystMap<>::init(1.05));
+  cb.cp().process({"jetFakes"}).bin({"et_0jet"}).AddSyst(cb,"CMS_jetFakesNorm_0jet_et_2017","lnN",SystMap<>::init(1.05));
+  //cb.cp().process({"jetFakes"}).bin({"et_0jethigh"}).AddSyst(cb,"CMS_jetFakesNorm_0jethigh_et_2017","lnN",SystMap<>::init(1.05));
 
   //**********************************************************
   //shape uncertainties
@@ -397,7 +397,7 @@ int main(int argc, char **argv)
 	    {"ZL"},
 	    &cb,
 	    1.00,
-	    TheFile,{"et_0jetlow","et_0jethigh","et_boosted1","et_boosted2"});
+	    TheFile,{"et_0jet","et_boosted1","et_boosted2"});
 	}
 
         AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2017","CMS_efaket_norm_pt40to50_2017","CMS_efaket_norm_ptgt50_2017","CMS_etauFR_barrel_2017","CMS_etauFR_endcap_2017"},
@@ -559,7 +559,7 @@ int main(int argc, char **argv)
        	&cb,
        	1.00,
        	TheFile,
-       	{"et_0jetlow","et_0jethigh"});
+       	{"et_0jet"});
 
 	  AddShapesIfNotEmpty({
        	  "CMS_rawFF_et_qcd_1jet_unc1_2017",
@@ -668,7 +668,7 @@ int main(int argc, char **argv)
 			      &cb,
 			      1.00,
 			      TheFile,
-			      {"et_0jetlow","et_0jethigh"});
+			      {"et_0jet"});
       
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017"},
 			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125"}}),
