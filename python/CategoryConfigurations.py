@@ -7,15 +7,17 @@ tt_boosted_GE2J_category = 'tt_boosted_multijet'
 tt_vbf_high_category = 'tt_vbf_highHpT'
 tt_vbf_low_category = 'tt_vbf_lowHpT'
 
-mt_0jet_low_category = 'mt_0jet_PTH_0_10'
-mt_0jet_high_category = 'mt_0jet_PTH_GE10'
+mt_0jet_low_category = 'mt_0jet'
+#mt_0jet_low_category = 'mt_0jet_PTH_0_10'
+#mt_0jet_high_category = 'mt_0jet_PTH_GE10'
 mt_boosted_1J_category = 'mt_boosted_1J'
 mt_boosted_GE2J_category = 'mt_boosted_GE2J'
 mt_vbf_low_category = 'mt_vbf_PTH_0_200'
 mt_vbf_high_category = 'mt_vbf_PTH_GE_200'
 
-et_0jet_low_category = 'et_0jetlow'
-et_0jet_high_category = 'et_0jethigh'
+et_0jet_low_category = 'et_0jet'
+#et_0jet_low_category = 'et_0jetlow'
+#et_0jet_high_category = 'et_0jethigh'
 et_boosted_1J_category = 'et_boosted1'
 et_boosted_GE2J_category = 'et_boosted2'
 et_vbf_low_category = 'et_vbflow'
@@ -42,8 +44,9 @@ tt_Categories = []
 tt_Categories = tt_0jet_categories + tt_boosted_categories + tt_vbf_categories
 
 mt_0jet_categories = []
-mt_0jet_categories.append(mt_0jet_low_category)
-mt_0jet_categories.append(mt_0jet_high_category)
+mt_0jet_categories.append(mt_0jet)
+#mt_0jet_categories.append(mt_0jet_low_category)
+#mt_0jet_categories.append(mt_0jet_high_category)
 mt_boosted_categories = []
 mt_boosted_categories.append(mt_boosted_1J_category)
 mt_boosted_categories.append(mt_boosted_GE2J_category)
@@ -61,8 +64,9 @@ et_vbf_categories = []
 et_vbf_categories.append(et_vbf_low_category)
 et_vbf_categories.append(et_vbf_high_category)
 et_0jet_categories = []
-et_0jet_categories.append(et_0jet_low_category)
-et_0jet_categories.append(et_0jet_high_category)
+et_0jet_categories.append(et_0jet)
+#et_0jet_categories.append(et_0jet_low_category)
+#et_0jet_categories.append(et_0jet_high_category)
 
 et_Categories = []
 et_Categories = et_0jet_categories + et_boosted_categories + et_vbf_categories
