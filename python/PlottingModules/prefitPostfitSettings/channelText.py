@@ -42,15 +42,14 @@ def DrawChannelName(channel):
 
 def DrawCategoryName(category):    
     theText = 'Default'
-    if (category == catConfig.tt_0jet_category):
+    if (category == catConfig.tt_0jet_category
+        or category == catConfig.em_0jet_category):
         theText = tt_ZeroJetText
     elif (category == catConfig.mt_0jet_low_category
-          or category == catConfig.et_0jet_low_category
-          or category == catConfig.em_0jet_low_category):
+          or category == catConfig.et_0jet_low_category):
         theText = zeroJetLowText
     elif (category == catConfig.mt_0jet_high_category
-          or category == catConfig.et_0jet_high_category
-          or category == catConfig.em_0jet_high_category):
+          or category == catConfig.et_0jet_high_category):
         theText = zeroJetHighText
     elif (category == catConfig.tt_vbf_low_category
           or category == catConfig.mt_vbf_low_category

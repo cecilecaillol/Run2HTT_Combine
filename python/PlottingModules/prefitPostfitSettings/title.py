@@ -49,14 +49,13 @@ def CreateTitle(year,channel,category,histogram):
     title += ', '
 
     if (category == catConfig.mt_0jet_low_category
-        or category == catConfig.et_0jet_low_category
-        or category == catConfig.em_0jet_low_category):
+        or category == catConfig.et_0jet_low_category):
         title += ZeroJetLowTitle
     elif (category == catConfig.mt_0jet_high_category
-          or category == catConfig.et_0jet_high_category
-          or category == catConfig.em_0jet_high_category):
+          or category == catConfig.et_0jet_high_category):
         title += ZeroJetHighTitle
     elif (category == catConfig.tt_0jet_category
+          or category == catConfig.em_0jet_category
           or category == 'ZeroJet'):
         title += ZeroJetTitle
     elif (category == catConfig.tt_boosted_1J_category

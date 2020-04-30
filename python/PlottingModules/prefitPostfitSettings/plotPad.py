@@ -1,9 +1,10 @@
 import ROOT
 
-def SetupPad(thePad):
+def SetupPad(thePad,noLog):
     thePad.SetTickx()
     thePad.SetTicky()
-    thePad.SetLogy()
+    if not noLog:
+        thePad.SetLogy()
 
 def CreatePads(theCanvas):
     theCanvas.Divide(1,2)
