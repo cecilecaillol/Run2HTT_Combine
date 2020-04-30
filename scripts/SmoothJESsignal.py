@@ -26,25 +26,27 @@ if args.channel=="et":
   ncategories = len(categories)
   #for the moment we'll keep this, because I'm not sure how to handle year by year variations in this stuff...
   bins_mtt=[50,70,90,110,130,150,170,210,250,290]
-  bins_0jetlow=[30,40,50,9000]
-  bins_0jethigh=[30,40,50,9000]
+  bins_0jet=[30,40,50,9000]
+  #bins_0jetlow=[30,40,50,9000]
+  #bins_0jethigh=[30,40,50,9000]
   bins_boosted1=[0,60,120,200,250,9000]
   bins_boosted2=[0,60,120,200,250,9000]
   bins_vbflow=[350,700,1000,1500,1800,9000]
   bins_vbfhigh=[350,700,1200,9000]
-  slices=[(len(bins_0jetlow)-1),(len(bins_0jethigh)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
+  slices=[(len(bins_0jet)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
 
 if args.channel == "mt":
   categories=catConfig.Categories['mt']
   ncategories = len(categories)
   bins_mtt=[50,70,90,110,130,150,170,210,250,290]
-  bins_0jetlow=[30,40,50,9000]
-  bins_0jethigh=[30,40,50,9000]
+  bins_0jet=[30,40,50,9000]
+  #bins_0jetlow=[30,40,50,9000]
+  #bins_0jethigh=[30,40,50,9000]
   bins_boosted1=[0,60,120,200,250,9000]
   bins_boosted2=[0,60,120,200,250,9000]
   bins_vbflow=[350,700,1000,1500,1800,9000]
   bins_vbfhigh=[350,700,1200,9000]
-  slices=[(len(bins_0jetlow)-1),(len(bins_0jethigh)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
+  slices=[(len(bins_0jet)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
 
 if args.channel == "em":
   categories=catConfig.Categories['em']
