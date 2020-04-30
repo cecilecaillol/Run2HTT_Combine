@@ -44,7 +44,7 @@ tt_Categories = []
 tt_Categories = tt_0jet_categories + tt_boosted_categories + tt_vbf_categories
 
 mt_0jet_categories = []
-mt_0jet_categories.append(mt_0jet)
+mt_0jet_categories.append(mt_0jet_category)
 #mt_0jet_categories.append(mt_0jet_low_category)
 #mt_0jet_categories.append(mt_0jet_high_category)
 mt_boosted_categories = []
@@ -64,7 +64,7 @@ et_vbf_categories = []
 et_vbf_categories.append(et_vbf_low_category)
 et_vbf_categories.append(et_vbf_high_category)
 et_0jet_categories = []
-et_0jet_categories.append(et_0jet)
+et_0jet_categories.append(et_0jet_category)
 #et_0jet_categories.append(et_0jet_low_category)
 #et_0jet_categories.append(et_0jet_high_category)
 
@@ -101,16 +101,14 @@ recoBinConfiguration = {
         tt_vbf_low_category:standardRecoBinConfiguration,
     },
     'mt':{
-        mt_0jet_low_category:standardRecoBinConfiguration,
-        mt_0jet_high_category:standardRecoBinConfiguration,
+        mt_0jet_category:standardRecoBinConfiguration,
         mt_boosted_1J_category:standardRecoBinConfiguration,
         mt_boosted_GE2J_category:standardRecoBinConfiguration,
         mt_vbf_low_category:standardRecoBinConfiguration,
         mt_vbf_high_category:standardRecoBinConfiguration,
     },
     'et':{
-        et_0jet_low_category:standardRecoBinConfiguration,
-        et_0jet_high_category:standardRecoBinConfiguration,
+        et_0jet_category:standardRecoBinConfiguration,
         et_boosted_1J_category:standardRecoBinConfiguration,
         et_boosted_GE2J_category:standardRecoBinConfiguration,
         et_vbf_low_category:standardRecoBinConfiguration,
@@ -136,16 +134,14 @@ rollingBinConfiguration = {
         tt_vbf_low_category:[],
     },
     'mt':{
-        mt_0jet_low_category:[30,40,50,10000],
-        mt_0jet_high_category:[30,40,50,10000],
+        mt_0jet_category:[30,40,50,10000],
         mt_boosted_1J_category:[0,60,120,200,250,10000],
         mt_boosted_GE2J_category:[0,60,120,200,250,10000],
         mt_vbf_low_category:[350,700,1000,1500,1800,10000],
         mt_vbf_high_category:[350,700,1200,10000],
     },
     'et':{
-        et_0jet_low_category:[30,40,50,9000],
-        et_0jet_high_category:[30,40,50,9000],
+        et_0jet_category:[30,40,50,9000],
         et_boosted_1J_category:[0,60,120,200,250,9000],
         et_boosted_GE2J_category:[0,60,120,200,250,9000],
         et_vbf_low_category:[350,700,1000,1500,1800,9000],
