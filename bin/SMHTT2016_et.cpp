@@ -592,10 +592,10 @@ int main(int argc, char **argv)
       //MET Unclustered Energy Scale      
       std::cout<<"MET UES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_met_unclustered_2016"},
-			  {"TTT","TTL","VVT","STT","VVL","STL"},
+			  {"TTT","TTL","VVT","STT"},
 			  &cb,
 			  1.00,
-			  TheFile,CategoryArgs);
+			  TheFile,{"et_0jet","et_boosted1","et_boosted2"});
       
       //Recoil Shapes:                  
       //check which signal processes this should be applied to. If any.
@@ -689,15 +689,21 @@ int main(int argc, char **argv)
       //TES Uncertainty                  
       std::cout<<"TES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_t_1prong_2016","CMS_scale_t_3prong_2016","CMS_scale_t_1prong1pizero_2016","CMS_scale_t_3prong1pizero_2016"},
-			  JoinStr({sig_procs,{"VVT","STT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"STT","VVT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 			  &cb,
 			  1.00,
-			  TheFile,CategoryArgs);
+			  TheFile,{"et_0jet","et_boosted1","et_boosted2"});
+
+      AddShapesIfNotEmpty({"CMS_scale_t_1prong_2016","CMS_scale_t_3prong_2016","CMS_scale_t_1prong1pizero_2016","CMS_scale_t_3prong1pizero_2016"},
+                          JoinStr({sig_procs,{"TTT","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          &cb,
+                          1.00,
+                          TheFile,{"et_vbflow","et_vbfhigh"});
 
       // JES
       AddShapesIfNotEmpty({"CMS_JetAbsolute","CMS_JetAbsolute_2016","CMS_JetBBEC1","CMS_JetBBEC1_2016","CMS_JetEC2","CMS_JetEC2_2016",
 	    "CMS_JetFlavorQCD","CMS_JetHF","CMS_JetHF_2016","CMS_JetRelativeBal"},
-	JoinStr({sig_procs,{"ZT","VVL","STL","ZL","TTL","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+	JoinStr({sig_procs,{"ZT","TTT","VVT","STT","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);      
@@ -705,10 +711,16 @@ int main(int argc, char **argv)
       //JER
       std::cout<<"JER"<<std::endl;
       AddShapesIfNotEmpty({"CMS_JER_2016"},
-			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"ZT","VVT","STL","STT","TTT","VVL","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 			  &cb,
 			  1.000,
-			  TheFile,CategoryArgs);
+			  TheFile,{"et_0jet","et_boosted1","et_boosted2"});
+
+      AddShapesIfNotEmpty({"CMS_JER_2016"},
+                          JoinStr({sig_procs,{"ZT","TTT","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          &cb,
+                          1.000,
+                          TheFile,{"et_vbflow","et_vbfhigh"});
 
 
       //ggH Theory Uncertainties
@@ -730,7 +742,7 @@ int main(int argc, char **argv)
 
       //Electron Energy scale uncertainties
       AddShapesIfNotEmpty({"CMS_scale_e"},
-			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
