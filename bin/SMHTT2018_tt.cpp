@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     bkg_procs.push_back("TTT");
     bkg_procs.push_back("STT");
   }
-  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+  /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
     {      
       bkg_procs.push_back("ggH_htt_nonfid125");
       bkg_procs.push_back("qqH_htt_nonfid125");
@@ -81,7 +81,7 @@ int main(int argc, char **argv)
       bkg_procs.push_back("qqH_hww125");
       bkg_procs.push_back("WH_hww125");
       bkg_procs.push_back("ZH_hww125");
-    }
+    }*/
 
   cb.AddProcesses({"*"}, {"smh2018"}, {"13TeV"}, {"tt"}, bkg_procs, cats, false);
 
@@ -175,7 +175,8 @@ int main(int argc, char **argv)
 		   "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"};
 
   vector<string> WH_STXS;
-  if (Input.OptionExists("-q")) WH_STXS = {"WH_lep_htt125","WH_had_htt125"};
+  //if (Input.OptionExists("-q")) WH_STXS = {"WH_lep_htt125","WH_had_htt125"};
+  if (Input.OptionExists("-q")) WH_STXS = {"WH_htt125"};
   else if (Input.OptionExists("-dp")) WH_STXS = {
       "WH_PTH_0_20_htt125",
       "WH_PTH_20_45_htt125",
@@ -204,7 +205,7 @@ int main(int argc, char **argv)
       "WH_MJJ_1400_1800_htt125",
       "WH_MJJ_GE1800_htt125",
     };
-  else WH_STXS = {
+  /*else WH_STXS = {
       "WH_lep_htt125",
       "WH_0J_htt125",
       "WH_1J_htt125",
@@ -216,10 +217,12 @@ int main(int argc, char **argv)
       "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
       "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
       "WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-    };
+    };*/
+  else WH_STXS = {"WH_htt125"};
 
   vector<string> ZH_STXS;
-  if (Input.OptionExists("-q")) ZH_STXS = {"ZH_lep_htt125","ZH_had_htt125"};
+  //if (Input.OptionExists("-q")) ZH_STXS = {"ZH_lep_htt125","ZH_had_htt125"};
+  if (Input.OptionExists("-q")) ZH_STXS = {"ZH_htt125"};
   else if (Input.OptionExists("-dp")) ZH_STXS = {
       "ZH_PTH_0_20_htt125",
       "ZH_PTH_20_45_htt125",
@@ -248,7 +251,7 @@ int main(int argc, char **argv)
       "ZH_MJJ_1400_1800_htt125",
       "ZH_MJJ_GE1800_htt125",
     };
-  else ZH_STXS = {
+  /*else ZH_STXS = {
       "ZH_lep_htt125",
       "ZH_0J_htt125",
       "ZH_1J_htt125",
@@ -260,7 +263,8 @@ int main(int argc, char **argv)
       "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
       "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
       "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-    };
+    };*/
+  else ZH_STXS = {"ZH_htt125"};
   
   vector<string> sig_procs = ch::JoinStr({ggH_STXS,qqH_STXS,WH_STXS,ZH_STXS});
   cb.AddProcesses(masses, {"smh2018"}, {"13TeV"}, {"tt"}, sig_procs, cats, true);
