@@ -51,12 +51,16 @@ for year in args.years:
         elif args.MeasurementType=="njets":
             DataCardCreationCommand+= ' -dn '
         DataCardCreationCommand+=" --Categories"
-        DataCardCreationCommand+=" "+channel+"_0jet"
+        if channel == 'tt':
+            DataCardCreationCommand+=" "+channel+"_0jet"
+        else:
+            DataCardCreationCommand+=" "+channel+"_0jet_high"
+            DataCardCreationCommand+=" "+channel+"_0jet_low"
         DataCardCreationCommand+=" "+channel+"_1jet"
         DataCardCreationCommand+=" "+channel+"_2jetlow"
         DataCardCreationCommand+=" "+channel+"_2jethigh"
-        DataCardCreationCommand+=" "+channel+"_3jetlow"
-        DataCardCreationCommand+=" "+channel+"_3jethigh"
+        DataCardCreationCommand+=" "+channel+"_3jet"
+        DataCardCreationCommand+=" "+channel+"_4jet"
         DataCardCreationCommand+=" "+channel+"_2jet"
         print("Creating data cards")
         logging.info('Data Card Creation Command:')
@@ -77,15 +81,29 @@ for year in args.years:
         # we may not necessarily want all of these cards
         #mjj measurements do not use the high and low mjj categories
         #njets measurements do not use the mjj rolled category
-        CardCombiningCommand+=" "+channel+"_"+year+"_0jet="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
-        CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
-        if not args.MeasurementType == "mjj":
-            CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_3jetlow="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_3jethigh="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
-        if args.MeasurementType == "mjj":
-            CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
+        
+        if channel == 'tt':
+            CardCombiningCommand+=" "+channel+"_"+year+"_0jet="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
+            if not args.MeasurementType == "mjj":
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_3jet="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_4jet="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
+            if args.MeasurementType == "mjj":
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
+        else:
+            CardCombiningCommand+=" "+channel+"_"+year+"_0jet_low="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_0jet_high="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
+            CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
+            if not args.MeasurementType == "mjj":
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_3jet="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_4jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
+            if args.MeasurementType == "mjj":
+                CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
+        
 
 CardCombiningCommand+=" > "+CombinedCardName
 logging.info("Final Card Combining Command:")
@@ -140,12 +158,14 @@ elif args.MeasurementType == 'njets':
     WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_0.*htt.*:r_H_NJETS_0[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_1.*htt.*:r_H_NJETS_1[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_2.*htt.*:r_H_NJETS_2[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_GE3.*htt.*:r_H_NJETS_GE3[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_3.*htt.*:r_H_NJETS_3[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_GE4.*htt.*:r_H_NJETS_GE4[1,-25,25]' "
     parametersToMeasure=[
         'r_H_NJETS_0',
         'r_H_NJETS_1',
         'r_H_NJETS_2',
-        'r_H_NJETS_GE3'
+        'r_H_NJETS_3'
+        'r_H_NJETS_GE4'
     ]
 WorkspaceCommand+= CombinedCardName+" -o "+WorkspaceName+" -m 125"
 
