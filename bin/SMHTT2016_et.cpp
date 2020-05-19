@@ -773,10 +773,49 @@ int main(int argc, char **argv)
 	1.00,
 	TheFile,CategoryArgs);
       
-      AddShapesIfNotEmpty({"ggH_scale_0jet"},
+      //new theory shapes
+      //inclusive shapes
+      AddShapesIfNotEmpty({"ggH_scale"},
 			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_0_200_0J_PTH_10_200_htt125",
+			      "ggZH_had_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"vbf_scale"},
+			  {"vbf_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"VH_scale"},
+			  {"WH_had_htt125",
+			      "ZH_had_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"WHlep_scale"},
+			  {"WH_lep_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"ZHlep_scale"},
+			  {"ZH_lep_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+
+      //individual STXS bin shapes
+      AddShapesIfNotEmpty({"ggH_scale_0jet"},
+			  {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 			      "ggH_PTH_0_200_0J_PTH_0_10_htt125",
 			      "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
 			      "ggZH_PTH_0_200_0J_PTH_0_10_htt125"},
@@ -786,9 +825,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"ggH_scale_1jet_lowpt"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_0_200_1J_PTH_0_60_htt125",
+			  {"ggH_PTH_0_200_1J_PTH_0_60_htt125",
 			      "ggH_PTH_0_200_1J_PTH_60_120_htt125",
 			      "ggH_PTH_0_200_1J_PTH_120_200_htt125",
 			      "ggZH_PTH_0_200_1J_PTH_0_60_htt125",
@@ -800,9 +837,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"ggH_scale_2jet_lowpt"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
+			  {"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
 			      "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
 			      "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"
 			      "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
@@ -814,9 +849,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"ggH_scale_vbf"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
+			  {"ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
 			      "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
 			      "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",
 			      "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",
@@ -830,9 +863,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"ggH_scale_highpt"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_200_300_htt125",
+			  {"ggH_PTH_200_300_htt125",
 			      "ggH_PTH_300_450_htt125",
 			      "ggZH_PTH_200_300_htt125",
 			      "ggZH_PTH_300_450_htt125"},
@@ -842,9 +873,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"ggH_scale_very_highpt"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125",
-			      "ggH_PTH_450_650_htt125",
+			  {"ggH_PTH_450_650_htt125",
 			      "ggH_PTH_GE650_htt125",
 			      "ggZH_PTH_450_650_htt125",
 			      "ggZH_PTH_GE650_htt125"},
@@ -855,37 +884,66 @@ int main(int argc, char **argv)
 			  );
 
       AddShapesIfNotEmpty({"vbf_scale_0jet"},
-			  {"qqH_htt125",
-			      "WH_had_htt125",
-			      "ZH_had_htt125"
-			      "qqH_0J_htt125",
-			      "WH_0J_htt125",
-			      "ZH_0J_htt125,"},
+			  {"qqH_0J_htt125"},
 			  &cb,
 			  1.00,
 			  TheFile,
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"vbf_scale_1jet"},
-			  {"qqH_htt125",
-			      "WH_had_htt125",
-			      "ZH_had_htt125",
-			      "qqH_1J_htt125",
-			      "WH_1J_htt125",
-			      "ZH_1J_htt125"},
+			  {"qqH_1J_htt125"},
 			  &cb,
 			  1.00,
 			  TheFile,
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"vbf_scale_lowmjj"},
-			  {"qqH_htt125",
-			      "WH_had_htt125",
-			      "ZH_had_htt125",
-			      "qqH_GE2J_MJJ_0_60_htt125",
+			  {"qqH_GE2J_MJJ_0_60_htt125",
 			      "qqH_GE2J_MJJ_60_120_htt125",
-			      "qqH_GE2J_MJJ_120_350_htt125",
-			      "WH_GE2J_MJJ_0_60_htt125",
+			      "qqH_GE2J_MJJ_120_350_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+
+      AddShapesIfNotEmpty({"vbf_scale_highmjj_lowpt"},
+			  {"qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+
+      AddShapesIfNotEmpty({"vbf_scale_highmjj_highpt"},
+			  {"qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+
+      AddShapesIfNotEmpty({"VH_scale_0jet"},
+			  {"WH_0J_htt125",
+			      "ZH_0J_htt125,"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"VH_scale_1jet"},
+			  {"WH_1J_htt125",
+			      "ZH_1J_htt125"},
+			  &cb,
+			  1.00,
+			  TheFile,
+			  CategoryArgs
+			  );
+      AddShapesIfNotEmpty({"VH_scale_lowmjj"},
+			  {"WH_GE2J_MJJ_0_60_htt125",
 			      "WH_GE2J_MJJ_60_120_htt125",
 			      "WH_GE2J_MJJ_120_350_htt125",
 			      "ZH_GE2J_MJJ_0_60_htt125",
@@ -897,15 +955,8 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
 
-      AddShapesIfNotEmpty({"vbf_scale_highmjj_lowpt"},
-			  {"qqH_htt125",
-			      "WH_had_htt125",
-			      "ZH_had_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+      AddShapesIfNotEmpty({"VH_scale_highmjj_lowpt"},
+			  {"WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
 			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
 			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
 			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
@@ -919,12 +970,8 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
 
-      AddShapesIfNotEmpty({"vbf_scale_highmjj_highpt"},
-			  {"qqH_htt125",
-			      "WH_had_htt125",
-			      "ZH_had_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
+      AddShapesIfNotEmpty({"VH_scale_highmjj_highpt"},
+			  {"WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
 			      "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
 			  &cb,
 			  1.00,
@@ -983,7 +1030,8 @@ int main(int argc, char **argv)
 			  TheFile,
 			  CategoryArgs
 			  );
-      
+      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
+      /*
       AddShapesIfNotEmpty({"WH_scale_lowpt"},
 			  {"WH_lep_htt125"},
 			  &cb,
@@ -1016,7 +1064,7 @@ int main(int argc, char **argv)
 			  TheFile,
 			  CategoryArgs
 			  );
-
+      */
     }
   //*********************************************************
   //embedded uncertainties. 
