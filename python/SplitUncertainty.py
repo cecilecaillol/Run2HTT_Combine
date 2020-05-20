@@ -23,8 +23,24 @@ class UncertaintySplitter():
         for Systematic in Systematics:
             SystGroup += Systematic+" "
         SystGroup+="\n"
-        CardFile.write(SystGroup)
+        CardFile.write(SystGroup)       
+
+        #let's find theory systematics and perform a similar analysis on them.
+        theorySysts = []
+        for line in CardContents:
+            if re.search("BR_htt|(?<!CMS_)(?<!boson_)[sS]cale|pdf_Higgs",line):
+                #the line contains one of our theory uncertainties. Get the name
+                theorySysts.append(re.match("^\S+",line).group(0))
+        #create the theory group
+        theoryGroup = "Theory group = "
+        for systematic in theorySysts:
+            theoryGroup += systematic+" "
+        theoryGroup+='\n'
+        CardFile.write(theoryGroup)
+        
         CardFile.close()
+
+    #this is old and incorrect? Maybe needs redoing. For now, avoid use.
     def SplitMeasurement(self,Command,OutputDir):
         print("Splitting the Uncertainty...")        
         #secondary method? should evaluate the same?
