@@ -377,15 +377,15 @@ os.system(TextWorkspaceCommand+" | tee -a "+outputLoggingFile)
 
 PhysModel = 'MultiDimFit'
 if args.UseGrid:
-    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --algo=grid --points='+str(args.nGridPoints)
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --expectSignal=1 --cl=0.68 --algo=grid --points='+str(args.nGridPoints)
 else:
-    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --algo=singles '
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --expectSignal=1 --cl=0.68 --algo=singles '
 if args.ComputeSignificance:
     PhysModel = 'Significance'
-    ExtraCombineOptions = '--X-rtd MINIMIZER_analytic --cl=0.68 '
+    ExtraCombineOptions = '--X-rtd MINIMIZER_analytic  --cl=0.68 '
 if args.StoreShapes:
     PhysModel = 'FitDiagnostics'
-    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes '
+    ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --expectSignal=1 --cl=0.68 --saveShapes '
 if args.ExperimentalSpeedup:
     ExtraCombineOptions += ' --X-rtd FAST_VERTICAL_MORPH --cminDefaultMinimizerStrategy 0 '
 if args.ControlMode:
@@ -395,7 +395,7 @@ if args.ControlMode:
 CombinedWorkspaceName = CombinedCardName[:len(CombinedCardName)-3]+"root"
 InclusiveCommand="combineTool.py -M "+PhysModel+" "+CombinedWorkspaceName+" "+ExtraCombineOptions+" " 
 if not args.Unblind:
-    InclusiveCommand+="--preFitValue=1. --expectSignal=1 -t -1 "
+    InclusiveCommand+="--preFitValue=1. -t -1 "
 InclusiveCommand+="-n "+DateTag+"_Inclusive"
     
 if args.Timeout is True:
@@ -421,9 +421,8 @@ if args.UseGrid:
     appendFile.write(theResult+'\n')
     appendFile.close()
     theScanFile.Close()
-
-if args.SplitInclusive:
-    Splitter.SplitMeasurement(InclusiveCommand,OutputDir)
+if args.SplitUncertainties:
+    Splitter.CreateGridMeasurement('r',OutputDir,CombinedWorkspaceName,DateTag,args.nGridPoints,logging)
 
 os.system("mv *"+DateTag+"*.root "+OutputDir)
 
@@ -432,7 +431,7 @@ if not args.ComputeSignificance:
     for SignalName in ["r_ggH","r_qqH"]:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
         if not args.Unblind:
-            CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
+            CombineCommand+=" --preFitValue=1. -t -1"
         CombineCommand+=" --setParameters r_ggH=1,r_qqH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
         if args.Timeout is True:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
@@ -458,11 +457,10 @@ if not args.ComputeSignificance:
             appendFile.write(theResult+'\n')
             appendFile.close()
             theScanFile.Close()
+        if args.SplitUncertainties:            
+            Splitter.CreateGridMeasurement(SignalName,OutputDir,PerSignalName,DateTag,args.nGridPoints,logging)
             
         os.system("mv *"+DateTag+"*.root "+OutputDir)
-
-        if args.SplitSignals:
-            Splitter.SplitMeasurement(CombineCommand,OutputDir)    
     
         #we need to remember to move and save the results file to something relevant           
 
@@ -527,7 +525,7 @@ if args.RunSTXS:
     for MergedBin in MergedSignalNames:
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerMergedBinName+" "+ExtraCombineOptions
         if not args.Unblind:
-            CombineCommand+=" --preFitValue=1. --expectSignal=1 -t -1"
+            CombineCommand+=" --preFitValue=1. -t -1"
         CombineCommand+=" -n "+DateTag+"_"+MergedBin+"_Merged --setParameters "
         
         for BinName in MergedSignalNames:
@@ -556,6 +554,8 @@ if args.RunSTXS:
             appendFile.write(theResult+'\n')
             appendFile.close()
             theScanFile.Close()
+        if args.SplitUncertainties:            
+            Splitter.CreateGridMeasurement('r_'+BinName,OutputDir,PerMergedBinName,DateTag,args.nGridPoints,logging)
         os.system(" mv *"+DateTag+"*.root "+OutputDir)
 
     if args.CorrelationMatrix:
