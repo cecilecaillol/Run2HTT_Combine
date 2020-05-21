@@ -28,7 +28,7 @@ class UncertaintySplitter():
         #let's find theory systematics and perform a similar analysis on them.
         theorySysts = []
         for line in CardContents:
-            if re.search("BR_htt|(?<!CMS_)(?<!boson_)[sS]cale|pdf_Higgs",line):
+            if re.search("BR_htt|(?<!CMS_)(?<!boson_)[sS]cale|pdf_Higgs|THU",line):
                 #the line contains one of our theory uncertainties. Get the name
                 theorySysts.append(re.match("^\S+",line).group(0))
         #create the theory group
