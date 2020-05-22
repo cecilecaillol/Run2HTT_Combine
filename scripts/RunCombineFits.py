@@ -6,6 +6,7 @@ import logging
 import datetime
 import string
 import random
+import re
 import CombineHarvester.Run2HTT_Combine.CategoryConfigurations as cfg
 import CombineHarvester.Run2HTT_Combine.CategoryMaps as CategoryMaps
 from CombineHarvester.Run2HTT_Combine.EmbeddedConfiguration import EmbeddedConfiguration as embedded_cfg
@@ -28,10 +29,7 @@ parser.add_argument('--ComputeGOF',help="Compute saturated GOF use on forcefully
 #parser.add_argument('--DisableCategoryFits',help="Disable category card creation and fits",action="store_true")
 parser.add_argument('--Timeout', help="Trigger timeout as conditions on fits (prevents infinitely running fits)", action="store_true")
 parser.add_argument('--TimeoutTime',nargs='?',help="Time allotted before a timeout (linux timeout syntax)",default="180s")
-parser.add_argument('--SplitUncertainties', help="Create groups for helping to split the measurements",action="store_true")
-parser.add_argument('--SplitInclusive',help="Split the inclusive measurements into component pieces. REQUIRES --SplitUncertainties",action="store_true")
-parser.add_argument('--SplitSignals',help="Split signal measurements into component pieces. REQUIRES --SplitUncertainties",action="store_true")
-parser.add_argument('--SplitSTXS',help="Split STXS measurements into component pieces. REQUIRES --SplitUncertainties",action="store_true")
+parser.add_argument('--SplitUncertainties', help="Submit condor grid jobs for splitting uncertainties. Also uses nGridPoints",action="store_true")
 parser.add_argument('--RunParallel',help='Run all fits in parallel using threads',action="store_true")
 parser.add_argument('--numthreads',nargs='?',help='Number of threads to use to run fits in parallel',type=int,default=12)
 parser.add_argument('--DecorrelateForMe',help="Run the decorrelator as part of the overall run. Looks for a datacard named smh<year><channel>_nocorrelation.root",action="store_true")
@@ -45,12 +43,10 @@ parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. 
 parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
 parser.add_argument('--UseGrid',help='Sweep grid points to generate results, instead of using the approximate singles algorithm',action='store_true')
 parser.add_argument('--nGridPoints',help='Number of grid points to use when using grid algorithms.',type=int,default=100)
+parser.add_argument('--displayCrossSections',help='Display inclusive and stage-0 results as cross sections also',action='store_true')
 
 print("Parsing command line arguments.")
 args = parser.parse_args() 
-
-if (args.SplitInclusive or args.SplitSignals or args.SplitSTXS) and not (args.SplitUncertainties):
-    parser.error("Tried to split a measurement without calling --SplitUncertainties!")
 
 if args.RunParallel:
     ThreadHandler = ThreadManager(args.numthreads)
@@ -403,7 +399,7 @@ if args.Timeout is True:
 logging.info("Inclusive combine command:")
 logging.info('\n\n'+InclusiveCommand+'\n')
 if args.RunParallel:
-    ThreadHandler.AddNewFit(InclusiveCommand,"r",OutputDir)
+    ThreadHandler.AddNewFit(InclusiveCommand,"r",OutputDir)    
 elif args.DontPrintResults:
     os.system(InclusiveCommand+" > /dev/null")
 else:
