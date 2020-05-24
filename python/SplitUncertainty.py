@@ -28,7 +28,7 @@ class UncertaintySplitter():
         #let's find theory systematics and perform a similar analysis on them.
         theorySysts = []
         for line in CardContents:
-            if re.search("BR_htt|(?<!CMS_)(?<!boson_)[sS]cale|pdf_Higgs|THU",line):
+            if re.search("BR_htt|(?<!CMS_)(?<!boson_)(?<!length)[sS]cale|pdf_Higgs|THU",line):
                 #the line contains one of our theory uncertainties. Get the name
                 theorySysts.append(re.match("^\S+",line).group(0))
         #create the theory group
@@ -42,10 +42,10 @@ class UncertaintySplitter():
     #create a special function dedicated to creating condor jobs for measurements
     def CreateGridMeasurement(self,parameter,OutputDir,workspace,tag,npoints,logging):
         print("Creating specialized condor tasks for making in depth uncertainty sweeps...")
-        allUncertsCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --splitPoints 1 -n '+parameter+'AllUncerts_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'AllUncerts_'+tag+' --merge 1'
-        theoryFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --splitPoints 1 -n '+parameter+'TheoryFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'TheoryFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Theory'
-        theoryAndBBBFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --splitPoints 1 -n '+parameter+'TheoryAndBBBFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'TheoryAndBBFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Theory,autoMCStats'
-        allFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --splitPoints 1 -n '+parameter+'AllFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'AllFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Syst,autoMCStats'
+        allUncertsCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --split-points 1 -n '+parameter+'AllUncerts_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'AllUncerts_'+tag+' --merge 1'
+        theoryFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --split-points 1 -n '+parameter+'TheoryFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'TheoryFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Theory'
+        theoryAndBBBFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --split-points 1 -n '+parameter+'TheoryAndBBBFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'TheoryAndBBFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Theory,autoMCStats'
+        allFreezeCommand = 'combineTool.py -M MultiDimFit -d '+workspace+' --robustFit 1 --X-rtd MINIMIZER_Analytic --algo grid --points '+str(npoints)+' --split-points 1 -n '+parameter+'AllFreeze_'+tag+' -P '+parameter+' --floatOtherPOIs=1 --job-mode condor --task-name '+parameter+'AllFreeze_'+tag+' --merge 1 --freezeNuisanceGroups Syst,autoMCStats'
         logging.info('Condor Based Grid Sweep Commands: ')
         logging.info('\n\n'+allUncertsCommand+'\n\n'+theoryFreezeCommand+'\n\n'+theoryAndBBBFreezeCommand+'\n\n'+allFreezeCommand+'\n')
         os.system(allUncertsCommand)
