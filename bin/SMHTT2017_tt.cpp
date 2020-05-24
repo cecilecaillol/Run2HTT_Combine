@@ -753,7 +753,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       AddShapesIfNotEmpty({"vbf_scale"},
-			  {"vbf_htt125"},
+			  {"qqH_htt125"},
 			  &cb,
 			  1.00,
 			  TheFile,
