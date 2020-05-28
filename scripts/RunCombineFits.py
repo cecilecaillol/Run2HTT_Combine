@@ -132,7 +132,7 @@ for year in args.years:
         print("Creating data cards")
         logging.info("Data Card Creation Command:")
         logging.info('\n\n'+DataCardCreationCommand+'\n')
-        os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile)        
+        assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0,"Model exited with stats != 0. Please check for errors"
         
 
 #cobmine all cards together
