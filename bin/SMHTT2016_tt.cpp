@@ -465,6 +465,19 @@ int main(int argc, char **argv)
   cb.cp().process({"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"}).bin({"tt_boosted_multijet"}).AddSyst(cb,"CMS_pythia_scale","lnN",ch::syst::SystMapAsymm<>::init(1.2,0.92));
   cb.cp().process({"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"}).bin({"tt_vbf_lowHpT"}).AddSyst(cb,"CMS_pythia_scale","lnN",ch::syst::SystMapAsymm<>::init(1.01,0.98));
   cb.cp().process({"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"}).bin({"tt_vbf_highHpT"}).AddSyst(cb,"CMS_pythia_scale","lnN",ch::syst::SystMapAsymm<>::init(1.138,0.85));
+
+  //pdf acceptance uncertainties
+    cb.cp().process({ggH_STXS}).bin({"tt_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.009));
+  cb.cp().process({ggH_STXS}).bin({"tt_boosted_onejet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.010));
+  cb.cp().process({ggH_STXS}).bin({"tt_boosted_multijet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.004));
+  cb.cp().process({ggH_STXS}).bin({"tt_vbf_lowHpT"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.013));
+  cb.cp().process({ggH_STXS}).bin({"tt_vbf_highHpT"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.013));
+
+  cb.cp().process({qqH_STXS}).bin({"tt_0jet"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.008));
+  cb.cp().process({qqH_STXS}).bin({"tt_boosted_onejet"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.005));
+  cb.cp().process({qqH_STXS}).bin({"tt_boosted_multijet"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.004));
+  cb.cp().process({qqH_STXS}).bin({"tt_vbf_lowHpT"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.006));
+  cb.cp().process({qqH_STXS}).bin({"tt_vbf_highHpT"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.006));
   
   // XSection Uncertainties
   cb.cp().process({"TTT","TTL"}).AddSyst(cb,"CMS_htt_tjXsec", "lnN", SystMap<>::init(1.042));
