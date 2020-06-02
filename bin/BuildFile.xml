@@ -10,6 +10,42 @@
 <bin file="SMHTT2016_em.cpp" name="SMHTT2016_em"></bin>
 <bin file="SMHTT2017_em.cpp" name="SMHTT2017_em"></bin>
 <bin file="SMHTT2018_em.cpp" name="SMHTT2018_em"></bin>
+<bin file="WH2016_emt.cpp" name="WH2016_emt"></bin>
+<bin file="WH2016_ett.cpp" name="WH2016_ett"></bin>
+<bin file="WH2016_mmt.cpp" name="WH2016_mmt"></bin>
+<bin file="WH2016_mtt.cpp" name="WH2016_mtt"></bin>
+<bin file="WH2017_emt.cpp" name="WH2017_emt"></bin>
+<bin file="WH2017_ett.cpp" name="WH2017_ett"></bin>
+<bin file="WH2017_mmt.cpp" name="WH2017_mmt"></bin>
+<bin file="WH2017_mtt.cpp" name="WH2017_mtt"></bin>
+<bin file="WH2018_emt.cpp" name="WH2018_emt"></bin>
+<bin file="WH2018_ett.cpp" name="WH2018_ett"></bin>
+<bin file="WH2018_mmt.cpp" name="WH2018_mmt"></bin>
+<bin file="WH2018_mtt.cpp" name="WH2018_mtt"></bin>
+<bin file="ZH2016_eeem.cpp" name="ZH2016_eeem"></bin>
+<bin file="ZH2016_eeet.cpp" name="ZH2016_eeet"></bin>
+<bin file="ZH2016_eemt.cpp" name="ZH2016_eemt"></bin>
+<bin file="ZH2016_eett.cpp" name="ZH2016_eett"></bin>
+<bin file="ZH2016_mmem.cpp" name="ZH2016_mmem"></bin>
+<bin file="ZH2016_mmet.cpp" name="ZH2016_mmet"></bin>
+<bin file="ZH2016_mmmt.cpp" name="ZH2016_mmmt"></bin>
+<bin file="ZH2016_mmtt.cpp" name="ZH2016_mmtt"></bin>
+<bin file="ZH2017_eeem.cpp" name="ZH2017_eeem"></bin>
+<bin file="ZH2017_eeet.cpp" name="ZH2017_eeet"></bin>
+<bin file="ZH2017_eemt.cpp" name="ZH2017_eemt"></bin>
+<bin file="ZH2017_eett.cpp" name="ZH2017_eett"></bin>
+<bin file="ZH2017_mmem.cpp" name="ZH2017_mmem"></bin>
+<bin file="ZH2017_mmet.cpp" name="ZH2017_mmet"></bin>
+<bin file="ZH2017_mmmt.cpp" name="ZH2017_mmmt"></bin>
+<bin file="ZH2017_mmtt.cpp" name="ZH2017_mmtt"></bin>
+<bin file="ZH2018_eeem.cpp" name="ZH2018_eeem"></bin>
+<bin file="ZH2018_eeet.cpp" name="ZH2018_eeet"></bin>
+<bin file="ZH2018_eemt.cpp" name="ZH2018_eemt"></bin>
+<bin file="ZH2018_eett.cpp" name="ZH2018_eett"></bin>
+<bin file="ZH2018_mmem.cpp" name="ZH2018_mmem"></bin>
+<bin file="ZH2018_mmet.cpp" name="ZH2018_mmet"></bin>
+<bin file="ZH2018_mmmt.cpp" name="ZH2018_mmmt"></bin>
+<bin file="ZH2018_mmtt.cpp" name="ZH2018_mmtt"></bin>
 <use name="root"/>
 <use name="rootmath"/>
 <use name="roofit"/>
