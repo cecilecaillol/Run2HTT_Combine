@@ -11,10 +11,15 @@
 #include "CombineHarvester/CombineTools/interface/Utilities.h"
 #include "CombineHarvester/CombineTools/interface/Systematics.h"
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
+#include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
+#include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
 
 using namespace std;
 
-int main() {
+int main(int argc, char **argv)
+
+{
+  InputParserUtility Input(argc,argv);
   //! [part1]
   // First define the location of the "auxiliaries" directory where we can
   // source the input files containing the datacard shapes
@@ -199,7 +204,7 @@ int main() {
   // instance.
 
   // We create the output root file that will contain all the shapes.
-  TFile output("wh2017_mmt.input.root", "RECREATE");
+  TFile output((Input.ReturnToken(0)+"/"+"wh2017_mmt.input.root").c_str(), "RECREATE");
 
   // Finally we iterate through each bin,mass combination and write a
   // datacard.
@@ -210,8 +215,8 @@ int main() {
       // We need to filter on both the mass and the mass hypothesis,
       // where we must rmmtmmtber to include the "*" mass entry to get
       // all the data and backgrounds.
-      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(
-          b + "_" + m + ".txt", output);
+      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", 
+						    output);
     }
   }
   //! [part9]

@@ -15,8 +15,10 @@ from CombineHarvester.Run2HTT_Combine.ThreadManager import ThreadManager
 import CombineHarvester.Run2HTT_Combine.outputArea as outputArea
 
 parser = argparse.ArgumentParser(description="Centralized script for running combine fits on dynamically changing analysis categories.")
+parser.add_argument('--analysisStyle',nargs="+",choices=['Standard','WH','ZH'],help="Specify which analysis's models are to be run",required=True)
 parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Specify the year(s) to run the fit for",required=True)
-parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create data cards for",required=True)
+parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create standard data cards for")
+parser.add_argument('--WHChannels',nargs="+",choices=['emt','ett','mmt','mtt'],help="specify the channels to create WH datacards for")
 parser.add_argument('--RunShapeless',help="Run combine model without using any shape uncertainties",action="store_true")
 parser.add_argument('--RunWithBinByBin',help="Run combine model without using bin-by-bin uncertainties",action="store_true")
 parser.add_argument('--RunWithoutAutoMCStats',help="Run with auto mc stats command appended to data cards",action="store_true")
@@ -44,9 +46,19 @@ parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. 
 parser.add_argument('--UseGrid',help='Sweep grid points to generate results, instead of using the approximate singles algorithm',action='store_true')
 parser.add_argument('--nGridPoints',help='Number of grid points to use when using grid algorithms.',type=int,default=100)
 parser.add_argument('--displayCrossSections',help='Display inclusive and stage-0 results as cross sections also',action='store_true')
+parser.add_argument('--workspaceOnly',help='Create the text cards, and workspaces only, and then exit. Do not attempt any fits.',action='store_true')
 
 print("Parsing command line arguments.")
 args = parser.parse_args() 
+
+if 'Standard' in args.analysisStyle and args.channels == None:
+    raise RuntimeError("Standard style analysis with no specified channels run!")
+
+if 'WH' in args.analysisStyle and args.WHChannels == None:
+    raise RuntimeError("WH channel analysis with no specified channels run!")
+
+if 'ZH' in args.analysisStyle:
+    raise RuntimeError("ZH channel analysis not implemented yet! Implement me!")
 
 if args.RunParallel:
     ThreadHandler = ThreadManager(args.numthreads)
@@ -59,83 +71,90 @@ DataCardCreationCommand = ""
 
 outputLoggingFile = "outputLog_"+DateTag+".txt"
 
-for year in args.years:        
-    for channel in args.channels:
-
-        if args.DecorrelateForMe:
-            if args.ControlMode:
-                NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root"
-                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root "
-                SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root -y "+year                
-            elif args.ComputeGOF:
-                print "Working on GOF with data outside signal region"
-                if not args.Unblind:
-                    NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
-                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root "
-                    SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root -y "+year
+if 'Standard' in args.analysisStyle:
+    for year in args.years:        
+        for channel in args.channels:
+            if args.DecorrelateForMe:
+                if args.ControlMode:
+                    NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root"
+                    AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root "
+                    SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+"_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root -y "+year                
+                elif args.ComputeGOF:
+                    print "Working on GOF with data outside signal region"
+                    if not args.Unblind:
+                        NegativeBinCommand="python scripts/RemoveNegativeBins.py "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
+                        AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root "
+                        SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root -y "+year
                     
+                    else:
+                        NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
+                        AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
+                        SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
                 else:
                     NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
                     AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
                     SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
-            else:
-                NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
-                AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
-                SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
-            if channel=="et" or channel=="em":
-                AddShapeCommand+="--TrimYears "
-            print("Duplicating shapes for year correlations")
-            logging.info("Shape duplication command:")
-            logging.info('\n\n'+AddShapeCommand+'\n')
-            os.system(AddShapeCommand+" | tee -a "+outputLoggingFile)            
-            print("Smoothing out signal JES shapes")
-            logging.info("Shape smoothing command:")
-            logging.info('\n\n'+SmoothingCommand+'\n')
-            os.system(SmoothingCommand+" | tee -a "+outputLoggingFile)
-            print("Removing Negative Bins")
-            logging.info("Negative Bin Removal Command:")
-            logging.info('\n\n'+NegativeBinCommand+'\n')
-            os.system(NegativeBinCommand+" | tee -a "+outputLoggingFile)
+                if channel=="et" or channel=="em":
+                    AddShapeCommand+="--TrimYears "
+                print("Duplicating shapes for year correlations")
+                logging.info("Shape duplication command:")
+                logging.info('\n\n'+AddShapeCommand+'\n')
+                os.system(AddShapeCommand+" | tee -a "+outputLoggingFile)            
+                print("Smoothing out signal JES shapes")
+                logging.info("Shape smoothing command:")
+                logging.info('\n\n'+SmoothingCommand+'\n')
+                os.system(SmoothingCommand+" | tee -a "+outputLoggingFile)
+                print("Removing Negative Bins")
+                logging.info("Negative Bin Removal Command:")
+                logging.info('\n\n'+NegativeBinCommand+'\n')
+                os.system(NegativeBinCommand+" | tee -a "+outputLoggingFile)
 
-        DataCardCreationCommand="SMHTT"+year
-        DataCardCreationCommand+="_"+channel+" "+OutputDir
-        if args.ControlMode:
-            DataCardCreationCommand+=" -c"
-        if args.ComputeGOF and not args.Unblind:
-            DataCardCreationCommand+=" -gf"
-        if args.RunShapeless:
-            DataCardCreationCommand+=" -s"
-        if not args.RunWithBinByBin:
-            DataCardCreationCommand+=" -b"            
-        if not embedded_cfg[str(year)+str(channel)]: #load from config. If false, run embedded less
-            DataCardCreationCommand+=" -e"
-        if args.RunInclusiveggH:
-            DataCardCreationCommand+=" -g"
-        if args.RunInclusiveqqH:
-            DataCardCreationCommand+=" -q"
-        DataCardCreationCommand+=" --Categories"
-        if args.ControlMode:
-            TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root")
-            for Directory in TheFile.GetListOfKeys():
-                DataCardCreationCommand+=" "+Directory.GetName()
-        elif args.ComputeGOF:
-            if not args.Unblind:
-                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
+            DataCardCreationCommand="SMHTT"+year
+            DataCardCreationCommand+="_"+channel+" "+OutputDir
+            if args.ControlMode:
+                DataCardCreationCommand+=" -c"
+            if args.ComputeGOF and not args.Unblind:
+                DataCardCreationCommand+=" -gf"
+            if args.RunShapeless:
+                DataCardCreationCommand+=" -s"
+            if not args.RunWithBinByBin:
+                DataCardCreationCommand+=" -b"            
+            if not embedded_cfg[str(year)+str(channel)]: #load from config. If false, run embedded less
+                DataCardCreationCommand+=" -e"
+            if args.RunInclusiveggH:
+                DataCardCreationCommand+=" -g"
+            if args.RunInclusiveqqH:
+                DataCardCreationCommand+=" -q"
+            DataCardCreationCommand+=" --Categories"
+            if args.ControlMode:
+                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root")
                 for Directory in TheFile.GetListOfKeys():
                     DataCardCreationCommand+=" "+Directory.GetName()
+            elif args.ComputeGOF:
+                if not args.Unblind:
+                    TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
+                    for Directory in TheFile.GetListOfKeys():
+                        DataCardCreationCommand+=" "+Directory.GetName()
+                else:
+                    for Category in cfg.Categories[channel]:
+                        DataCardCreationCommand+=" "+Category
             else:
                 for Category in cfg.Categories[channel]:
                     DataCardCreationCommand+=" "+Category
-        else:
-            for Category in cfg.Categories[channel]:
-                DataCardCreationCommand+=" "+Category
-        print("Creating data cards")
-        logging.info("Data Card Creation Command:")
-        logging.info('\n\n'+DataCardCreationCommand+'\n')
-        assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0,"Model exited with stats != 0. Please check for errors"
-        
+            print("Creating data cards")
+            logging.info("Data Card Creation Command:")
+            logging.info('\n\n'+DataCardCreationCommand+'\n')
+            assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0,"Model exited with status != 0. Please check for errors"
 
-#cobmine all cards together
+if 'WH' in args.analysisStyle:
+    for year in args.years:        
+        for channel in args.WHChannels:
+            DataCardCreationCommand="WH"+year+"_"+channel+" "+OutputDir
+            logging.info("WH Datacard Creation Command:")
+            logging.info('\n\n'+DataCardCreationCommand+'\n')
+            assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0, "Model exited with status !=0. Please check for errors"
+
+#combine all cards together
 #we can't do this the old way of first mashing all channels together and then mashing those into a final card
 #messes with paths somewhere
 #we have to do this in one fell swoop.
@@ -143,31 +162,44 @@ CombinedCardName = OutputDir+"FinalCard_"+DateTag+".txt"
 CardCombiningCommand = "combineCards.py"
 if args.SplitUncertainties:
     Splitter = UncertaintySplitter()
-for year in args.years:
-    for channel in args.channels:
-        CardNum = 1
-        if args.ControlMode:
-            TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root")
-        elif args.ComputeGOF:
-            if not args.Unblind:
-                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
-                print "Working on GOF with data outside signal region"
+
+if 'Standard' in args.analysisStyle:
+    for year in args.years:
+        for channel in args.channels:
+            CardNum = 1
+            if args.ControlMode:
+                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root")
+            elif args.ComputeGOF:
+                if not args.Unblind:
+                    TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
+                    print "Working on GOF with data outside signal region"
+                else:
+                    TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
             else:
                 TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
-        else:
-            TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
 
-        for Directory in TheFile.GetListOfKeys():
-            if not args.ControlMode and not (Directory.GetName() in cfg.Categories[channel]):
-                continue
-            if not args.RunWithoutAutoMCStats:
-                CardFile = open(OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt","a+")
-                CardFile.write("* autoMCStats 0.0\n")
-                CardFile.close()                
-            if args.SplitUncertainties:                    
-                Splitter.FindAndTagGroups(OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt")
-            CardCombiningCommand += " "+Directory.GetName()+"_"+year+"="+OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt "
-            CardNum+=1
+            for Directory in TheFile.GetListOfKeys():
+                if not args.ControlMode and not (Directory.GetName() in cfg.Categories[channel]):
+                    continue
+                if not args.RunWithoutAutoMCStats:
+                    CardFile = open(OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt","a+")
+                    CardFile.write("* autoMCStats 0.0\n")
+                    CardFile.close()                
+                if args.SplitUncertainties:                    
+                    Splitter.FindAndTagGroups(OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt")
+                CardCombiningCommand += " "+Directory.GetName()+"_"+year+"="+OutputDir+"smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt "
+                CardNum+=1
+
+#now let's catch all of our WH cards if that's a part of the analysis
+if 'WH' in args.analysisStyle:
+    for year in args.years:
+        for channel in args.WHChannels:
+            whCardName="wh_"+channel+"_1_"+year+"_125.txt"
+            CardFile = open(OutputDir+whCardName,"a+")
+            CardFile.write("* autoMCStats 0.0\n")
+            CardFile.close()
+            CardCombiningCommand += " "+"WH_"+channel+"_"+year+"="+OutputDir+whCardName
+        
 CardCombiningCommand+= " > "+CombinedCardName
 logging.info("Final Card Combining Command:")
 logging.info('\n\n'+CardCombiningCommand+'\n')
@@ -177,22 +209,25 @@ os.system(CardCombiningCommand+" | tee -a "+outputLoggingFile)
 print("Setting up per signal workspace")
 PerSignalName = OutputDir+"Workspace_per_signal_breakdown_cmb_"+DateTag+".root"
 PerSignalWorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
-PerSignalWorkspaceCommand+= "--PO 'map=.*/ggH.*htt125.*:r_ggH[1,-25,25]' "
-PerSignalWorkspaceCommand+= "--PO 'map=.*/qqH.*htt125.*:r_qqH[1,-25,25]' "
-if args.RunInclusiveggH:
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ggZH_had.*htt125.*:r_ggH[1,-25,25]' "
-else:
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ggZH_PTH.*htt125.*:r_ggH[1,-25,25]' "
-if args.RunInclusiveqqH:
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_had.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_had.*htt125.*:r_qqH[1,-25,25]' "
-else:
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_0J.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_1J.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_GE2J.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_0J.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_1J.*htt125.*:r_qqH[1,-25,25]' "
-    PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_GE2J.*htt125.*:r_qqH[1,-25,25]' "
+if 'Standard' in args.analysisStyle:
+    PerSignalWorkspaceCommand+= "--PO 'map=.*/ggH.*htt125.*:r_ggH[1,-25,25]' "
+    PerSignalWorkspaceCommand+= "--PO 'map=.*/qqH.*htt125.*:r_qqH[1,-25,25]' "
+    if args.RunInclusiveggH:
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ggZH_had.*htt125.*:r_ggH[1,-25,25]' "
+    else:
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ggZH_PTH.*htt125.*:r_ggH[1,-25,25]' "
+    if args.RunInclusiveqqH:
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_had.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_had.*htt125.*:r_qqH[1,-25,25]' "
+    else:
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_0J.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_1J.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/ZH_GE2J.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_0J.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_1J.*htt125.*:r_qqH[1,-25,25]' "
+        PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_GE2J.*htt125.*:r_qqH[1,-25,25]' "
+if 'WH' in args.analysisStyle:
+    PerSignalWorkspaceCommand+="--PO 'map=.*/WH_lep.*:r_WH[1,-25,25]' "
 PerSignalWorkspaceCommand+= CombinedCardName +" -o "+PerSignalName+" -m 125"
 
 logging.info("Per Signal Workspace Command:")
@@ -371,6 +406,15 @@ logging.info("Text 2 Worskpace Command:")
 logging.info('\n\n'+TextWorkspaceCommand+'\n')
 os.system(TextWorkspaceCommand+" | tee -a "+outputLoggingFile)
 
+if args.workspaceOnly:
+    #move the log file into output
+    os.system('mv '+outputLoggingFile+' '+OutputDir)
+    #move anything we may have made in parallel, or that may be left over to the output
+    os.system(" mv *"+DateTag+"* "+OutputDir)
+
+    outputArea.PrintSessionInfo(DateTag)
+    exit()
+
 PhysModel = 'MultiDimFit'
 if args.UseGrid:
     ExtraCombineOptions = '--robustFit=1 --X-rtd MINIMIZER_analytic --expectSignal=1 --cl=0.68 --algo=grid --points='+str(args.nGridPoints)
@@ -424,11 +468,22 @@ os.system("mv *"+DateTag+"*.root "+OutputDir)
 
 if not args.ComputeSignificance:
     #run the signal samples    
-    for SignalName in ["r_ggH","r_qqH"]:
+    stage0SignalNames = []
+    if 'Standard' in args.analysisStyle:
+        stage0SignalNames.append("r_ggH")
+        stage0SignalNames.append("r_qqH")
+    if 'WH' in args.analysisStyle:
+        stage0SignalNames.append('r_WH')
+    for SignalName in stage0SignalNames:
+        
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions
         if not args.Unblind:
             CombineCommand+=" --preFitValue=1. -t -1"
-        CombineCommand+=" --setParameters r_ggH=1,r_qqH=1 -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
+        CombineCommand+=" --setParameters "
+        for parameter in stage0SignalNames:
+            CombineCommand+=parameter+"=1,"
+        CombineCommand+=" -P "+SignalName+" --floatOtherPOIs=1  -n "+DateTag+"_"+SignalName
+
         if args.Timeout is True:
             CombineCommand = "timeout "+args.TimeoutTime+" " + CombineCommand
         logging.info("Signal Sample Signal Command: ")
@@ -440,6 +495,7 @@ if not args.ComputeSignificance:
             os.system(CombineCommand+" > /dev/null")
         else:            
             os.system(CombineCommand+" | tee -a "+outputLoggingFile)
+
         if args.UseGrid:
             outputScanName = "scan_"+SignalName+"_"+DateTag
             outputScanFileName = outputScanName+".root"
