@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 
 
   cb.cp().process({"jetFakes"}).AddSyst(cb, "reducible_norm_mtt", "lnN", SystMap<>::init(1.15));
-  cb.cp().process({"WZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
-  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_wzXsec_13TeV", "lnN", SystMap<>::init(1.032));
+  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
+  cb.cp().process({"WZ"}).AddSyst(cb, "CMS_htt_wzXsec_13TeV", "lnN", SystMap<>::init(1.032));
   cb.cp().process({"ttZ"}).AddSyst(cb, "CMS_htt_ttzXsec_13TeV", "lnN", SystMap<>::init(1.25));
   cb.cp().process({"TriBoson"}).AddSyst(cb, "CMS_htt_triboson_13TeV", "lnN", SystMap<>::init(1.25));
 
