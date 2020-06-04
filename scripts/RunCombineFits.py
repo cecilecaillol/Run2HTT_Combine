@@ -19,6 +19,7 @@ parser.add_argument('--analysisStyle',nargs="+",choices=['Standard','WH','ZH'],h
 parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Specify the year(s) to run the fit for",required=True)
 parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create standard data cards for")
 parser.add_argument('--WHChannels',nargs="+",choices=['emt','ett','mmt','mtt'],help="specify the channels to create WH datacards for")
+parser.add_argument('--ZHChannels',nargs="+",choices=['eeem','eeet','eemt','eett','mmem','mmet','mmmt','mmtt'],help='specify the channels to create ZH datacards for')
 parser.add_argument('--RunShapeless',help="Run combine model without using any shape uncertainties",action="store_true")
 parser.add_argument('--RunWithBinByBin',help="Run combine model without using bin-by-bin uncertainties",action="store_true")
 parser.add_argument('--RunWithoutAutoMCStats',help="Run with auto mc stats command appended to data cards",action="store_true")
@@ -57,8 +58,8 @@ if 'Standard' in args.analysisStyle and args.channels == None:
 if 'WH' in args.analysisStyle and args.WHChannels == None:
     raise RuntimeError("WH channel analysis with no specified channels run!")
 
-if 'ZH' in args.analysisStyle:
-    raise RuntimeError("ZH channel analysis not implemented yet! Implement me!")
+if 'ZH' in args.analysisStyle and args.ZHChannels == None:
+    raise RuntimeError("ZH channel analysis with no specified channels run!")
 
 if args.RunParallel:
     ThreadHandler = ThreadManager(args.numthreads)
@@ -154,6 +155,14 @@ if 'WH' in args.analysisStyle:
             logging.info('\n\n'+DataCardCreationCommand+'\n')
             assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0, "Model exited with status !=0. Please check for errors"
 
+if 'ZH' in args.analysisStyle:
+    for year in args.years:
+        for channel in args.ZHChannels:
+            DataCardCreationCommand="ZH"+year+"_"+channel+" "+OutputDir
+            logging.info("ZH Datacard Creation Command:")
+            logging.info('\n\n'+DataCardCreationCommand+'\n')
+            assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0, "Model exited with status !=0. Please check for errors"
+
 #combine all cards together
 #we can't do this the old way of first mashing all channels together and then mashing those into a final card
 #messes with paths somewhere
@@ -199,6 +208,15 @@ if 'WH' in args.analysisStyle:
             CardFile.write("* autoMCStats 0.0\n")
             CardFile.close()
             CardCombiningCommand += " "+"WH_"+channel+"_"+year+"="+OutputDir+whCardName
+
+if 'ZH' in args.analysisStyle:
+    for year in args.years:
+        for channel in args.ZHChannels:
+            zhCardName="zh_"+channel+"_1_"+year+"_125.txt"
+            CardFile = open(OutputDir+zhCardName,"a+")
+            CardFile.write("* autoMCStats 0.0\n")
+            CardFile.close()
+            CardCombiningCommand+=" "+"ZH_"+channel+"_"+year+"="+OutputDir+zhCardName
         
 CardCombiningCommand+= " > "+CombinedCardName
 logging.info("Final Card Combining Command:")
@@ -228,6 +246,9 @@ if 'Standard' in args.analysisStyle:
         PerSignalWorkspaceCommand+= "--PO 'map=.*/WH_GE2J.*htt125.*:r_qqH[1,-25,25]' "
 if 'WH' in args.analysisStyle:
     PerSignalWorkspaceCommand+="--PO 'map=.*/WH_lep.*:r_WH[1,-25,25]' "
+if 'ZH' in args.analysisStyle:
+    PerSignalWorkspaceCommand+="--PO 'map=.*/ZH_lep.*:r_ZH[1,-25,25]' "
+    PerSignalWorkspaceCommand+="--PO 'map=.*/ggZH_lep.*:r_ZH[1,-25,25]' "
 PerSignalWorkspaceCommand+= CombinedCardName +" -o "+PerSignalName+" -m 125"
 
 logging.info("Per Signal Workspace Command:")
@@ -474,6 +495,8 @@ if not args.ComputeSignificance:
         stage0SignalNames.append("r_qqH")
     if 'WH' in args.analysisStyle:
         stage0SignalNames.append('r_WH')
+    if 'ZH' in args.analysisStyle:
+        stage0SignalNames.append('r_ZH')
     for SignalName in stage0SignalNames:
         
         CombineCommand = "combineTool.py -M "+PhysModel+" "+PerSignalName+" "+ExtraCombineOptions

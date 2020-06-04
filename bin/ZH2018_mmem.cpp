@@ -11,10 +11,14 @@
 #include "CombineHarvester/CombineTools/interface/Utilities.h"
 #include "CombineHarvester/CombineTools/interface/Systematics.h"
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
+#include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
 
 using namespace std;
+using ch::JoinStr;
 
-int main() {
+int main(int argc, char **argv) 
+{
+  InputParserUtility Input(argc,argv);
   //! [part1]
   // First define the location of the "auxiliaries" directory where we can
   // source the input files containing the datacard shapes
@@ -36,11 +40,12 @@ int main() {
   //! [part3]
   cb.AddObservations({"*"}, {"zh"}, {"2018"}, {"mmem"}, cats);
 
-  vector<string> bkg_procs = {"Triboson","Reducible","ZZ"};//VV
-  cb.AddProcesses({"*"}, {"zh"}, {"2018"}, {"mmem"}, bkg_procs, cats, false);
 
-  vector<string> sig_procs = {"ZH_lep_htt"};
-  //vector<string> sig_procs = {"ZH_had_htt","ZH_lep_PTV_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"};
+  vector<string> bkg_procs = {"Triboson","Reducible","ZZ","ZH_hww125"};//VV
+  cb.AddProcesses({"*"}, {"zh"}, {"2018"}, {"mmem"}, bkg_procs, cats, false);
+  vector<string> sig_procs = {"ZH_lep_htt","ggZH_lep_htt"};
+  //vector<string> sig_procs = {"ggZH_lep_PTV_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ZH_lep_PTV_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"};
+
   cb.AddProcesses(masses, {"zh"}, {"2018"}, {"mmem"}, sig_procs, cats, true);
   //! [part4]
 
@@ -50,41 +55,56 @@ int main() {
   using ch::syst::bin_id;
   using ch::syst::process;
 
-  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_mmem", "lnN", SystMap<>::init(1.20));
-  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_wzXsec_13TeV", "lnN", SystMap<>::init(1.032));
+  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_llem_syst", "lnN", SystMap<>::init(1.15));
+  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_mmem_stat_2018", "lnN", SystMap<>::init(1.03));
+  cb.cp().process({"Reducible"}).AddSyst(cb,"CMS_fakeEle_promptSubtraction_2018", "lnN", SystMap<>::init(1.01));
+  cb.cp().process({"Reducible"}).AddSyst(cb,"CMS_fakeMu_promptSubtraction_2018", "lnN", SystMap<>::init(1.02));
+  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
   cb.cp().process({"Triboson"}).AddSyst(cb, "CMS_htt_triboson_13TeV", "lnN", SystMap<>::init(1.25));
 
   // Theory uncertainties
-  cb.cp().process({"ZH_had_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt"}).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));
-  cb.cp().process({"ZH_had_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt"}).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
-  cb.cp().process({"ZH_had_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_htt","ZH_htt"}).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
-  cb.cp().process({"ZH_had_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_htt"}).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.007));
-  cb.cp().process({"ZH_lep_htt"}).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.038));
-  cb.cp().process({"ZH_had_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_htt"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.019));
-  cb.cp().process({"ZH_lep_htt"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.016));
+  cb.cp().process({"ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt","ggZH_lep_PTH_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ggZH_lep_htt"}).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));
+  cb.cp().process({"ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt","ggZH_lep_PTH_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ggZH_lep_htt"}).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
+  cb.cp().process({"ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt","ggZH_lep_PTH_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ggZH_lep_htt"}).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
+  cb.cp().process({"ZH_hww125","ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt","ggZH_lep_PTH_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ggZH_lep_htt"}).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.007));
+  cb.cp().process({"ZH_hww125","ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt","ZH_lep_htt","ggZH_lep_PTH_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ggZH_lep_htt"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.019));
+
+  cb.cp().process({"ZH_lep_htt","ZH_lep_PTH_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"qqVH_NLOEWK", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"ZH_lep_htt","ggZH_lep_htt"}).AddSyst(cb,"ZHlep_scale", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"ZH_lep_PTV_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt"}).AddSyst(cb,"ZH_scale_lowpt", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"ZH_scale_highpt", "shape", SystMap<>::init(1.00));
 
   // Lumi uncertainties
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "lumi_Run2018", "lnN", SystMap<>::init(1.015));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "lumi_XYfactorization", "lnN", SystMap<>::init(1.020));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.002));  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.002));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_Run2018", "lnN", SystMap<>::init(1.015));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_XYfactorization", "lnN", SystMap<>::init(1.020));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.002));  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.002));
 
   // Trg and ID uncertainties
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "CMS_singlemutrg_2018", "lnN", SystMap<>::init(1.02));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "CMS_eff_e_2018", "lnN", SystMap<>::init(1.02));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb, "CMS_eff_m_2018", "lnN", SystMap<>::init(1.06));
-
-/*
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_singlemutrg_2018", "lnN", SystMap<>::init(1.02));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_eff_e_2018", "lnN", SystMap<>::init(1.02));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_eff_m_2018", "lnN", SystMap<>::init(1.06));
 
   //Scale met
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"CMS_scale_met_unclustered_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_met_unclustered_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetAbsolute", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetAbsolute_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetBBEC1", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetBBEC1_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetEC2", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetEC2_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetFlavorQCD", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetHF", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetHF_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetRelativeSample_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JetRelativeBal", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JER_2018", "shape", SystMap<>::init(1.00));
 
   //Scale mu, ele
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"CMS_scale_e_2018", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"CMS_scale_m_etalt1p2_2018", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2018", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"Triboson","ZZ","ZH_lep_htt","ZH_lep_PTH_0_75","ZH_lep_PTV_75_150","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"}).AddSyst(cb,"CMS_scale_m_etagt2p1_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_e_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_etalt1p2_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2018", "shape", SystMap<>::init(1.00));
+  cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_etagt2p1_2018", "shape", SystMap<>::init(1.00));
 
-*/
 
   cb.cp().backgrounds().ExtractShapes(
       aux_shapes + "zh2018.root",
@@ -108,7 +128,7 @@ int main() {
   // instance.
 
   // We create the output root file that will contain all the shapes.
-  TFile output("zh2018_mmem.input.root", "RECREATE");
+  TFile output((Input.ReturnToken(0)+"/"+"zh2018_mmem.input.root").c_str(), "RECREATE");
 
   // Finally we iterate through each bin,mass combination and write a
   // datacard.
@@ -119,8 +139,8 @@ int main() {
       // We need to filter on both the mass and the mass hypothesis,
       // where we must rmmemmmember to include the "*" mass entry to get
       // all the data and backgrounds.
-      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(
-          b + "_" + m + ".txt", output);
+      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", 
+						    output);
     }
   }
   //! [part9]
