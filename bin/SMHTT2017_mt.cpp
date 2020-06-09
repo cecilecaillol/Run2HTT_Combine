@@ -257,6 +257,7 @@ int main(int argc, char **argv)
 
   vector<string> ggZH_STXS;
   if (Input.OptionExists("-g")) ggZH_STXS = {"ggZH_lep_htt125","ggZH_had_htt125"};
+  else if (Input.OptionExists("-dp")|Input.OptionExists("-dn")|Input.OptionExists("-dm")) ggZH_STXS={};
   else ggZH_STXS = {
       "ggZH_lep_htt125",
       "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
@@ -459,11 +460,11 @@ int main(int argc, char **argv)
   cb.cp().process({ggH_STXS}).bin({"mt_vbf_PTH_0_200"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.011));
   cb.cp().process({ggH_STXS}).bin({"mt_vbf_PTH_GE_200"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.011));
 
-  cb.cp().process({qqH_STXS}).bin({"mt_0jet"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.006));
-  cb.cp().process({qqH_STXS}).bin({"mt_boosted_1J"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.005));
-  cb.cp().process({qqH_STXS}).bin({"mt_boosted_GE2J"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.004));
-  cb.cp().process({qqH_STXS}).bin({"mt_vbf_PTH_0_200"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.008));
-  cb.cp().process({qqH_STXS}).bin({"mt_vbf_PTH_GE_200"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.008));
+  cb.cp().process({qqH_STXS}).bin({"mt_0jet"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.006));
+  cb.cp().process({qqH_STXS}).bin({"mt_boosted_1J"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.005));
+  cb.cp().process({qqH_STXS}).bin({"mt_boosted_GE2J"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.004));
+  cb.cp().process({qqH_STXS}).bin({"mt_vbf_PTH_0_200"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.008));
+  cb.cp().process({qqH_STXS}).bin({"mt_vbf_PTH_GE_200"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.008));
 
   
   //Muon ID efficiency
@@ -594,11 +595,22 @@ int main(int argc, char **argv)
    
       //Mu to tau fake energy fake scale            
       std::cout<<"Adding Shapes..."<<std::endl;
-      AddShapesIfNotEmpty({"CMS_ZLShape_mt_1prong_2017","CMS_ZLShape_mt_1prong1pizero_2017"},
-			  {"ZL"},
-			  &cb,
-			  1.00,
-			  TheFile,{"mt_0jet","mt_boosted_1J","mt_boosted_GE2J"});
+      if (Input.OptionExists("-dp")|Input.OptionExists("-dn")|Input.OptionExists("-dm"))
+	{
+	  AddShapesIfNotEmpty({"CMS_ZLShape_mt_1prong_2017","CMS_ZLShape_mt_1prong1pizero_2017"},
+			      {"ZL"},
+			      &cb,
+			      1.00,
+			      TheFile,CategoryArgs);
+	}
+      else
+	{
+	  AddShapesIfNotEmpty({"CMS_ZLShape_mt_1prong_2017","CMS_ZLShape_mt_1prong1pizero_2017"},
+			      {"ZL"},
+			      &cb,
+			      1.00,
+			      TheFile,{"mt_0jet","mt_boosted_1J","mt_boosted_GE2J"});
+	}
 
       // Trg eff. It is a shape because the 2 triggers affect the mu pT spectrum differently
       std::cout<<"Trigger eff"<<std::endl;
@@ -649,6 +661,43 @@ int main(int argc, char **argv)
 	}
       else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
+	  AddShapesIfNotEmpty({
+	      "CMS_rawFF_mt_qcd_0jet_unc1_2017",
+		"CMS_rawFF_mt_qcd_0jet_unc2_2017",
+		"CMS_rawFF_mt_w_0jet_unc1_2017",
+		"CMS_rawFF_mt_w_0jet_unc2_2017",
+		"CMS_rawFF_mt_qcd_1jet_unc1_2017",
+		"CMS_rawFF_mt_qcd_1jet_unc2_2017",
+		"CMS_rawFF_mt_w_1jet_unc1_2017",
+		"CMS_rawFF_mt_w_1jet_unc2_2017",
+		"CMS_rawFF_mt_qcd_2jet_unc1_2017",
+		"CMS_rawFF_mt_qcd_2jet_unc2_2017",
+		"CMS_rawFF_mt_w_2jet_unc1_2017",
+		"CMS_rawFF_mt_w_2jet_unc2_2017",
+		"CMS_rawFF_mt_tt_unc1_2017",
+		"CMS_rawFF_mt_tt_unc2_2017",
+		//"CMS_FF_closure_mvis_mt_qcd_0jet",
+		//"CMS_FF_closure_mvis_mt_w_0jet",
+		//"CMS_FF_closure_mvis_mt_qcd_1jet",
+		//"CMS_FF_closure_mvis_mt_w_1jet",
+		//"CMS_FF_closure_mvis_mt_qcd_2jet",
+		//"CMS_FF_closure_mvis_mt_w_2jet",
+		//"CMS_FF_closure_mvis_mt_tt",            
+		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
+		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
+		"CMS_FF_closure_lpt_mt_qcd",
+		"CMS_FF_closure_lpt_mt_w",
+		"CMS_FF_closure_lpt_mt_tt",
+		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
+		"CMS_FF_closure_mt_mt_w_unc1_2017",
+		"CMS_FF_closure_mt_mt_w_unc2_2017"},
+	    {"jetFakes"},
+	    &cb,
+	    1.00,
+	    TheFile,
+	    CategoryArgs);
+	  /*
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_0jet_unc1_2017",
 		"CMS_rawFF_mt_qcd_0jet_unc2_2017",
@@ -755,6 +804,7 @@ int main(int argc, char **argv)
 		TheFile,
 		{"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
 	    }
+	  */
 	}
       else
 	{
@@ -858,6 +908,14 @@ int main(int argc, char **argv)
 	}
       else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
 	{
+	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017",
+		"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017",
+		"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
+	    RecoilVector,
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	  /*
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017"},
 			      RecoilVector,
 			      &cb,
@@ -890,6 +948,7 @@ int main(int argc, char **argv)
 			      TheFile,
 				  {"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
 	    }
+	  */
 	}
       else
 	{

@@ -464,11 +464,11 @@ int main(int argc, char **argv)
   cb.cp().process({ggH_STXS}).bin({"et_vbflow"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.008));
   cb.cp().process({ggH_STXS}).bin({"et_vbfhigh"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","lnN",SystMap<>::init(1.008));
 
-  cb.cp().process({qqH_STXS}).bin({"et_0jet"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.015));
-  cb.cp().process({qqH_STXS}).bin({"et_boosted1"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.003));
-  cb.cp().process({qqH_STXS}).bin({"et_boosted2"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.004));
-  cb.cp().process({qqH_STXS}).bin({"et_vbflow"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.013));
-  cb.cp().process({qqH_STXS}).bin({"et_vbfhigh"}).AddSyst(cb,"pdf_Hiqqs_qq_ACCEPT","lnN",SystMap<>::init(1.013));
+  cb.cp().process({qqH_STXS}).bin({"et_0jet"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.015));
+  cb.cp().process({qqH_STXS}).bin({"et_boosted1"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.003));
+  cb.cp().process({qqH_STXS}).bin({"et_boosted2"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.004));
+  cb.cp().process({qqH_STXS}).bin({"et_vbflow"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.013));
+  cb.cp().process({qqH_STXS}).bin({"et_vbfhigh"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.013));
   
   //Electron ID efficiency
   cb.cp().process(JoinStr({{"ZT","TTT","VVT","STT","ZL","TTL","VVL","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.02));
