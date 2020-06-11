@@ -12,11 +12,12 @@
 #include "CombineHarvester/CombineTools/interface/Systematics.h"
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
+#include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
 
 using namespace std;
 using ch::JoinStr;
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
   InputParserUtility Input(argc,argv);
   //! [part1]
@@ -25,7 +26,7 @@ int main(int argc, char **argv)
   cout<<"test"<<endl;
   string aux_shapes = string(getenv("CMSSW_BASE")) + "/src/auxiliaries/shapes/";
 
-  // Create an mmttpty CombineHarvester instance that will hold all of the
+  // Create an lletpty CombineHarvester instance that will hold all of the
   // datacard configuration and histograms etc.
   ch::CombineHarvester cb;
   // Uncomment this next line to see a *lot* of debug information
@@ -34,19 +35,19 @@ int main(int argc, char **argv)
   // Here we will just define two categories for an 8TeV analysis. Each entry in
   // the vector below specifies a bin name and corresponding bin_id.
   ch::Categories cats = {
-      {1, "mmtt"}
+      {1, "llet"}
     };
   vector<string> masses = {"125"};//ch::MassesFromRange("120");//120-135:5");
   //! [part3]
-  cb.AddObservations({"*"}, {"zh"}, {"2018"}, {"mmtt"}, cats);
+  cb.AddObservations({"*"}, {"zh"}, {"2018"}, {"llet"}, cats);
 
 
   vector<string> bkg_procs = {"Triboson","Reducible","ZZ","ZH_hww125"};//VV
-  cb.AddProcesses({"*"}, {"zh"}, {"2018"}, {"mmtt"}, bkg_procs, cats, false);
+  cb.AddProcesses({"*"}, {"zh"}, {"2018"}, {"llet"}, bkg_procs, cats, false);
   vector<string> sig_procs = {"ZH_lep_htt","ggZH_lep_htt"};
   //vector<string> sig_procs = {"ggZH_lep_PTV_0_75_htt","ggZH_lep_PTV_75_150_htt","ggZH_lep_PTV_150_250_0J_htt","ggZH_lep_PTV_150_250_GE1J_htt","ggZH_lep_PTV_GT250_htt","ZH_lep_PTV_0_75_htt","ZH_lep_PTV_75_150_htt","ZH_lep_PTV_150_250_0J_htt","ZH_lep_PTV_150_250_GE1J_htt","ZH_lep_PTV_GT250_htt"};
 
-  cb.AddProcesses(masses, {"zh"}, {"2018"}, {"mmtt"}, sig_procs, cats, true);
+  cb.AddProcesses(masses, {"zh"}, {"2018"}, {"llet"}, sig_procs, cats, true);
   //! [part4]
 
 
@@ -55,8 +56,9 @@ int main(int argc, char **argv)
   using ch::syst::bin_id;
   using ch::syst::process;
 
-  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_lltt_syst", "lnN", SystMap<>::init(1.15));
-  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_mmtt_stat_2018", "lnN", SystMap<>::init(1.02));
+  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_llet_syst", "lnN", SystMap<>::init(1.15));
+  cb.cp().process({"Reducible"}).AddSyst(cb, "reducible_norm_llet_stat_2018", "lnN", SystMap<>::init(1.03));
+  cb.cp().process({"Reducible"}).AddSyst(cb,"CMS_fakeEle_promptSubtraction_2018", "lnN", SystMap<>::init(1.005));
   cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
   cb.cp().process({"Triboson"}).AddSyst(cb, "CMS_htt_triboson_13TeV", "lnN", SystMap<>::init(1.25));
 
@@ -78,8 +80,10 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_lengthScale", "lnN", SystMap<>::init(1.002));  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "lumi_beamCurrentCalibration", "lnN", SystMap<>::init(1.002));
 
   // Trg and ID uncertainties
-  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_singlemutrg_2018", "lnN", SystMap<>::init(1.02));
-  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_eff_m_2018", "lnN", SystMap<>::init(1.04));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_singleeletrg_2018", "lnN", SystMap<>::init(1.01));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_singlemutrg_2018", "lnN", SystMap<>::init(1.01));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_eff_e_2018", "lnN", SystMap<>::init(1.036));
+  cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb, "CMS_eff_m_2018", "lnN", SystMap<>::init(1.02));
 
   // TES
   cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_t_1prong_2018", "shape", SystMap<>::init(1.00));
@@ -110,10 +114,10 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({{"Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_JER_2018", "shape", SystMap<>::init(1.00));
 
   //Scale mu, ele
+  cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_e_2018", "shape", SystMap<>::init(1.00));
   cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_etalt1p2_2018", "shape", SystMap<>::init(1.00));
   cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_eta1p2to2p1_2018", "shape", SystMap<>::init(1.00));
   cb.cp().process(JoinStr({{"Reducible","Triboson","ZZ","ZH_hww125"},sig_procs})).AddSyst(cb,"CMS_scale_m_etagt2p1_2018", "shape", SystMap<>::init(1.00));
-
 
 
   cb.cp().backgrounds().ExtractShapes(
@@ -134,11 +138,11 @@ int main(int argc, char **argv)
   // First we generate a set of bin names:
   set<string> bins = cb.bin_set();
   // This method will produce a set of unique bin names by considering all
-  // Observation, Process and Systmmttatic entries in the CombineHarvester
+  // Observation, Process and Systlletatic entries in the CombineHarvester
   // instance.
 
   // We create the output root file that will contain all the shapes.
-  TFile output((Input.ReturnToken(0)+"/"+"zh2018_mmtt.input.root").c_str(), "RECREATE");
+  TFile output((Input.ReturnToken(0)+"/"+"zh2018_llet.input.root").c_str(), "RECREATE");
 
   // Finally we iterate through each bin,mass combination and write a
   // datacard.
@@ -147,10 +151,9 @@ int main(int argc, char **argv)
       cout << ">> Writing datacard for bin: " << b << " and mass: " << m
            << "\n";
       // We need to filter on both the mass and the mass hypothesis,
-      // where we must rmmttmmttber to include the "*" mass entry to get
+      // where we must rlletlletber to include the "*" mass entry to get
       // all the data and backgrounds.
-      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", 
-						    output);
+      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", output);
     }
   }
   //! [part9]

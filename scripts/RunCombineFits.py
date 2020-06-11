@@ -19,7 +19,7 @@ parser.add_argument('--analysisStyle',nargs="+",choices=['Standard','WH','ZH'],h
 parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Specify the year(s) to run the fit for",required=True)
 parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create standard data cards for")
 parser.add_argument('--WHChannels',nargs="+",choices=['emt','ett','mmt','mtt'],help="specify the channels to create WH datacards for")
-parser.add_argument('--ZHChannels',nargs="+",choices=['eeem','eeet','eemt','eett','mmem','mmet','mmmt','mmtt'],help='specify the channels to create ZH datacards for')
+parser.add_argument('--ZHChannels',nargs="+",choices=['llem','llet','llmt','lltt'],help='specify the channels to create ZH datacards for')
 parser.add_argument('--RunShapeless',help="Run combine model without using any shape uncertainties",action="store_true")
 parser.add_argument('--RunWithBinByBin',help="Run combine model without using bin-by-bin uncertainties",action="store_true")
 parser.add_argument('--RunWithoutAutoMCStats',help="Run with auto mc stats command appended to data cards",action="store_true")
