@@ -8,7 +8,7 @@ sys.setrecursionlimit(10000)
 
 
 def read(scan, param_x, param_y, file):
-    # print files
+    # print files/
     goodfiles = [f for f in [file] if plot.TFileIsGood(f)]
     limit = plot.MakeTChain(goodfiles, 'limit')
     graph = plot.TGraph2DFromTree(
@@ -333,6 +333,9 @@ for scan in order:
     fixZeros(hists[scan])
     outfile.WriteTObject(hists[scan], hists[scan].GetName() + '_processed')
     #conts68[scan] = plot.contourFromTH2(hists[scan], ROOT.Math.chisquared_quantile_c(1-0.683, 2))
+    #conts95[scan] = plot.contourFromTH2(hists[scan], ROOT.Math.chisquared_quantile_c(1-0.9545, 2))
+    #conts68[scan] = plot.contourFromTH2(hists[scan], ROOT.Math.chisquared_quantile_c(
+    #    1 - 0.683, 2), frameValue=10)
     conts95[scan] = plot.contourFromTH2(hists[scan], ROOT.Math.chisquared_quantile_c(1-0.9545, 2))
     conts68[scan] = plot.contourFromTH2(hists[scan], ROOT.Math.chisquared_quantile_c(
         1 - 0.683, 2), frameValue=10)
@@ -361,17 +364,20 @@ for scan in order:
         if (i==0): c.Draw('LF SAME')
         outfile.WriteTObject(c, 'graph68_%s_%i' % (scan, i))
     if scan in conts95:
-        c.SetName('graph95_%s_%i' % (scan, i))
+        #this techinically needs to be inside the for loop to be properly defined?
+        #c.SetName('graph95_%s_%i' % (scan, i))
         for i, c in enumerate(conts95[scan]):
+            c.SetName('graph95_%s_%i' % (scan, i))
             c.SetLineColor(SETTINGS[scan]['line_color'])
             c.SetFillColor(SETTINGS[scan]['fill_color2'])
             c.SetLineWidth(3)
             #c.SetLineStyle(3)
             pads[0].cd()
             outfile.WriteTObject(c, 'graph95_%s_%i' % (scan, i))
-        c.SetLineColor(SETTINGS[scan]['line_color'])
-        c.SetFillColor(SETTINGS[scan]['fill_color2'])
+            c.SetLineColor(SETTINGS[scan]['line_color'])
+            c.SetFillColor(SETTINGS[scan]['fill_color2'])
 for scan in legend_order:
+    #print 'Settings '+str(SETTINGS)
     legend.AddEntry(conts68[scan][0], SETTINGS[scan]['legend'], 'F')
 for scan in order:
     if scan in conts95:
