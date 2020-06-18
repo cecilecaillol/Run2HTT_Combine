@@ -16,9 +16,11 @@ import CombineHarvester.Run2HTT_Combine.outputArea as outputArea
 parser = argparse.ArgumentParser(description = "Central script for running the differential analysis fits")
 parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Specify the year(s) to run the fit for",required=True)
 parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create data cards for",required=True)
-parser.add_argument('--MeasurementType',nargs = '?', choices=['mjj','pth','njets'],help="Specify the kind of differential measurement to make",required=True)
+parser.add_argument('--MeasurementType',nargs = '?', choices=['mjj','pth','njets','ljpt'],help="Specify the kind of differential measurement to make",required=True)
 parser.add_argument('--DecorrelateForMe',help="Run the decorrelator as part of the overall run.",action="store_true")
 parser.add_argument('--MakePlots',help="run a special fit dedicated to extracting relevant",action="store_true")
+parser.add_argument('--RunShapeless',help="Run combine model without using any shape uncertainties",action="store_true")
+parser.add_argument('--workspaceOnly',help='Create the text cards, and workspaces only, and then exit. Do not attempt any fits.',action='store_true')
 
 args = parser.parse_args()
 
@@ -42,6 +44,8 @@ for year in args.years:
         DataCardCreationCommand="SMHTT"+year
         DataCardCreationCommand+="_"+channel+" "+OutputDir
         DataCardCreationCommand+=" -b "
+        if args.RunShapeless:
+            DataCardCreationCommand+=' -s '
         #depending on the type of measurement we're running, we also want to pass 
         # a new parameter to the card to handle the new type of signal.
         if args.MeasurementType=='mjj':
@@ -50,18 +54,54 @@ for year in args.years:
             DataCardCreationCommand+= ' -dp '
         elif args.MeasurementType=="njets":
             DataCardCreationCommand+= ' -dn '
-        DataCardCreationCommand+=" --Categories"
+        elif args.MeasurementType=='ljpt':
+            DataCardCreationCommand+= ' -dljpt '
+        DataCardCreationCommand+=" --Categories"        
         if channel == 'tt':
-            DataCardCreationCommand+=" "+channel+"_0jet"
-        else:
-            DataCardCreationCommand+=" "+channel+"_0jet_high"
-            DataCardCreationCommand+=" "+channel+"_0jet_low"
-        DataCardCreationCommand+=" "+channel+"_1jet"
-        DataCardCreationCommand+=" "+channel+"_2jetlow"
-        DataCardCreationCommand+=" "+channel+"_2jethigh"
-        DataCardCreationCommand+=" "+channel+"_3jet"
-        DataCardCreationCommand+=" "+channel+"_4jet"
-        DataCardCreationCommand+=" "+channel+"_2jet"
+            measurementString = ''
+            if args.MeasurementType == 'pth':
+                measurementString = 'HiggsPt'
+            elif args.MeasurementType == 'njets':
+                measurementString = 'NJets'
+            elif args.MeasurementType == 'ljpt':
+                measurementString = 'LJPT'
+            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
+        elif channel == 'mt':
+            measurementString = ''
+            if args.MeasurementType == 'pth':
+                measurementString = 'HiggsPt'
+            elif args.MeasurementType == 'njets':
+                measurementString = 'NJets'
+            elif args.MeasurementType == 'ljpt':
+                measurementString = 'LeadingJetPt'
+            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
+            #bugged category name. Should be fixed in next round
+            #DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_HighTauPt"
+        elif channel == 'et':
+            measurementString = ''
+            if args.MeasurementType == 'pth':
+                measurementString = 'HiggsPt'
+            elif args.MeasurementType == 'njets':
+                measurementString = 'njets'
+            elif args.MeasurementType == 'ljpt':
+                measurementString = 'j1pt'
+            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
+            DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
+        elif channel == 'em':
+            measurementString = ''
+            if args.MeasurementType == 'pth':
+                measurementString = 'HiggsPt'
+            elif args.MeasurementType == 'njets':
+                measurementString = 'njets'
+            elif args.MeasurementType == 'ljpt':
+                measurementString = 'j1pt'
+            DataCardCreationCommand+=" "+channel+"_"+measurementString
+            
         print("Creating data cards")
         logging.info('Data Card Creation Command:')
         logging.info('\n\n'+DataCardCreationCommand+'\n')
@@ -81,29 +121,13 @@ for year in args.years:
         # we may not necessarily want all of these cards
         #mjj measurements do not use the high and low mjj categories
         #njets measurements do not use the mjj rolled category
-        
-        if channel == 'tt':
-            CardCombiningCommand+=" "+channel+"_"+year+"_0jet="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
-            if not args.MeasurementType == "mjj":
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_3jet="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_4jet="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
-            if args.MeasurementType == "mjj":
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
         else:
-            CardCombiningCommand+=" "+channel+"_"+year+"_0jet_low="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_0jet_high="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"
-            CardCombiningCommand+=" "+channel+"_"+year+"_1jet="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
-            if not args.MeasurementType == "mjj":
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jetlow="+OutputDir+"smh"+year+"_"+channel+"_4_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jethigh="+OutputDir+"smh"+year+"_"+channel+"_5_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_3jet="+OutputDir+"smh"+year+"_"+channel+"_6_13TeV_.txt"
-                CardCombiningCommand+=" "+channel+"_"+year+"_4jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
-            if args.MeasurementType == "mjj":
-                CardCombiningCommand+=" "+channel+"_"+year+"_2jet="+OutputDir+"smh"+year+"_"+channel+"_7_13TeV_.txt"
-        
+            if channel != 'em':
+                CardCombiningCommand+=" "+channel+"_"+year+"="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
+            else:
+                CardCombiningCommand+=" "+channel+"_"+year+"_LowTauPt="+OutputDir+"smh"+year+"_"+channel+"_1_13TeV_.txt"
+                CardCombiningCommand+=" "+channel+"_"+year+"_IntermediateTauPt="+OutputDir+"smh"+year+"_"+channel+"_2_13TeV_.txt"            
+                CardCombiningCommand+=" "+channel+"_"+year+"_HighTauPt="+OutputDir+"smh"+year+"_"+channel+"_3_13TeV_.txt"
 
 CardCombiningCommand+=" > "+CombinedCardName
 logging.info("Final Card Combining Command:")
@@ -117,23 +141,21 @@ parametersToMeasure = []
 WorkspaceName = OutputDir+"Workspace_"+args.MeasurementType+".root"
 WorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
 if args.MeasurementType == "pth":
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_20.*htt.*:r_H_PTH_0_20[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_20_45.*htt.*:r_H_PTH_20_45[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*htt.*:r_H_PTH_0_45[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_45_80.*htt.*:r_H_PTH_45_80[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_80_120.*htt.*:r_H_PTH_80_120[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_120_200.*htt.*:r_H_PTH_120_200[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_200_350.*htt.*:r_H_PTH_200_350[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_600.*htt.*:r_H_PTH_350_600[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_GE600.*htt.*:r_H_PTH_GE600[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*htt.*:r_H_PTH_350_600[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_GT450.*htt.*:r_H_PTH_GT450[1,-25,25]' "
     parametersToMeasure = [        
-        'r_H_PTH_0_20',
-        'r_H_PTH_20_45',
+        'r_H_PTH_0_45',
         'r_H_PTH_45_80',
         'r_H_PTH_80_120',
         'r_H_PTH_120_200',
         'r_H_PTH_200_350',
-        'r_H_PTH_350_600',
-        'r_H_PTH_GE600'
+        'r_H_PTH_350_450',
+        'r_H_PTH_GT450'
         ]
 elif args.MeasurementType == "mjj":
     WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_0_150.*htt.*:r_H_MJJ_0_150[1,-25,25]' "
@@ -164,14 +186,37 @@ elif args.MeasurementType == 'njets':
         'r_H_NJETS_0',
         'r_H_NJETS_1',
         'r_H_NJETS_2',
-        'r_H_NJETS_3'
+        'r_H_NJETS_3',
         'r_H_NJETS_GE4'
+    ]
+elif args.MeasurementType == 'ljpt':
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_30_60.*htt.*:r_H_LJPT_30_60[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_60_120.*htt.*:r_H_LJPT_60_120[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_120_200.*htt.*:r_H_LJPT_120_200[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_200_350.*htt.*:r_H_LJPT_200_350[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_GT350.*htt.*:r_H_LJPT_GT350[1,-25,25]' "
+    parametersToMeasure=[
+        'r_H_LJPT_30_60',        
+        'r_H_LJPT_60_120',
+        'r_H_LJPT_120_200',
+        'r_H_LJPT_200_350',
+        'r_H_LJPT_GT350',
     ]
 WorkspaceCommand+= CombinedCardName+" -o "+WorkspaceName+" -m 125"
 
 logging.info("Workspace Command:")
 logging.info('\n\n'+WorkspaceCommand+'\n')
 os.system(WorkspaceCommand+" | tee -a "+outputLoggingFile)
+
+#terminate here if we only wanted a workspace
+if args.workspaceOnly:
+    #move the log file into output
+    os.system('mv '+outputLoggingFile+' '+OutputDir)
+    #move anything we may have made in parallel, or that may be left over to the output
+    os.system(" mv *"+DateTag+"* "+OutputDir)
+
+    outputArea.PrintSessionInfo(DateTag)
+    exit()
 
 for parameter in parametersToMeasure:
 

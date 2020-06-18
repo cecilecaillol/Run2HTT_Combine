@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   TFile* TheFile;
   if(Input.OptionExists("-c")) TheFile = new TFile((aux_shapes+"mt_controls_2017.root").c_str());
   else if (Input.OptionExists("-gf")) TheFile = new TFile((aux_shapes+"smh2017mt_GOF.root").c_str());
-  else if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")) TheFile = new TFile((aux_shapes+"smh2017mt_Differential.root").c_str());
+  else if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")||Input.OptionExists("-dljpt")) TheFile = new TFile((aux_shapes+"smh2017mt_Differential.root").c_str());
   else TheFile = new TFile((aux_shapes+"smh2017mt.root").c_str());  
     
   //categories loaded from configurations
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
   vector<string> bkg_procs = {"VVT","STT","TTT","jetFakes","ZL","VVL","STL","TTL"};
   if(Input.OptionExists("-e")) {bkg_procs.push_back("ZT");}
   else bkg_procs.push_back("embedded");
-  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
     {
       bkg_procs.push_back("ggH_htt_nonfid125");
       bkg_procs.push_back("qqH_htt_nonfid125");
@@ -82,21 +82,21 @@ int main(int argc, char **argv)
   vector<string> ggH_STXS;
   if (Input.OptionExists("-g")) ggH_STXS = {"ggH_htt125"};
   else if (Input.OptionExists("-dp")) ggH_STXS = {
-      "ggH_PTH_0_20_htt125",
-      "ggH_PTH_20_45_htt125",
+      "ggH_PTH_0_45_htt125",
       "ggH_PTH_45_80_htt125",
       "ggH_PTH_80_120_htt125",
       "ggH_PTH_120_200_htt125",
       "ggH_PTH_200_350_htt125",
-      "ggH_PTH_350_600_htt125",
-      "ggH_PTH_GE600_htt125",
+      "ggH_PTH_350_450_htt125",
+      "ggH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ggH_STXS = {
       "ggH_NJETS_0_htt125",
       "ggH_NJETS_1_htt125",
       "ggH_NJETS_2_htt125",
-      "ggH_NJETS_GE3_htt125",
+      "ggH_NJETS_3_htt125",
+      "ggH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) ggH_STXS = {
@@ -108,6 +108,13 @@ int main(int argc, char **argv)
       "ggH_MJJ_1000_1400_htt125",
       "ggH_MJJ_1400_1800_htt125",
       "ggH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) ggH_STXS = {
+      "ggH_LJPT_30_60_htt125",
+      "ggH_LJPT_60_120_htt125",
+      "ggH_LJPT_120_200_htt125",
+      "ggH_LJPT_200_350_htt125",
+      "ggH_LJPT_GT350_htt125",
     };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
@@ -129,21 +136,21 @@ int main(int argc, char **argv)
   vector<string> qqH_STXS; 
   if(Input.OptionExists("-q")) qqH_STXS = {"qqH_htt125"};
   else if (Input.OptionExists("-dp")) qqH_STXS = {
-      "qqH_PTH_0_20_htt125",
-      "qqH_PTH_20_45_htt125",
+      "qqH_PTH_0_45_htt125",
       "qqH_PTH_45_80_htt125",
       "qqH_PTH_80_120_htt125",
       "qqH_PTH_120_200_htt125",
       "qqH_PTH_200_350_htt125",
-      "qqH_PTH_350_600_htt125",
-      "qqH_PTH_GE600_htt125",
+      "qqH_PTH_350_450_htt125",
+      "qqH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) qqH_STXS = {
       "qqH_NJETS_0_htt125",
       "qqH_NJETS_1_htt125",
       "qqH_NJETS_2_htt125",
-      "qqH_NJETS_GE3_htt125",
+      "qqH_NJETS_3_htt125",
+      "qqH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) qqH_STXS = {
@@ -155,6 +162,13 @@ int main(int argc, char **argv)
       "qqH_MJJ_1000_1400_htt125",
       "qqH_MJJ_1400_1800_htt125",
       "qqH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) qqH_STXS = {
+      "qqH_LJPT_30_60_htt125",
+      "qqH_LJPT_60_120_htt125",
+      "qqH_LJPT_120_200_htt125",
+      "qqH_LJPT_200_350_htt125",
+      "qqH_LJPT_GT350_htt125",
     };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
@@ -170,21 +184,21 @@ int main(int argc, char **argv)
   vector<string> WH_STXS;
   if (Input.OptionExists("-q")) WH_STXS = {"WH_lep_htt125","WH_had_htt125"};
   else if (Input.OptionExists("-dp")) WH_STXS = {
-      "WH_PTH_0_20_htt125",
-      "WH_PTH_20_45_htt125",
+      "WH_PTH_0_45_htt125",
       "WH_PTH_45_80_htt125",
       "WH_PTH_80_120_htt125",
       "WH_PTH_120_200_htt125",
       "WH_PTH_200_350_htt125",
-      "WH_PTH_350_600_htt125",
-      "WH_PTH_GE600_htt125",
+      "WH_PTH_350_450_htt125",
+      "WH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) WH_STXS = {
       "WH_NJETS_0_htt125",
       "WH_NJETS_1_htt125",
       "WH_NJETS_2_htt125",
-      "WH_NJETS_GE3_htt125",
+      "WH_NJETS_3_htt125",
+      "WH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) WH_STXS = {
@@ -196,6 +210,13 @@ int main(int argc, char **argv)
       "WH_MJJ_1000_1400_htt125",
       "WH_MJJ_1400_1800_htt125",
       "WH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) WH_STXS = {
+      "WH_LJPT_30_60_htt125",
+      "WH_LJPT_60_120_htt125",
+      "WH_LJPT_120_200_htt125",
+      "WH_LJPT_200_350_htt125",
+      "WH_LJPT_GT350_htt125",
     };
   else WH_STXS = {
       "WH_lep_htt125",
@@ -214,21 +235,21 @@ int main(int argc, char **argv)
   vector<string> ZH_STXS;
   if (Input.OptionExists("-q")) ZH_STXS = {"ZH_lep_htt125","ZH_had_htt125"};
   else if (Input.OptionExists("-dp")) ZH_STXS = {
-      "ZH_PTH_0_20_htt125",
-      "ZH_PTH_20_45_htt125",
+      "ZH_PTH_0_45_htt125",
       "ZH_PTH_45_80_htt125",
       "ZH_PTH_80_120_htt125",
       "ZH_PTH_120_200_htt125",
       "ZH_PTH_200_350_htt125",
-      "ZH_PTH_350_600_htt125",
-      "ZH_PTH_GE600_htt125",
+      "ZH_PTH_350_450_htt125",
+      "ZH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ZH_STXS = {
       "ZH_NJETS_0_htt125",
       "ZH_NJETS_1_htt125",
       "ZH_NJETS_2_htt125",
-      "ZH_NJETS_GE3_htt125",
+      "ZH_NJETS_3_htt125",
+      "ZH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) ZH_STXS = {
@@ -240,6 +261,13 @@ int main(int argc, char **argv)
       "ZH_MJJ_1000_1400_htt125",
       "ZH_MJJ_1400_1800_htt125",
       "ZH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) ZH_STXS = {
+      "ZH_LJPT_30_60_htt125",
+      "ZH_LJPT_60_120_htt125",
+      "ZH_LJPT_120_200_htt125",
+      "ZH_LJPT_200_350_htt125",
+      "ZH_LJPT_GT350_htt125",
     };
   else ZH_STXS = {
       "ZH_lep_htt125",
@@ -257,7 +285,7 @@ int main(int argc, char **argv)
 
   vector<string> ggZH_STXS;
   if (Input.OptionExists("-g")) ggZH_STXS = {"ggZH_lep_htt125","ggZH_had_htt125"};
-  else if (Input.OptionExists("-dp")|Input.OptionExists("-dn")|Input.OptionExists("-dm")) ggZH_STXS={};
+  else if (Input.OptionExists("-dm")||Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dljpt")) ggZH_STXS = {};
   else ggZH_STXS = {
       "ggZH_lep_htt125",
       "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
@@ -595,7 +623,7 @@ int main(int argc, char **argv)
    
       //Mu to tau fake energy fake scale            
       std::cout<<"Adding Shapes..."<<std::endl;
-      if (Input.OptionExists("-dp")|Input.OptionExists("-dn")|Input.OptionExists("-dm"))
+      if (Input.OptionExists("-dp")|Input.OptionExists("-dn")|Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_ZLShape_mt_1prong_2017","CMS_ZLShape_mt_1prong1pizero_2017"},
 			      {"ZL"},
@@ -659,7 +687,7 @@ int main(int argc, char **argv)
 	    TheFile,
 	    CategoryArgs);
 	}
-      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({
 	      "CMS_rawFF_mt_qcd_0jet_unc1_2017",
@@ -906,7 +934,7 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
-      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017",
 		"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017",
@@ -1437,7 +1465,7 @@ int main(int argc, char **argv)
                       "$BIN/$PROCESS$MASS",
                       "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
-  else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm"))
+  else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
     {
       cb.cp().backgrounds().ExtractShapes(
       aux_shapes + "smh2017mt_Differential.root",

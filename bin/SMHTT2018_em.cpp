@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
   TFile* TheFile;
   if(Input.OptionExists("-c")) TheFile = new TFile ((aux_shapes+"em_controls_2018.root").c_str());
   else if (Input.OptionExists("-gf")) TheFile = new TFile((aux_shapes+"smh2018em_GOF.root").c_str());
-  else if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")) TheFile = new TFile((aux_shapes+"smh2018em_Differential.root").c_str());
+  else if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")||Input.OptionExists("-dljpt")) TheFile = new TFile((aux_shapes+"smh2018em_Differential.root").c_str());
   else TheFile = new TFile((aux_shapes+"smh2018em.root").c_str());  
     
   //categories loaded from configurations
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
       bkg_procs.push_back("TTT");      
     }
   else bkg_procs.push_back("embedded");
-  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+  if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
     {
       bkg_procs.push_back("ggH_htt_nonfid125");
       bkg_procs.push_back("qqH_htt_nonfid125");
@@ -89,21 +89,21 @@ int main(int argc, char **argv) {
 vector<string> ggH_STXS;
   if (Input.OptionExists("-g")) ggH_STXS = {"ggH_htt125"};
   else if (Input.OptionExists("-dp")) ggH_STXS = {
-      "ggH_PTH_0_20_htt125",
-      "ggH_PTH_20_45_htt125",
+      "ggH_PTH_0_45_htt125",
       "ggH_PTH_45_80_htt125",
       "ggH_PTH_80_120_htt125",
       "ggH_PTH_120_200_htt125",
       "ggH_PTH_200_350_htt125",
-      "ggH_PTH_350_600_htt125",
-      "ggH_PTH_GE600_htt125",
+      "ggH_PTH_350_450_htt125",
+      "ggH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ggH_STXS = {
       "ggH_NJETS_0_htt125",
       "ggH_NJETS_1_htt125",
       "ggH_NJETS_2_htt125",
-      "ggH_NJETS_GE3_htt125",
+      "ggH_NJETS_3_htt125",
+      "ggH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) ggH_STXS = {
@@ -115,6 +115,13 @@ vector<string> ggH_STXS;
       "ggH_MJJ_1000_1400_htt125",
       "ggH_MJJ_1400_1800_htt125",
       "ggH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) ggH_STXS = {
+      "ggH_LJPT_30_60_htt125",
+      "ggH_LJPT_60_120_htt125",
+      "ggH_LJPT_120_200_htt125",
+      "ggH_LJPT_200_350_htt125",
+      "ggH_LJPT_GT350_htt125",
     };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
@@ -136,21 +143,21 @@ vector<string> ggH_STXS;
   vector<string> qqH_STXS; 
   if(Input.OptionExists("-q")) qqH_STXS = {"qqH_htt125"};
   else if (Input.OptionExists("-dp")) qqH_STXS = {
-      "qqH_PTH_0_20_htt125",
-      "qqH_PTH_20_45_htt125",
+      "qqH_PTH_0_45_htt125",
       "qqH_PTH_45_80_htt125",
       "qqH_PTH_80_120_htt125",
       "qqH_PTH_120_200_htt125",
       "qqH_PTH_200_350_htt125",
-      "qqH_PTH_350_600_htt125",
-      "qqH_PTH_GE600_htt125",
+      "qqH_PTH_350_450_htt125",
+      "qqH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) qqH_STXS = {
       "qqH_NJETS_0_htt125",
       "qqH_NJETS_1_htt125",
       "qqH_NJETS_2_htt125",
-      "qqH_NJETS_GE3_htt125",
+      "qqH_NJETS_3_htt125",
+      "qqH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) qqH_STXS = {
@@ -162,6 +169,13 @@ vector<string> ggH_STXS;
       "qqH_MJJ_1000_1400_htt125",
       "qqH_MJJ_1400_1800_htt125",
       "qqH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) qqH_STXS = {
+      "qqH_LJPT_30_60_htt125",
+      "qqH_LJPT_60_120_htt125",
+      "qqH_LJPT_120_200_htt125",
+      "qqH_LJPT_200_350_htt125",
+      "qqH_LJPT_GT350_htt125",
     };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
@@ -177,21 +191,21 @@ vector<string> ggH_STXS;
   vector<string> WH_STXS;
   if (Input.OptionExists("-q")) WH_STXS = {"WH_lep_htt125","WH_had_htt125"};
   else if (Input.OptionExists("-dp")) WH_STXS = {
-      "WH_PTH_0_20_htt125",
-      "WH_PTH_20_45_htt125",
+      "WH_PTH_0_45_htt125",
       "WH_PTH_45_80_htt125",
       "WH_PTH_80_120_htt125",
       "WH_PTH_120_200_htt125",
       "WH_PTH_200_350_htt125",
-      "WH_PTH_350_600_htt125",
-      "WH_PTH_GE600_htt125",
+      "WH_PTH_350_450_htt125",
+      "WH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) WH_STXS = {
       "WH_NJETS_0_htt125",
       "WH_NJETS_1_htt125",
       "WH_NJETS_2_htt125",
-      "WH_NJETS_GE3_htt125",
+      "WH_NJETS_3_htt125",
+      "WH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) WH_STXS = {
@@ -203,6 +217,13 @@ vector<string> ggH_STXS;
       "WH_MJJ_1000_1400_htt125",
       "WH_MJJ_1400_1800_htt125",
       "WH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) WH_STXS = {
+      "WH_LJPT_30_60_htt125",
+      "WH_LJPT_60_120_htt125",
+      "WH_LJPT_120_200_htt125",
+      "WH_LJPT_200_350_htt125",
+      "WH_LJPT_GT350_htt125",
     };
   else WH_STXS = {
       "WH_lep_htt125",
@@ -221,21 +242,21 @@ vector<string> ggH_STXS;
   vector<string> ZH_STXS;
   if (Input.OptionExists("-q")) ZH_STXS = {"ZH_lep_htt125","ZH_had_htt125"};
   else if (Input.OptionExists("-dp")) ZH_STXS = {
-      "ZH_PTH_0_20_htt125",
-      "ZH_PTH_20_45_htt125",
+      "ZH_PTH_0_45_htt125",
       "ZH_PTH_45_80_htt125",
       "ZH_PTH_80_120_htt125",
       "ZH_PTH_120_200_htt125",
       "ZH_PTH_200_350_htt125",
-      "ZH_PTH_350_600_htt125",
-      "ZH_PTH_GE600_htt125",
+      "ZH_PTH_350_450_htt125",
+      "ZH_PTH_GT450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ZH_STXS = {
       "ZH_NJETS_0_htt125",
       "ZH_NJETS_1_htt125",
       "ZH_NJETS_2_htt125",
-      "ZH_NJETS_GE3_htt125",
+      "ZH_NJETS_3_htt125",
+      "ZH_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) ZH_STXS = {
@@ -247,6 +268,13 @@ vector<string> ggH_STXS;
       "ZH_MJJ_1000_1400_htt125",
       "ZH_MJJ_1400_1800_htt125",
       "ZH_MJJ_GE1800_htt125",
+    };
+  else if (Input.OptionExists("-dljpt")) ZH_STXS = {
+      "ZH_LJPT_30_60_htt125",
+      "ZH_LJPT_60_120_htt125",
+      "ZH_LJPT_120_200_htt125",
+      "ZH_LJPT_200_350_htt125",
+      "ZH_LJPT_GT350_htt125",
     };
   else ZH_STXS = {
       "ZH_lep_htt125",
@@ -264,6 +292,7 @@ vector<string> ggH_STXS;
 
   vector<string> ggZH_STXS;
   if (Input.OptionExists("-g")) ggZH_STXS = {"ggZH_lep_htt125","ggZH_had_htt125"};
+  else if (Input.OptionExists("-dm")||Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dljpt")) ggZH_STXS = {};
   else ggZH_STXS = {
       "ggZH_lep_htt125",
       "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
@@ -544,8 +573,15 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       std::cout<<"Shape Errors"<<std::endl;
 
       // QCD shape      
-      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm") || Input.OptionExists("-dljpt"))
     {      
+      AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2018","CMS_QCD_njet0_slope_2018","CMS_QCD_stat_pte15to25_ptmu15to25_2018","CMS_QCD_stat_pte15to25_ptmugt25_2018","CMS_QCD_stat_pte25to35_ptmu15to25_2018","CMS_QCD_stat_pte25to35_ptmugt25_2018","CMS_QCD_stat_ptegt35_ptmu15to25_2018","CMS_QCD_stat_ptegt35_ptmugt25_2018","CMS_QCD_njet1_intercept_2018","CMS_QCD_njet1_slope_2018","CMS_QCD_stat_pte15to25_ptmu15to25_2018","CMS_QCD_stat_pte15to25_ptmugt25_2018","CMS_QCD_stat_pte25to35_ptmu15to25_2018","CMS_QCD_stat_pte25to35_ptmugt25_2018","CMS_QCD_stat_ptegt35_ptmu15to25_2018","CMS_QCD_stat_ptegt35_ptmugt25_2018","CMS_QCD_njet2_intercept_2018","CMS_QCD_njet2_slope_2018","CMS_QCD_stat_pte15to25_ptmu15to25_2018","CMS_QCD_stat_pte15to25_ptmugt25_2018","CMS_QCD_stat_pte25to35_ptmu15to25_2018","CMS_QCD_stat_pte25to35_ptmugt25_2018","CMS_QCD_stat_ptegt35_ptmu15to25_2018","CMS_QCD_stat_ptegt35_ptmugt25_2018"},
+			      {"QCD"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs);
+      /*
       AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2018","CMS_QCD_njet0_slope_2018","CMS_QCD_stat_pte15to25_ptmu15to25_2018","CMS_QCD_stat_pte15to25_ptmugt25_2018","CMS_QCD_stat_pte25to35_ptmu15to25_2018","CMS_QCD_stat_pte25to35_ptmugt25_2018","CMS_QCD_stat_ptegt35_ptmu15to25_2018","CMS_QCD_stat_ptegt35_ptmugt25_2018"},
 			  {"QCD"},
 			  &cb,
@@ -577,6 +613,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 			      TheFile,
 			      {"em_2jetlow","em_2jethigh","em_3jetlow","em_3jethigh"});
 	}
+      */
     }
   else
     {
@@ -621,8 +658,15 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
-      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm") || Input.OptionExists("-dljpt"))
 	{     
+	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2018","CMS_htt_boson_scale_met_0jet_2018","CMS_htt_boson_reso_met_1jet_2018","CMS_htt_boson_scale_met_1jet_2018","CMS_htt_boson_reso_met_2jet_2018","CMS_htt_boson_scale_met_2jet_2018"},
+			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs);
+	  /*
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2018","CMS_htt_boson_scale_met_0jet_2018"},
 			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
 			      &cb,
@@ -654,6 +698,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 			      TheFile,
 				  {"em_2jetlow","em_2jethigh","em_3jetlow","em_3jethigh"});
 	    }
+	  */
 	}      
       else
 	{
@@ -1078,10 +1123,18 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_bothmuetrg_emb_2018","shape",SystMap<>::init(1.0));*/
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu8e23trg_emb_2018","shape",SystMap<>::init(0.866));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu23e12trg_emb_2018","shape",SystMap<>::init(0.866));
-      AddShapesIfNotEmpty({"CMS_bothmuetrg_emb_2018"},{"embedded"},&cb,0.866,TheFile,{"em_boosted1","em_boosted2","em_vbflow","em_vbfhigh"});
+      if(Input.OptionExists("-dm")||Input.OptionExists("-dn")||Input.OptionExists("-dp")||Input.OptionExists("-dljpt"))
+	{
+	  AddShapesIfNotEmpty({"CMS_bothmuetrg_emb_2018"},{"embedded"},&cb,0.866,TheFile,CategoryArgs);
+	  AddShapesIfNotEmpty({"CMS_bothmuetrg_2018"},{"embedded"},&cb,0.5,TheFile,CategoryArgs);
+	}
+      else
+	{
+	  AddShapesIfNotEmpty({"CMS_bothmuetrg_emb_2018"},{"embedded"},&cb,0.866,TheFile,{"em_boosted1","em_boosted2","em_vbflow","em_vbfhigh"});
+	  AddShapesIfNotEmpty({"CMS_bothmuetrg_2018"},{"embedded"},&cb,0.5,TheFile,{"em_boosted1","em_boosted2","em_vbflow","em_vbfhigh"});
+	}
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu8e23trg_2018","shape",SystMap<>::init(0.5));
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu23e12trg_2018","shape",SystMap<>::init(0.5));
-      AddShapesIfNotEmpty({"CMS_bothmuetrg_2018"},{"embedded"},&cb,0.5,TheFile,{"em_boosted1","em_boosted2","em_vbflow","em_vbfhigh"});
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu23e12trg_2018","shape",SystMap<>::init(0.5));      
 
     }
   //***********************************************************                          
@@ -1108,7 +1161,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
                       "$BIN/$PROCESS$MASS",
                       "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
-    else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm"))
+    else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
     {
       cb.cp().backgrounds().ExtractShapes(
       aux_shapes + "smh2018em_Differential.root",
