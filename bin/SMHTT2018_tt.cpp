@@ -72,8 +72,10 @@ int main(int argc, char **argv)
     {      
       bkg_procs.push_back("ggH_htt_nonfid125");
       bkg_procs.push_back("qqH_htt_nonfid125");
-      bkg_procs.push_back("WH_htt_nonfid125");
-      bkg_procs.push_back("ZH_htt_nonfid125");
+      bkg_procs.push_back("WH_lep_htt_nonfid125");
+      bkg_procs.push_back("WH_had_htt_nonfid125");
+      bkg_procs.push_back("ZH_lep_htt_nonfid125");
+      bkg_procs.push_back("ZH_had_htt_nonfid125");
     }
   else
     {
@@ -95,7 +97,7 @@ int main(int argc, char **argv)
       "ggH_PTH_120_200_htt125",
       "ggH_PTH_200_350_htt125",
       "ggH_PTH_350_450_htt125",
-      "ggH_PTH_GT450_htt125",
+      "ggH_PTH_GE450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ggH_STXS = {
@@ -149,7 +151,7 @@ int main(int argc, char **argv)
       "qqH_PTH_120_200_htt125",
       "qqH_PTH_200_350_htt125",
       "qqH_PTH_350_450_htt125",
-      "qqH_PTH_GT450_htt125",
+      "qqH_PTH_GE450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) qqH_STXS = {
@@ -191,13 +193,20 @@ int main(int argc, char **argv)
   vector<string> WH_STXS;
   if (Input.OptionExists("-q")) WH_STXS = {"WH_lep_htt125","WH_had_htt125"};  
   else if (Input.OptionExists("-dp")) WH_STXS = {
-      "WH_PTH_0_45_htt125",
-      "WH_PTH_45_80_htt125",
-      "WH_PTH_80_120_htt125",
-      "WH_PTH_120_200_htt125",
-      "WH_PTH_200_350_htt125",
-      "WH_PTH_350_450_htt125",
-      "WH_PTH_GT450_htt125",
+      "WH_had_PTH_0_45_htt125",
+      "WH_had_PTH_45_80_htt125",
+      "WH_had_PTH_80_120_htt125",
+      "WH_had_PTH_120_200_htt125",
+      "WH_had_PTH_200_350_htt125",
+      "WH_had_PTH_350_450_htt125",
+      "WH_had_PTH_GE450_htt125",
+      "WH_lep_PTH_0_45_htt125",
+      "WH_lep_PTH_45_80_htt125",
+      "WH_lep_PTH_80_120_htt125",
+      "WH_lep_PTH_120_200_htt125",
+      "WH_lep_PTH_200_350_htt125",
+      "WH_lep_PTH_350_450_htt125",
+      "WH_lep_PTH_GE450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) WH_STXS = {
@@ -244,13 +253,20 @@ int main(int argc, char **argv)
   if (Input.OptionExists("-q")) ZH_STXS = {"ZH_lep_htt125","ZH_had_htt125"};
   //if (Input.OptionExists("-q")) ZH_STXS = {"ZH_htt125"};
   else if (Input.OptionExists("-dp")) ZH_STXS = {
-      "ZH_PTH_0_45_htt125",
-      "ZH_PTH_45_80_htt125",
-      "ZH_PTH_80_120_htt125",
-      "ZH_PTH_120_200_htt125",
-      "ZH_PTH_200_350_htt125",
-      "ZH_PTH_350_450_htt125",
-      "ZH_PTH_GT450_htt125",
+      "ZH_had_PTH_0_45_htt125",
+      "ZH_had_PTH_45_80_htt125",
+      "ZH_had_PTH_80_120_htt125",
+      "ZH_had_PTH_120_200_htt125",
+      "ZH_had_PTH_200_350_htt125",
+      "ZH_had_PTH_350_450_htt125",
+      "ZH_had_PTH_GE450_htt125",
+      "ZH_lep_PTH_0_45_htt125",
+      "ZH_lep_PTH_45_80_htt125",
+      "ZH_lep_PTH_80_120_htt125",
+      "ZH_lep_PTH_120_200_htt125",
+      "ZH_lep_PTH_200_350_htt125",
+      "ZH_lep_PTH_350_450_htt125",
+      "ZH_lep_PTH_GE450_htt125",
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ZH_STXS = {
@@ -291,7 +307,6 @@ int main(int argc, char **argv)
       "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
       "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125",
     };
-
   
   vector<string> ggZH_STXS;
   if (Input.OptionExists("-g")) ggZH_STXS = {"ggZH_lep_htt125","ggZH_had_htt125"};

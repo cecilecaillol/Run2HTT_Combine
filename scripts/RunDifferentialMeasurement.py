@@ -79,8 +79,10 @@ for year in args.years:
             DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
             DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
             #bugged category name. Should be fixed in next round
-            #DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_HighTauPt"
+            if args.MeasurementType == 'njets':
+                DataCardCreationCommand+=" "+channel+"_HighTauPt"
+            else:
+                DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
         elif channel == 'et':
             measurementString = ''
             if args.MeasurementType == 'pth':
@@ -146,8 +148,8 @@ if args.MeasurementType == "pth":
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_80_120.*htt.*:r_H_PTH_80_120[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_120_200.*htt.*:r_H_PTH_120_200[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_200_350.*htt.*:r_H_PTH_200_350[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*htt.*:r_H_PTH_350_600[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_GT450.*htt.*:r_H_PTH_GT450[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*htt.*:r_H_PTH_350_450[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_G.450.*htt.*:r_H_PTH_GT450[1,-25,25]' "
     parametersToMeasure = [        
         'r_H_PTH_0_45',
         'r_H_PTH_45_80',
