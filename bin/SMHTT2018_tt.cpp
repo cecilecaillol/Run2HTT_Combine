@@ -123,7 +123,7 @@ int main(int argc, char **argv)
       "ggH_LJPT_60_120_htt125",
       "ggH_LJPT_120_200_htt125",
       "ggH_LJPT_200_350_htt125",
-      "ggH_LJPT_GT350_htt125",
+      "ggH_LJPT_GE350_htt125",
     };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
       "qqH_LJPT_60_120_htt125",
       "qqH_LJPT_120_200_htt125",
       "qqH_LJPT_200_350_htt125",
-      "qqH_LJPT_GT350_htt125",
+      "qqH_LJPT_GE350_htt125",
     };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
@@ -210,11 +210,16 @@ int main(int argc, char **argv)
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) WH_STXS = {
-      "WH_NJETS_0_htt125",
-      "WH_NJETS_1_htt125",
-      "WH_NJETS_2_htt125",
-      "WH_NJETS_3_htt125",
-      "WH_NJETS_GE4_htt125",
+      "WH_had_NJETS_0_htt125",
+      "WH_had_NJETS_1_htt125",
+      "WH_had_NJETS_2_htt125",
+      "WH_had_NJETS_3_htt125",
+      "WH_had_NJETS_GE4_htt125",
+      "WH_lep_NJETS_0_htt125",
+      "WH_lep_NJETS_1_htt125",
+      "WH_lep_NJETS_2_htt125",
+      "WH_lep_NJETS_3_htt125",
+      "WH_lep_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) WH_STXS = {
@@ -228,11 +233,17 @@ int main(int argc, char **argv)
       "WH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) WH_STXS = {
-      "WH_LJPT_30_60_htt125",
-      "WH_LJPT_60_120_htt125",
-      "WH_LJPT_120_200_htt125",
-      "WH_LJPT_200_350_htt125",
-      "WH_LJPT_GT350_htt125",
+      "WH_had_LJPT_30_60_htt125",
+      "WH_had_LJPT_60_120_htt125",
+      "WH_had_LJPT_120_200_htt125",
+      "WH_had_LJPT_200_350_htt125",
+      "WH_had_LJPT_GE350_htt125",
+      "WH_lep_LJPT_30_60_htt125",
+      "WH_lep_LJPT_60_120_htt125",
+      "WH_lep_LJPT_120_200_htt125",
+      "WH_lep_LJPT_200_350_htt125",
+      "WH_lep_LJPT_GE350_htt125",
+      
     };
   else WH_STXS = {
       "WH_lep_htt125",
@@ -270,11 +281,16 @@ int main(int argc, char **argv)
     };
   //NJets differential Option
   else if (Input.OptionExists("-dn")) ZH_STXS = {
-      "ZH_NJETS_0_htt125",
-      "ZH_NJETS_1_htt125",
-      "ZH_NJETS_2_htt125",
-      "ZH_NJETS_3_htt125",
-      "ZH_NJETS_GE4_htt125",
+      "ZH_had_NJETS_0_htt125",
+      "ZH_had_NJETS_1_htt125",
+      "ZH_had_NJETS_2_htt125",
+      "ZH_had_NJETS_3_htt125",
+      "ZH_had_NJETS_GE4_htt125",
+      "ZH_lep_NJETS_0_htt125",
+      "ZH_lep_NJETS_1_htt125",
+      "ZH_lep_NJETS_2_htt125",
+      "ZH_lep_NJETS_3_htt125",
+      "ZH_lep_NJETS_GE4_htt125",
     };
   //mjj differential option
   else if (Input.OptionExists("-dm")) ZH_STXS = {
@@ -288,11 +304,16 @@ int main(int argc, char **argv)
       "ZH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) ZH_STXS = {
-      "ZH_LJPT_30_60_htt125",
-      "ZH_LJPT_60_120_htt125",
-      "ZH_LJPT_120_200_htt125",
-      "ZH_LJPT_200_350_htt125",
-      "ZH_LJPT_GT350_htt125",
+      "ZH_had_LJPT_30_60_htt125",
+      "ZH_had_LJPT_60_120_htt125",
+      "ZH_had_LJPT_120_200_htt125",
+      "ZH_had_LJPT_200_350_htt125",
+      "ZH_had_LJPT_GE350_htt125",
+      "ZH_lep_LJPT_30_60_htt125",
+      "ZH_lep_LJPT_60_120_htt125",
+      "ZH_lep_LJPT_120_200_htt125",
+      "ZH_lep_LJPT_200_350_htt125",
+      "ZH_lep_LJPT_GE350_htt125",
     };
   else ZH_STXS = {
       "ZH_lep_htt125",

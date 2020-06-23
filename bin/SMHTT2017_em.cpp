@@ -1168,7 +1168,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
                       "$BIN/$PROCESS$MASS",
                       "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
-  else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm"))
+  else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
     {
       cb.cp().backgrounds().ExtractShapes(
       aux_shapes + "smh2017em_Differential.root",

@@ -196,7 +196,7 @@ elif args.MeasurementType == 'ljpt':
     WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_60_120.*htt.*:r_H_LJPT_60_120[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_120_200.*htt.*:r_H_LJPT_120_200[1,-25,25]' "
     WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_200_350.*htt.*:r_H_LJPT_200_350[1,-25,25]' "
-    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_GT350.*htt.*:r_H_LJPT_GT350[1,-25,25]' "
+    WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_G.350.*htt.*:r_H_LJPT_GT350[1,-25,25]' "
     parametersToMeasure=[
         'r_H_LJPT_30_60',        
         'r_H_LJPT_60_120',
