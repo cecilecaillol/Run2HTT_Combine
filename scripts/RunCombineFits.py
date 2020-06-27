@@ -46,8 +46,9 @@ parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. 
 parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
 parser.add_argument('--UseGrid',help='Sweep grid points to generate results, instead of using the approximate singles algorithm',action='store_true')
 parser.add_argument('--nGridPoints',help='Number of grid points to use when using grid algorithms.',type=int,default=100)
-parser.add_argument('--displayCrossSections',help='Display inclusive and stage-0 results as cross sections also',action='store_true')
 parser.add_argument('--workspaceOnly',help='Create the text cards, and workspaces only, and then exit. Do not attempt any fits.',action='store_true')
+parser.add_argument('--stage0CrossSection',help='Create workspaces for a stage 0 cross section measurements. Removes some uncertainties.',action='store_true')
+parser.add_argument('--stage1CrossSection',help='Create workspaces for a stage 1 cross section measurements. Removes some uncertainties.',action='store_true')
 
 print("Parsing command line arguments.")
 args = parser.parse_args() 
@@ -60,6 +61,9 @@ if 'WH' in args.analysisStyle and args.WHChannels == None:
 
 if 'ZH' in args.analysisStyle and args.ZHChannels == None:
     raise RuntimeError("ZH channel analysis with no specified channels run!")
+
+if args.stage0CrossSection and args.stage1CrossSection:
+    raise RuntimeError("Cannot do both stage 0 and stage 1 cross section workspace creation!")
 
 if args.RunParallel:
     ThreadHandler = ThreadManager(args.numthreads)
@@ -95,6 +99,7 @@ if 'Standard' in args.analysisStyle:
                     NegativeBinCommand="python scripts/RemoveNegativeBins.py ../../auxiliaries/shapes/smh"+year+channel+".root"
                     AddShapeCommand="python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard ../../auxiliaries/shapes/smh"+year+channel+"_nocorrelation.root --OutputFileName ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root "
                     SmoothingCommand = "python scripts/SmoothJESsignal.py -c "+channel+" -i ../../auxiliaries/shapes/smh"+year+channel+"_correlated.root -o ../../auxiliaries/shapes/smh"+year+channel+".root -y "+year
+                    normalizedTheoryCommand = "prepNormalizedTheoryUncertainties.py ../../auxiliaries/shapes/smh"+year+channel+".root"
                 if channel=="et" or channel=="em":
                     AddShapeCommand+="--TrimYears "
                 print("Duplicating shapes for year correlations")
@@ -109,6 +114,11 @@ if 'Standard' in args.analysisStyle:
                 logging.info("Negative Bin Removal Command:")
                 logging.info('\n\n'+NegativeBinCommand+'\n')
                 os.system(NegativeBinCommand+" | tee -a "+outputLoggingFile)
+
+                print("Creating Normalized Theory Shapes For XS Measurements")
+                logging.info("Normalized Theory Command:")
+                logging.info("\n\n"+normalizedTheoryCommand+"\n")
+                os.system(normalizedTheoryCommand+" | tee -a "+outputLoggingFile)
 
             DataCardCreationCommand="SMHTT"+year
             DataCardCreationCommand+="_"+channel+" "+OutputDir
@@ -126,6 +136,10 @@ if 'Standard' in args.analysisStyle:
                 DataCardCreationCommand+=" -g"
             if args.RunInclusiveqqH:
                 DataCardCreationCommand+=" -q"
+            if args.stage0CrossSection:
+                DataCardCreationCommand+=" -x0"
+            if args.stage1CrossSection:
+                DataCardCreationCommand+=" -x1"
             DataCardCreationCommand+=" --Categories"
             if args.ControlMode:
                 TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/"+channel+"_controls_"+year+".root")

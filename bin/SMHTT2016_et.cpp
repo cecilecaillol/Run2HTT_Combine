@@ -331,19 +331,22 @@ int main(int argc, char **argv)
   //******************************************
   
   //Theory uncerts
-  cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
-  cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
-  cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));  
+  if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
+    {
+      cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
+      cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
+      cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));
+      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
+      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
+      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
+      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
+      cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
+      cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
+    }
   cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_PU_alphas", "lnN", ch::syst::SystMapAsymm<>::init(1.0066,1.0063));
   cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_PU_mq", "lnN", ch::syst::SystMapAsymm<>::init(1.0099,1.0098));
-  cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_THU", "lnN", SystMap<>::init(1.0099));
-  cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
-  cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
-  //cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "QCDScale_qqH", "lnN", SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
-  cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
-  cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
-  cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
+  cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_THU", "lnN", SystMap<>::init(1.0099));  
+  //cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "QCDScale_qqH", "lnN", SystMap<>::init(1.005));  
 
   cb.cp().process({"ggH_htt125"}).bin({"et_0jet"}).AddSyst(cb,"CMS_pythia_scale","lnN",ch::syst::SystMapAsymm<>::init(1.002,0.998));
   cb.cp().process({"ggH_PTH_0_200_0J_PTH_10_200_htt125"}).bin({"et_0jet"}).AddSyst(cb,"CMS_pythia_scale","lnN",ch::syst::SystMapAsymm<>::init(1.006,0.997));
@@ -870,40 +873,6 @@ int main(int argc, char **argv)
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2016","CMS_htt_boson_scale_met_0jet_2016"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"et_0jet"});
-      
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2016","CMS_htt_boson_scale_met_1jet_2016"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"et_1jet"});
-
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2016","CMS_htt_boson_scale_met_2jet_2016"},
-				  JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"et_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2016","CMS_htt_boson_scale_met_2jet_2016"},
-				  JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"et_2jetlow","et_2jethigh","et_3jetlow","et_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -1002,24 +971,48 @@ int main(int argc, char **argv)
 			      1.000,
 			      TheFile,{"et_vbflow","et_vbfhigh"});
 	}
-
-
-      //ggH Theory Uncertainties
-      AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
-            "THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
-        JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
-        &cb,
-        1.00,
-        TheFile,CategoryArgs);
       
-      //qqH theory uncertainties
-      std::cout<<"qqH Theory"<<std::endl;
-      AddShapesIfNotEmpty({"THU_qqH_yield","THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
-	    "THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
-	JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}}),
-	&cb,
-	1.00,
-	TheFile,CategoryArgs);
+      
+      if(Input.OptionExists("-x0"))
+	{
+	  //ggH Theory Uncertainties
+	  std::cout<<"Scaled ggH Theory"<<std::endl;
+	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
+		"THU_ggH_VBF3j_norm","THU_ggH_qmtop_norm","THU_ggH_PT60_norm","THU_ggH_PT120_norm"},
+	    JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+      
+	  //qqH theory uncertainties
+	  std::cout<<"Scaled qqH Theory"<<std::endl;
+	  AddShapesIfNotEmpty({"THU_qqH_yield","THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
+		"THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
+	    JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}}),
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	}
+      else if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
+	{
+	  //ggH Theory Uncertainties
+	  std::cout<<"ggH Theory"<<std::endl;
+	  AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
+		"THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
+	    JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+      
+	  //qqH theory uncertainties
+	  std::cout<<"qqH Theory"<<std::endl;
+	  AddShapesIfNotEmpty({"THU_qqH_yield","THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
+		"THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
+	    JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}}),
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	}
 
       //Electron Energy scale uncertainties
       AddShapesIfNotEmpty({"CMS_scale_e"},
@@ -1030,6 +1023,7 @@ int main(int argc, char **argv)
       
       //new theory shapes
       //inclusive shapes
+      /*
       AddShapesIfNotEmpty({"ggH_scale"},
 			  {"ggH_htt125",
 			      "ggZH_had_htt125"},
@@ -1045,6 +1039,7 @@ int main(int argc, char **argv)
 			  TheFile,
 			  CategoryArgs
 			  );
+      */
       AddShapesIfNotEmpty({"VH_scale"},
 			  {"WH_had_htt125",
 			      "ZH_had_htt125"},
@@ -1068,223 +1063,226 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
 
-      //individual STXS bin shapes
-      AddShapesIfNotEmpty({"ggH_scale_0jet"},
-			  {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
-			      "ggH_PTH_0_200_0J_PTH_0_10_htt125",
-			      "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
-			      "ggZH_PTH_0_200_0J_PTH_0_10_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ggH_scale_1jet_lowpt"},
-			  {"ggH_PTH_0_200_1J_PTH_0_60_htt125",
-			      "ggH_PTH_0_200_1J_PTH_60_120_htt125",
-			      "ggH_PTH_0_200_1J_PTH_120_200_htt125",
-			      "ggZH_PTH_0_200_1J_PTH_0_60_htt125",
-			      "ggZH_PTH_0_200_1J_PTH_60_120_htt125",
-			      "ggZH_PTH_0_200_1J_PTH_120_200_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ggH_scale_2jet_lowpt"},
-			  {"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
-			      "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
-			      "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"
-			      "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
-			      "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
-			      "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ggH_scale_vbf"},
-			  {"ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",
-			      "ggZH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "ggZH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "ggZH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "ggZH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ggH_scale_highpt"},
-			  {"ggH_PTH_200_300_htt125",
-			      "ggH_PTH_300_450_htt125",
-			      "ggZH_PTH_200_300_htt125",
-			      "ggZH_PTH_300_450_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ggH_scale_very_highpt"},
-			  {"ggH_PTH_450_650_htt125",
-			      "ggH_PTH_GE650_htt125",
-			      "ggZH_PTH_450_650_htt125",
-			      "ggZH_PTH_GE650_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+      if(not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
+	{
+	  //individual STXS bin shapes
+	  AddShapesIfNotEmpty({"ggH_scale_0jet"},
+			      {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
+				  "ggH_PTH_0_200_0J_PTH_0_10_htt125",
+				  "ggZH_PTH_0_200_0J_PTH_10_200_htt125",
+				  "ggZH_PTH_0_200_0J_PTH_0_10_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"ggH_scale_1jet_lowpt"},
+			      {"ggH_PTH_0_200_1J_PTH_0_60_htt125",
+				  "ggH_PTH_0_200_1J_PTH_60_120_htt125",
+				  "ggH_PTH_0_200_1J_PTH_120_200_htt125",
+				  "ggZH_PTH_0_200_1J_PTH_0_60_htt125",
+				  "ggZH_PTH_0_200_1J_PTH_60_120_htt125",
+				  "ggZH_PTH_0_200_1J_PTH_120_200_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"ggH_scale_2jet_lowpt"},
+			      {"ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
+				  "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
+				  "ggH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"
+				  "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_0_60_htt125",		   
+				  "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_60_120_htt125",		   
+				  "ggZH_PTH_0_200_GE2J_MJJ_0_350_PTH_120_200_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"ggH_scale_vbf"},
+			      {"ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "ggH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "ggH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125",
+				  "ggZH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "ggZH_PTH_0_200_GE2J_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "ggZH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "ggZH_PTH_0_200_GE2J_MJJ_GE700_PTHJJ_GE25_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"ggH_scale_highpt"},
+			      {"ggH_PTH_200_300_htt125",
+				  "ggH_PTH_300_450_htt125",
+				  "ggZH_PTH_200_300_htt125",
+				  "ggZH_PTH_300_450_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"ggH_scale_very_highpt"},
+			      {"ggH_PTH_450_650_htt125",
+				  "ggH_PTH_GE650_htt125",
+				  "ggZH_PTH_450_650_htt125",
+				  "ggZH_PTH_GE650_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"vbf_scale_0jet"},
-			  {"qqH_0J_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale_1jet"},
-			  {"qqH_1J_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale_lowmjj"},
-			  {"qqH_GE2J_MJJ_0_60_htt125",
-			      "qqH_GE2J_MJJ_60_120_htt125",
-			      "qqH_GE2J_MJJ_120_350_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"vbf_scale_0jet"},
+			      {"qqH_0J_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"vbf_scale_1jet"},
+			      {"qqH_1J_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"vbf_scale_lowmjj"},
+			      {"qqH_GE2J_MJJ_0_60_htt125",
+				  "qqH_GE2J_MJJ_60_120_htt125",
+				  "qqH_GE2J_MJJ_120_350_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"vbf_scale_highmjj_lowpt"},
-			  {"qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"vbf_scale_highmjj_lowpt"},
+			      {"qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "qqH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"vbf_scale_highmjj_highpt"},
-			  {"qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"vbf_scale_highmjj_highpt"},
+			      {"qqH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"VH_scale_0jet"},
-			  {"WH_0J_htt125",
-			      "ZH_0J_htt125,"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"VH_scale_1jet"},
-			  {"WH_1J_htt125",
-			      "ZH_1J_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"VH_scale_lowmjj"},
-			  {"WH_GE2J_MJJ_0_60_htt125",
-			      "WH_GE2J_MJJ_60_120_htt125",
-			      "WH_GE2J_MJJ_120_350_htt125",
-			      "ZH_GE2J_MJJ_0_60_htt125",
-			      "ZH_GE2J_MJJ_60_120_htt125",
-			      "ZH_GE2J_MJJ_120_350_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"VH_scale_0jet"},
+			      {"WH_0J_htt125",
+				  "ZH_0J_htt125,"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"VH_scale_1jet"},
+			      {"WH_1J_htt125",
+				  "ZH_1J_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"VH_scale_lowmjj"},
+			      {"WH_GE2J_MJJ_0_60_htt125",
+				  "WH_GE2J_MJJ_60_120_htt125",
+				  "WH_GE2J_MJJ_120_350_htt125",
+				  "ZH_GE2J_MJJ_0_60_htt125",
+				  "ZH_GE2J_MJJ_60_120_htt125",
+				  "ZH_GE2J_MJJ_120_350_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"VH_scale_highmjj_lowpt"},
-			  {"WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"VH_scale_highmjj_lowpt"},
+			      {"WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
 
-      AddShapesIfNotEmpty({"VH_scale_highmjj_highpt"},
-			  {"WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"VH_scale_highmjj_highpt"},
+			      {"WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125"},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
       
-      AddShapesIfNotEmpty({"VH_scale_0jet"},
-			  {"WH_0J_htt125",
-			      "ZH_0J_htt125",},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"VH_scale_0jet"},
+			      {"WH_0J_htt125",
+				  "ZH_0J_htt125",},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
       
-      AddShapesIfNotEmpty({"VH_scale_1jet"},
-			  {"WH_1J_htt125",
-			      "ZH_1J_htt125",},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"VH_scale_lowmjj"},
-			  {"WH_GE2J_MJJ_0_60_htt125",
-			      "WH_GE2J_MJJ_60_120_htt125",
-			      "WH_GE2J_MJJ_120_350_htt125",
-			      "ZH_GE2J_MJJ_0_60_htt125",
-			      "ZH_GE2J_MJJ_60_120_htt125",
-			      "ZH_GE2J_MJJ_120_350_htt125",},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"VH_scale_highmjj_lowpt"},
-			  {"WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"VH_scale_highmjj_highpt"},
-			  {"WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
-			      "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125",},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
+	  AddShapesIfNotEmpty({"VH_scale_1jet"},
+			      {"WH_1J_htt125",
+				  "ZH_1J_htt125",},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"VH_scale_lowmjj"},
+			      {"WH_GE2J_MJJ_0_60_htt125",
+				  "WH_GE2J_MJJ_60_120_htt125",
+				  "WH_GE2J_MJJ_120_350_htt125",
+				  "ZH_GE2J_MJJ_0_60_htt125",
+				  "ZH_GE2J_MJJ_60_120_htt125",
+				  "ZH_GE2J_MJJ_120_350_htt125",},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"VH_scale_highmjj_lowpt"},
+			      {"WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "WH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_0_25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_350_700_PTHJJ_GE25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_0_25_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_0_200_MJJ_GE700_PTHJJ_GE25_htt125",},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	  AddShapesIfNotEmpty({"VH_scale_highmjj_highpt"},
+			      {"WH_GE2J_MJJ_GE350_PTH_GE200_htt125",
+				  "ZH_GE2J_MJJ_GE350_PTH_GE200_htt125",},
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs
+			      );
+	}
       //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
       /*
       AddShapesIfNotEmpty({"WH_scale_lowpt"},
