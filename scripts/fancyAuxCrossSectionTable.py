@@ -40,9 +40,9 @@ parameters_STXS = {
         },
     'r_ggH_0J':{
         'SMXS': 1752.942,
-        'mu_value':-0.55,
-        'uncert_down':0.452,
-        'uncert_up':0.493,
+        'mu_value':0.067,
+        'uncert_down':0.451,
+        'uncert_up':0.494,
         'color':ROOT.kAzure+7,
         'axis':'ggH: 0 Jet',
         'SMXS_mu_up': 0.09125,
@@ -50,9 +50,9 @@ parameters_STXS = {
     },
     'r_ggH_1J_PTH_0_60':{
         'SMXS': 451.0862,
-        'mu_value':-1.676,
-        'uncert_down':1.131,
-        'uncert_up':1.150,
+        'mu_value':-1.540,
+        'uncert_down':y1.131,
+        'uncert_up':1.147,
         'color':ROOT.kAzure+7,
         'axis':'ggH: 1 Jet, p_{T}^{H}[0,60]',
         'SMXS_mu_up': 0.140,
@@ -60,9 +60,9 @@ parameters_STXS = {
     },
     'r_ggH_1J_PTH_60_120':{
         'SMXS': 287.6776,
-        'mu_value':3.514,
-        'uncert_down':0.909,
-        'uncert_up':0.918,
+        'mu_value':3.600,
+        'uncert_down':0.912,
+        'uncert_up':0.909,
         'color':ROOT.kAzure+7,
         'axis':'ggH: 1 Jet, p_{T}^{H}[60,120]',
         'SMXS_mu_up': 0.142,
@@ -70,29 +70,29 @@ parameters_STXS = {
     },
     'r_ggH_1J_PTH_120_200':{
         'SMXS': 50.04276,
-        'mu_value':1.981,
-        'uncert_down':0.941,
-        'uncert_up':1.038,
+        'mu_value':2.160,
+        'uncert_down':0.944,
+        'uncert_up':1.043,
         'color':ROOT.kAzure+7,
         'axis':'ggH: 1 Jet, p_{T}^{H}[120,200]',
         'SMXS_mu_up': 0.193,
         'SMXS_mu_down': 0.193,        
     },
-    'r_ggH_PTH_0_200_GE2J':{
-        'SMXS': 306.2587,
-        'mu_value':0.062,
-        'uncert_down':0.886,
-        'uncert_up':0.818,
+    'r_ggH_PTH_0_200_GE2J_MJJ_0_350':{
+        'SMXS': 253.72,
+        'mu_value':0.440,
+        'uncert_down':0.866,
+        'uncert_up':0.823,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: #geq 2 Jet',
+        'axis':'ggH: #geq 2 Jet, m_{jj}[0,350]',
         'SMXS_mu_up': 0.2296,
         'SMXS_mu_down': 0.2296,        
     },
     'r_ggH_PTH_200_300':{
         'SMXS': 27.51224,
-        'mu_value':0.878,
-        'uncert_down':0.892,
-        'uncert_up':0.885,
+        'mu_value':1.102,
+        'uncert_down':0.903,
+        'uncert_up':0.871,
         'color':ROOT.kAzure+7,
         'axis':'ggH: p_{T}^{H}[200,300]',
         'SMXS_mu_up': 0.41885,
@@ -100,9 +100,9 @@ parameters_STXS = {
     },
     'r_ggH_PTH_GE300':{
         'SMXS': 7.188811,
-        'mu_value':1.803,
-        'uncert_down':1.099,
-        'uncert_up':1.088,
+        'mu_value':2.101,
+        'uncert_down':1.095,
+        'uncert_up':1.065,
         'color':ROOT.kAzure+7,
         'axis':'ggH: p_{T}^{H} > 300',
         'SMXS_mu_up': 0.467,
@@ -110,44 +110,44 @@ parameters_STXS = {
     },
     'r_qqH_NONVBFTOPO':{
         'SMXS': 209.42,
-        'mu_value':1.787,
-        'uncert_down':2.460,
-        'uncert_up':2.636,
+        'mu_value':0.912,
+        'uncert_down':2.437,
+        'uncert_up':2.583,
         'color':ROOT.kOrange-3,
         'axis':'qqH: Non-VBF Topology',
         'SMXS_mu_up': 0.02919,
         'SMXS_mu_down': 0.02919,        
     },
-    'r_qqH_GE2J_MJJ_350_700_PTH_0_200':{
-        'SMXS': 34.430,
-        'mu_value':-0.55,
-        'uncert_down':1.336,
-        'uncert_up':1.331,
-        'color':ROOT.kOrange-3,
-        'axis':'qqH: #geq  2 Jets, m_{jj}[350,700]',
-        'SMXS_mu_up': 0.03639,
-        'SMXS_mu_down': 0.03639,        
-    },
-    'r_qqH_GE2J_MJJ_GE700_PTH_0_200':{
-        'SMXS': 47.481,
-        'mu_value':0.693,
-        'uncert_down':0.364,
-        'uncert_up':0.372,
-        'color':ROOT.kOrange-3,
-        'axis':'qqH: #geq 2 Jets, m_{jj} > 700',
-        'SMXS_mu_up': 0.0379,
-        'SMXS_mu_down': 0.0379,        
-    },    
     'r_qqH_BSM':{
         'SMXS': 9.8996,
-        'mu_value':0.648,
-        'uncert_down':0.421,
-        'uncert_up':0.444,
+        'mu_value':0.598,
+        'uncert_down':0.417,
+        'uncert_up':0.442,
         'color':ROOT.kOrange-3,
         'axis':'qqH: p_{T}^{H} > 200',
         'SMXS_mu_up': 0.03426,
         'SMXS_mu_down': 0.03426,        
     },    
+    'r_VBFTOPO_MJJ_350_700':{
+        'SMXS': 70.806,
+        'mu_value':-0.049,
+        'uncert_down':0.566,
+        'uncert_up':0.567,
+        'color':ROOT.kGreen+1,
+        'axis':'VBF Topology: m_{jj}[350,700]',
+        'SMXS_mu_up': 0.1675,
+        'SMXS_mu_down': 0.1675,        
+    },
+    'r_VBFTOPO_MJJ_GE700':{
+        'SMXS': 63.000,
+        'mu_value':0.610,
+        'uncert_down':0.342,
+        'uncert_up':0.343,
+        'color':ROOT.kGreen+1,
+        'axis':'VBF Topology: m_{jj} > 700',
+        'SMXS_mu_up': 0.11929,
+        'SMXS_mu_down': 0.11929,        
+    },
 }
 
 parameterOrder = ['r','r_ggH','r_qqH',
@@ -155,13 +155,13 @@ parameterOrder = ['r','r_ggH','r_qqH',
                   'r_ggH_1J_PTH_0_60',
                   'r_ggH_1J_PTH_60_120',
                   'r_ggH_1J_PTH_120_200',
-                  'r_ggH_PTH_0_200_GE2J',
+                  'r_ggH_PTH_0_200_GE2J_MJJ_0_350',
                   'r_ggH_PTH_200_300',
                   'r_ggH_PTH_GE300',
                   'r_qqH_NONVBFTOPO',
-                  'r_qqH_GE2J_MJJ_350_700_PTH_0_200',
-                  'r_qqH_GE2J_MJJ_GE700_PTH_0_200', 
-                  'r_qqH_BSM',]
+                  'r_qqH_BSM',
+                  'r_VBFTOPO_MJJ_350_700',
+                  'r_VBFTOPO_MJJ_GE700', ]
 latexAlignments = [10000,10000,900,
                    5000,
                    1300,
@@ -171,24 +171,26 @@ latexAlignments = [10000,10000,900,
                    100,
                    40,
                    1800,
-                   100,
-                   150,
-                   25,]
+                   20,
+                   180,
+                   150,]
 
 ggHParameters = [
     'r_ggH_0J',
     'r_ggH_1J_PTH_0_60',
     'r_ggH_1J_PTH_60_120',
     'r_ggH_1J_PTH_120_200',
-    'r_ggH_PTH_0_200_GE2J',
+    'r_ggH_PTH_0_200_GE2J_MJJ_0_350',
     'r_ggH_PTH_200_300',
     'r_ggH_PTH_GE300',
     ]
 qqHParameters= [
-    'r_qqH_NONVBFTOPO',
-    'r_qqH_GE2J_MJJ_350_700_PTH_0_200',
-    'r_qqH_GE2J_MJJ_GE700_PTH_0_200', 
+    'r_qqH_NONVBFTOPO',    
     'r_qqH_BSM',
+]
+VBFTOPOParameters = [
+    'r_VBFTOPO_MJJ_350_700',
+    'r_VBFTOPO_MJJ_GE700', 
 ]
 
 #parser = argparse.ArgumentParser(description = 'Create a fancy cross section plot table ')
@@ -282,12 +284,23 @@ for qqHParameterIndex in range(len(qqHParameters)):
 qqHSTXS.SetMarkerStyle(21)
 qqHSTXS.SetLineWidth(3)
 
+VBFTOPOSTXS = ROOT.TGraphAsymmErrors(len(VBFTOPOParameters))
+for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
+    VBFTOPOSTXS.SetPoint(VBFTOPOParameterIndex,VBFTOPOParameterIndex+3.5+len(ggHParameters)+len(qqHParameters),parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['mu_value'])
+    VBFTOPOSTXS.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_down'])
+    VBFTOPOSTXS.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_up'])
+    VBFTOPOSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    VBFTOPOSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+VBFTOPOSTXS.SetMarkerStyle(21)
+VBFTOPOSTXS.SetLineWidth(3)
+
 overallXSGraph = ROOT.TMultiGraph()
 overallXSGraph.Add(inclusiveGraph)
 overallXSGraph.Add(ggHGraph)
 overallXSGraph.Add(qqHGraph)
 overallXSGraph.Add(ggHSTXS)
 overallXSGraph.Add(qqHSTXS)
+overallXSGraph.Add(VBFTOPOSTXS)
 
 SMXSErrorHisto = ROOT.TGraphAsymmErrors(len(parameterOrder))
 for parameterIndex in range(len(parameters_STXS)):
@@ -347,12 +360,23 @@ for qqHParameterIndex in range(len(qqHParameters)):
 qqHRatioSTXS.SetMarkerStyle(21)
 qqHRatioSTXS.SetLineWidth(3)
 
+VBFTOPORatioSTXS = ROOT.TGraphAsymmErrors(len(VBFTOPOParameters))
+for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
+    VBFTOPORatioSTXS.SetPoint(VBFTOPOParameterIndex,VBFTOPOParameterIndex+3.5+len(ggHParameters)+len(qqHParameters),parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['mu_value'])
+    VBFTOPORatioSTXS.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_down'])
+    VBFTOPORatioSTXS.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_up'])
+    VBFTOPORatioSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    VBFTOPORatioSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+VBFTOPORatioSTXS.SetMarkerStyle(21)
+VBFTOPORatioSTXS.SetLineWidth(3)
+
 ratioGraph = ROOT.TMultiGraph()
 ratioGraph.Add(inclusiveRatioGraph)
 ratioGraph.Add(ggHRatioGraph)
 ratioGraph.Add(qqHRatioGraph)
 ratioGraph.Add(ggHRatioSTXS)
 ratioGraph.Add(qqHRatioSTXS)
+ratioGraph.Add(VBFTOPORatioSTXS)
 
 SMXSRatioErrorHisto = ROOT.TGraphAsymmErrors(len(parameterOrder))
 for parameterIndex in range(len(parameters_STXS)):
@@ -389,6 +413,11 @@ theLegend.AddEntry(SMXSErrorHisto,"Uncertainty on SM prediction","F")
 theLegend.SetBorderSize(0)
 theLegend.SetFillStyle(0)
 theLegend.Draw()
+
+#let's draw out a handmade grid
+for i in range(len(parameters_STXS)):
+    newLine = ROOT.TLine(i+1-1,5,i+1+1,20000)
+    newLine.SetLineColor(ROOT.kGray+2)
     
 
 #okay, let's draw the latex
@@ -438,9 +467,9 @@ ratioGridHisto.GetYaxis().SetTitle("Ratio to SM")
 ratioGridHisto.GetYaxis().CenterTitle()
 ratioGridHisto.GetYaxis().SetTitleOffset(0.45)
 ratioGridHisto.GetYaxis().SetTitleSize(0.075)
-ratioGridHisto.GetYaxis().SetNdivisions(7,0,0)
 ratioGridHisto.GetXaxis().LabelsOption("v")
 ratioGridHisto.GetXaxis().SetLabelSize(0.064)
+ratioGridHisto.GetYaxis().SetNdivisions(7,0,0)
 ratioGridHisto.SetMaximum(4)
 ratioGridHisto.SetMinimum(-3)
 
@@ -455,6 +484,6 @@ SMXSRatioErrorHisto.Draw('2')
 strikeOutPlot.Draw("SAME")
 ratioGraph.Draw("P0Z")
 
-theCanvas.SaveAs("crossSectionTable.png")
-theCanvas.SaveAs("crossSectionTable.pdf")
+theCanvas.SaveAs("auxCrossSectionTable.png")
+theCanvas.SaveAs("auxCrossSectionTable.pdf")
 raw_input("Press Enter To Continue...")
