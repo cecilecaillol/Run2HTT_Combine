@@ -55,7 +55,7 @@ mt_vbf_categories.append(mt_vbf_low_category)
 mt_vbf_categories.append(mt_vbf_high_category)
 
 mt_Categories = []
-mt_Categories = mt_0jet_categories + mt_boosted_categories + mt_vbf_categories 
+mt_Categories =  mt_boosted_categories + mt_vbf_categories + mt_0jet_categories
 
 et_boosted_categories = []
 et_boosted_categories.append(et_boosted_1J_category)
