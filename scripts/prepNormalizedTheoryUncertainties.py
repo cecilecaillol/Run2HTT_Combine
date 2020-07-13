@@ -18,18 +18,27 @@ ggHTheoryShapes = ["THU_ggH_Mu",
                    "THU_ggH_qmtop",
                    "THU_ggH_PT60",
                    "THU_ggH_PT120"]
-qqHTheoryShapes = [
-    "THU_qqH_yield",
-    "THU_qqH_PTH200",
-    "THU_qqH_Mjj60",
-    "THU_qqH_Mjj120",
-    "THU_qqH_Mjj350",
-    "THU_qqH_Mjj700",
-    "THU_qqH_Mjj1000",
-    "THU_qqH_Mjj1500",
-    "THU_qqH_PTH25",
-    "THU_qqH_JET01"
-]
+
+ggHScales = {
+    "THU_ggH_MuUp":1.01763,
+    "THU_ggH_MuDown":0.983136,
+    "THU_ggH_ResUp":1.01236,
+    "THU_ggH_ResDown":0.990195,
+    "THU_ggH_Mig01Up":1.00738,
+    "THU_ggH_Mig01Down":0.994629,
+    "THU_ggH_Mig12Up":1.00608,
+    "THU_ggH_Mig12Down":0.996028,
+    "THU_ggH_VBF2jUp":1.01935,
+    "THU_ggH_VBF2jDown":0.988537,
+    "THU_ggH_VBF3jUp":1.01839,
+    "THU_ggH_VBF3jDown":0.988824,
+    "THU_ggH_qmtopUp":1.00105,
+    "THU_ggH_qmtopDown":0.998741,
+    "THU_ggH_PT60Up":1.00346,
+    "THU_ggH_PT60Down":0.998505,
+    "THU_ggH_PT120Up":1.00368,
+    "THU_ggH_PT120Down":0.998689,
+}
 
 for datacard in args.datacards:
     datacardFile = ROOT.TFile(datacard,"UPDATE")
@@ -48,21 +57,8 @@ for datacard in args.datacards:
                     except ZeroDivisionError:
                         print("Nominal: "+nominal+" in directory: "+directory.GetName()+" of file: "+datacard+" has norm 0. Setting theory norms to 0 as well.")
                         scale = 0
-                    newShape.Scale(scale)
+                    newShape.Scale(1.0/ggHScales[ggHShape+upOrDown])
                     #okay, should be good to write it
-                    newShape.Write()
-        for nominal in ['qqH_htt125','qqH_hww125']:
-            for qqHShape in qqHTheoryShapes:
-                for upOrDown in ['Up','Down']:
-                    newShape = theDirectory.Get(nominal+"_"+qqHShape+upOrDown).Clone()
-                    newShape.SetNameTitle(nominal+"_"+qqHShape+"_norm"+upOrDown,
-                                          nominal+"_"+qqHShape+"_norm"+upOrDown,)
-                    try:
-                        scale = newShape.Integral()/theDirectory.Get(nominal).Integral()
-                    except ZeroDivisionError:
-                        print("Nominal: "+nominal+" in directory: "+directory.GetName()+" of file: "+datacard+" has norm 0. Setting theory norms to 0 as well.")
-                        scale = 0
-                    newShape.Scale(scale)
                     newShape.Write()
 
     datacardFile.Write()
