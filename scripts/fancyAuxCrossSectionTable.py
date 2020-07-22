@@ -3,6 +3,10 @@ import ROOT
 import argparse
 import CombineHarvester.Run2HTT_Combine.PlottingModules.globalSettings as globalSettings
 import math
+from ROOT import gROOT
+gROOT.SetBatch(ROOT.kTRUE)
+
+
 
 def roundToSigDigits(number,sigDigits):    
     return round(number,sigDigits-int(math.floor(math.log10(abs(number))))-1)
@@ -51,7 +55,7 @@ parameters_STXS = {
     'r_ggH_1J_PTH_0_60':{
         'SMXS': 451.0862,
         'mu_value':-1.540,
-        'uncert_down':y1.131,
+        'uncert_down':1.131,
         'uncert_up':1.147,
         'color':ROOT.kAzure+7,
         'axis':'ggH: 1 Jet, p_{T}^{H}[0,60]',
@@ -201,12 +205,12 @@ ROOT.gROOT.SetStyle('pasStyle')
 
 #okay, let's start by creating the canvas
 theCanvas = ROOT.TCanvas("crossSectionCanvas","crossSectionCanvas")
-theCanvas.SetCanvasSize(950,600)
+theCanvas.SetCanvasSize(950,650)
 theCanvas.Divide(1,2)
 plotPad = theCanvas.GetPrimitive(theCanvas.GetName()+'_1')
 ratioPad = theCanvas.GetPrimitive(theCanvas.GetName()+'_2')
-plotPad.SetPad(0.0,0.4,1.,1.)
-ratioPad.SetPad(0.0,0.0,1.0,0.475)
+plotPad.SetPad(0.0,0.45,1.,1.)
+ratioPad.SetPad(0.0,0.0,1.0,0.52)
 plotPad.SetTopMargin(1)
 plotPad.SetLeftMargin(1)
 
@@ -462,13 +466,16 @@ cmsLatex.DrawLatex(0.98,0.92,"137 fb^{-1} (13 TeV)")
 
 #draw the ratio plot elements
 ratioPad.cd()
+ratioPad.SetTopMargin(0.025)
+ratioPad.SetBottomMargin(0.55)
+
 ratioGridHisto.Draw()
 ratioGridHisto.GetYaxis().SetTitle("Ratio to SM")
 ratioGridHisto.GetYaxis().CenterTitle()
 ratioGridHisto.GetYaxis().SetTitleOffset(0.45)
 ratioGridHisto.GetYaxis().SetTitleSize(0.075)
 ratioGridHisto.GetXaxis().LabelsOption("v")
-ratioGridHisto.GetXaxis().SetLabelSize(0.064)
+ratioGridHisto.GetXaxis().SetLabelSize(0.072)
 ratioGridHisto.GetYaxis().SetNdivisions(7,0,0)
 ratioGridHisto.SetMaximum(4)
 ratioGridHisto.SetMinimum(-3)
