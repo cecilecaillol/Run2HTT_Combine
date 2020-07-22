@@ -10,6 +10,30 @@
 <bin file="SMHTT2016_em.cpp" name="SMHTT2016_em"></bin>
 <bin file="SMHTT2017_em.cpp" name="SMHTT2017_em"></bin>
 <bin file="SMHTT2018_em.cpp" name="SMHTT2018_em"></bin>
+<bin file="WH2016_emt.cpp" name="WH2016_emt"></bin>
+<bin file="WH2016_ett.cpp" name="WH2016_ett"></bin>
+<bin file="WH2016_mmt.cpp" name="WH2016_mmt"></bin>
+<bin file="WH2016_mtt.cpp" name="WH2016_mtt"></bin>
+<bin file="WH2017_emt.cpp" name="WH2017_emt"></bin>
+<bin file="WH2017_ett.cpp" name="WH2017_ett"></bin>
+<bin file="WH2017_mmt.cpp" name="WH2017_mmt"></bin>
+<bin file="WH2017_mtt.cpp" name="WH2017_mtt"></bin>
+<bin file="WH2018_emt.cpp" name="WH2018_emt"></bin>
+<bin file="WH2018_ett.cpp" name="WH2018_ett"></bin>
+<bin file="WH2018_mmt.cpp" name="WH2018_mmt"></bin>
+<bin file="WH2018_mtt.cpp" name="WH2018_mtt"></bin>
+<bin file="ZH2016_llem.cpp" name="ZH2016_llem"></bin>
+<bin file="ZH2016_llet.cpp" name="ZH2016_llet"></bin>
+<bin file="ZH2016_llmt.cpp" name="ZH2016_llmt"></bin>
+<bin file="ZH2016_lltt.cpp" name="ZH2016_lltt"></bin>
+<bin file="ZH2017_llem.cpp" name="ZH2017_llem"></bin>
+<bin file="ZH2017_llet.cpp" name="ZH2017_llet"></bin>
+<bin file="ZH2017_llmt.cpp" name="ZH2017_llmt"></bin>
+<bin file="ZH2017_lltt.cpp" name="ZH2017_lltt"></bin>
+<bin file="ZH2018_llem.cpp" name="ZH2018_llem"></bin>
+<bin file="ZH2018_llet.cpp" name="ZH2018_llet"></bin>
+<bin file="ZH2018_llmt.cpp" name="ZH2018_llmt"></bin>
+<bin file="ZH2018_lltt.cpp" name="ZH2018_lltt"></bin>
 <use name="root"/>
 <use name="rootmath"/>
 <use name="roofit"/>

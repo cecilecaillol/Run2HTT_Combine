@@ -73,12 +73,9 @@ if args.channel == "tt":
   bins_0=[0,9000]  
   bins_boosted1=[0,60,120,200,250,9000]
   bins_boosted2=[0,60,120,200,250,9000]
-  if args.Year == '2016':
-    bins_vbflow=[0,350,700,1000,1500,9000]
-    bins_vbfhigh=[0,350,700,9000]
-  else:
-    bins_vbflow=[0,350,700,1000,1500,1800,9000]
-    bins_vbfhigh=[0,350,700,1200,9000]
+  bins_vbflow=[0,350,700,1000,1500,9000]
+  bins_vbfhigh=[0,350,700,9000]
+
   slices=[(len(bins_0)-1),(len(bins_boosted1)-1),(len(bins_boosted2)-1),(len(bins_vbflow)-1),(len(bins_vbfhigh)-1)]
 
 file_in.cd()
