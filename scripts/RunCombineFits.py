@@ -874,51 +874,51 @@ if args.ComputeGOF:
         os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
     for year in args.years:
-       for channel in args.channels:
-          if channel=="mt":
-            channelTitle = "#mu#tau"
-          if channel=="et":
-            channelTitle = "e#tau"
-          if channel=="tt":
-            channelTitle = "#tau#tau"
-          if channel=="em":
-            channelTitle = "e#mu"
-          CardNum = 1
-          if args.Unblind:
-              TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
-          else:
-              TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
-          print "Working on GOF with data outside signal region ",os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
-          for Directory in TheFile.GetListOfKeys():
-              if Directory.GetName() in cfg.Categories[channel]:
-                 ImpactCommand = "text2workspace.py -m 125 smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt "
-                 if args.DontPrintResults:
-                     os.system(ImpactCommand+" > /dev/null")
-                 else:
-                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
-                 GOFJsonName = "gof_"+channel+"_"+year+"_"+str(CardNum)+"_"+DateTag+".json"
-                 ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys'  -t 25 -s 0:19:1 --parallel 12"
-                 if args.DontPrintResults:
-                     os.system(ImpactCommand+" > /dev/null")
-                 else:
-                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+        for channel in args.channels:
+            if channel=="mt":
+               channelTitle = "#mu#tau"
+            if channel=="et":
+                channelTitle = "e#tau"
+            if channel=="tt":
+                channelTitle = "#tau#tau"
+            if channel=="em":
+                channelTitle = "e#mu"
+            CardNum = 1
+            if args.Unblind:
+                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+".root")
+            else:
+                TheFile = ROOT.TFile(os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root")
+                print "Working on GOF with data outside signal region ",os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_GOF.root"
+            for Directory in TheFile.GetListOfKeys():
+                if Directory.GetName() in cfg.Categories[channel]:
+                    ImpactCommand = "text2workspace.py -m 125 smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.txt "
+                if args.DontPrintResults:
+                    os.system(ImpactCommand+" > /dev/null")
+                else:
+                    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                GOFJsonName = "gof_"+channel+"_"+year+"_"+str(CardNum)+"_"+DateTag+".json"
+                ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys'  -t 25 -s 0:19:1 --parallel 12"
+                if args.DontPrintResults:
+                    os.system(ImpactCommand+" > /dev/null")
+                else:
+                    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
-                 ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+"'"
-                 if args.DontPrintResults:
-                     os.system(ImpactCommand+" > /dev/null")
-                 else:
-                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(CardNum)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(CardNum)+"'"
+                if args.DontPrintResults:
+                    os.system(ImpactCommand+" > /dev/null")
+                else:
+                    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
-                 ImpactCommand = "combineTool.py -M CollectGoodnessOfFit --input higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".GoodnessOfFit.mH125.root higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys.GoodnessOfFit.mH125.*.root -o "+GOFJsonName
-                 os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                ImpactCommand = "combineTool.py -M CollectGoodnessOfFit --input higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".GoodnessOfFit.mH125.root higgsCombine.saturated."+year+"_"+channel+"_"+str(CardNum)+".toys.GoodnessOfFit.mH125.*.root -o "+GOFJsonName
+                os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
-                 ImpactCommand = "python ../../../CombineTools/scripts/plotGof.py --statistic saturated --mass 125.0 "+GOFJsonName+" --title-right='' --output='saturated_"+year+"_"+channel+"_"+str(CardNum)+"' --title-left='"+year+" "+channelTitle+"' --title-right='"+CategoryMaps.mapTDir[Directory.GetName()]+"'"
-                 if args.DontPrintResults:
-                     os.system(ImpactCommand+" > /dev/null")
-                 else:
-                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+                ImpactCommand = "python ../../../CombineTools/scripts/plotGof.py --statistic saturated --mass 125.0 "+GOFJsonName+" --title-right='' --output='saturated_"+year+"_"+channel+"_"+str(CardNum)+"' --title-left='"+year+" "+channelTitle+"' --title-right='"+CategoryMaps.mapTDir[Directory.GetName()]+"'"
+                if args.DontPrintResults:
+                    os.system(ImpactCommand+" > /dev/null")
+                else:
+                    os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
-                 CardNum+=1
+                CardNum+=1
 
     os.chdir("../../")
 #Run kappaV kappaF scan using the Asimov dataset please see below for details
