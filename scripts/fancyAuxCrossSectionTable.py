@@ -17,6 +17,8 @@ parameters_STXS = {
         'mu_value':0.865, #+0.865   -0.108/+0.115
         'uncert_down':0.108,
         'uncert_up':0.115,
+        'stat_uncert_down':0.06,
+        'stat_uncert_up':0.06,
         'color':ROOT.kBlack,
         'axis':'H#rightarrow#tau#tau',
         'SMXS_mu_up': 0.0503,
@@ -27,6 +29,8 @@ parameters_STXS = {
         'mu_value':1.002, #+1.002   -0.181/+0.194
         'uncert_down':0.181,
         'uncert_up':0.194,
+        'stat_uncert_down':0.09,
+        'stat_uncert_up':0.09,
         'color':ROOT.kAzure+7,
         'axis':'ggH#rightarrow#tau#tau',
         'SMXS_mu_up': 0.0523,
@@ -37,6 +41,8 @@ parameters_STXS = {
         'mu_value': 0.672, #+0.672   -0.223/+0.229
         'uncert_down': 0.223,
         'uncert_up': 0.229,
+        'stat_uncert_down':0.18,
+        'stat_uncert_up':0.19,
         'color':ROOT.kOrange-3,
         'axis':'qqH#rightarrow#tau#tau',
         'SMXS_mu_up': 0.0294,
@@ -47,8 +53,10 @@ parameters_STXS = {
         'mu_value':0.067,
         'uncert_down':0.451,
         'uncert_up':0.494,
+        'stat_uncert_down':0.171,
+        'stat_uncert_up':0.172,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: 0 Jet',
+        'axis':'ggH-0j/pT<200',
         'SMXS_mu_up': 0.09125,
         'SMXS_mu_down': 0.09125,        
     },
@@ -57,8 +65,10 @@ parameters_STXS = {
         'mu_value':-1.540,
         'uncert_down':1.131,
         'uncert_up':1.147,
+        'stat_uncert_down':0.713,
+        'stat_uncert_up':0.716,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: 1 Jet, p_{T}^{H}[0,60]',
+        'axis':'ggH-1j/pT[0-60]',
         'SMXS_mu_up': 0.140,
         'SMXS_mu_down': 0.140,        
     },
@@ -67,8 +77,10 @@ parameters_STXS = {
         'mu_value':3.600,
         'uncert_down':0.912,
         'uncert_up':0.909,
+        'stat_uncert_down':0.739,
+        'stat_uncert_up':0.741,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: 1 Jet, p_{T}^{H}[60,120]',
+        'axis':'ggH-1j/pT[60-120]',
         'SMXS_mu_up': 0.142,
         'SMXS_mu_down': 0.142,        
     },
@@ -77,8 +89,10 @@ parameters_STXS = {
         'mu_value':2.160,
         'uncert_down':0.944,
         'uncert_up':1.043,
+        'stat_uncert_down':0.760,
+        'stat_uncert_up':0.766,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: 1 Jet, p_{T}^{H}[120,200]',
+        'axis':'ggH-1j/pT[120-200]',
         'SMXS_mu_up': 0.193,
         'SMXS_mu_down': 0.193,        
     },
@@ -87,8 +101,10 @@ parameters_STXS = {
         'mu_value':0.440,
         'uncert_down':0.866,
         'uncert_up':0.823,
+        'stat_uncert_down':0.577,
+        'stat_uncert_up':0.581,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: #geq 2 Jet, m_{jj}[0,350]',
+        'axis':'ggH-2j/mJJ<350',
         'SMXS_mu_up': 0.2296,
         'SMXS_mu_down': 0.2296,        
     },
@@ -97,8 +113,10 @@ parameters_STXS = {
         'mu_value':1.102,
         'uncert_down':0.903,
         'uncert_up':0.871,
+        'stat_uncert_down':0.575,
+        'stat_uncert_up':0.581,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: p_{T}^{H}[200,300]',
+        'axis':'ggH/pT[200,300]',
         'SMXS_mu_up': 0.41885,
         'SMXS_mu_down': 0.41885,        
     },
@@ -107,8 +125,10 @@ parameters_STXS = {
         'mu_value':2.101,
         'uncert_down':1.095,
         'uncert_up':1.065,
+        'stat_uncert_down':0.747,
+        'stat_uncert_up':0.737,
         'color':ROOT.kAzure+7,
-        'axis':'ggH: p_{T}^{H} > 300',
+        'axis':'ggH/pT>300',
         'SMXS_mu_up': 0.467,
         'SMXS_mu_down': 0.467,        
     },
@@ -117,8 +137,10 @@ parameters_STXS = {
         'mu_value':0.912,
         'uncert_down':2.437,
         'uncert_up':2.583,
+        'stat_uncert_down':1.923,
+        'stat_uncert_up':1.906,
         'color':ROOT.kOrange-3,
-        'axis':'qqH: Non-VBF Topology',
+        'axis':'qqH non-VBF topo',
         'SMXS_mu_up': 0.02919,
         'SMXS_mu_down': 0.02919,        
     },
@@ -127,8 +149,10 @@ parameters_STXS = {
         'mu_value':0.598,
         'uncert_down':0.417,
         'uncert_up':0.442,
+        'stat_uncert_down':0.363,
+        'stat_uncert_up':0.379,
         'color':ROOT.kOrange-3,
-        'axis':'qqH: p_{T}^{H} > 200',
+        'axis':'qqH-2j/pT>200',
         'SMXS_mu_up': 0.03426,
         'SMXS_mu_down': 0.03426,        
     },    
@@ -137,8 +161,10 @@ parameters_STXS = {
         'mu_value':-0.049,
         'uncert_down':0.566,
         'uncert_up':0.567,
+        'stat_uncert_down':0.475,
+        'stat_uncert_up':0.480,
         'color':ROOT.kGreen+1,
-        'axis':'VBF Topology: m_{jj}[350,700]',
+        'axis':'mJJ[350-700]',
         'SMXS_mu_up': 0.1675,
         'SMXS_mu_down': 0.1675,        
     },
@@ -147,8 +173,10 @@ parameters_STXS = {
         'mu_value':0.610,
         'uncert_down':0.342,
         'uncert_up':0.343,
+        'stat_uncert_down':0.292,
+        'stat_uncert_up':0.298,
         'color':ROOT.kGreen+1,
-        'axis':'VBF Topology: m_{jj} > 700',
+        'axis':'mJJ>700',
         'SMXS_mu_up': 0.11929,
         'SMXS_mu_down': 0.11929,        
     },
@@ -245,58 +273,133 @@ inclusiveGraph = ROOT.TGraphAsymmErrors(1)
 inclusiveGraph.SetPoint(0,0.5,parameters_STXS['r']['SMXS']*parameters_STXS['r']['mu_value'])
 inclusiveGraph.SetPointEYlow(0,parameters_STXS['r']['SMXS']*parameters_STXS['r']['uncert_down'])
 inclusiveGraph.SetPointEYhigh(0,parameters_STXS['r']['SMXS']*parameters_STXS['r']['uncert_up'])
-inclusiveGraph.SetMarkerColor(parameters_STXS['r']['color'])
-inclusiveGraph.SetLineColor(parameters_STXS['r']['color'])
+#inclusiveGraph.SetMarkerColor(parameters_STXS['r']['color'])
+#inclusiveGraph.SetLineColor(parameters_STXS['r']['color'])
 inclusiveGraph.SetMarkerStyle(21)
-inclusiveGraph.SetLineWidth(3)
+inclusiveGraph.SetMarkerSize(0.5)
+inclusiveGraph.SetLineWidth(2)
 
 ggHGraph = ROOT.TGraphAsymmErrors(1)
 ggHGraph.SetPoint(0,1.5,parameters_STXS['r_ggH']['SMXS']*parameters_STXS['r_ggH']['mu_value'])
 ggHGraph.SetPointEYlow(0,parameters_STXS['r_ggH']['SMXS']*parameters_STXS['r_ggH']['uncert_down'])
 ggHGraph.SetPointEYhigh(0,parameters_STXS['r_ggH']['SMXS']*parameters_STXS['r_ggH']['uncert_up'])
-ggHGraph.SetMarkerColor(parameters_STXS['r_ggH']['color'])
-ggHGraph.SetLineColor(parameters_STXS['r_ggH']['color'])
+#ggHGraph.SetMarkerColor(parameters_STXS['r_ggH']['color'])
+#ggHGraph.SetLineColor(parameters_STXS['r_ggH']['color'])
 ggHGraph.SetMarkerStyle(21)
-ggHGraph.SetLineWidth(3)
+ggHGraph.SetMarkerSize(0.5)
+ggHGraph.SetLineWidth(2)
 
 qqHGraph = ROOT.TGraphAsymmErrors(1)
 qqHGraph.SetPoint(0,2.5,parameters_STXS['r_qqH']['SMXS']*parameters_STXS['r_qqH']['mu_value'])
 qqHGraph.SetPointEYlow(0,parameters_STXS['r_qqH']['SMXS']*parameters_STXS['r_qqH']['uncert_down'])
 qqHGraph.SetPointEYhigh(0,parameters_STXS['r_qqH']['SMXS']*parameters_STXS['r_qqH']['uncert_up'])
-qqHGraph.SetMarkerColor(parameters_STXS['r_qqH']['color'])
-qqHGraph.SetLineColor(parameters_STXS['r_qqH']['color'])
+#qqHGraph.SetMarkerColor(parameters_STXS['r_qqH']['color'])
+#qqHGraph.SetLineColor(parameters_STXS['r_qqH']['color'])
 qqHGraph.SetMarkerStyle(21)
-qqHGraph.SetLineWidth(3)
+qqHGraph.SetMarkerSize(0.5)
+qqHGraph.SetLineWidth(2)
 
 ggHSTXS = ROOT.TGraphAsymmErrors(len(ggHParameters))
 for ggHParameterIndex in range(len(ggHParameters)):
     ggHSTXS.SetPoint(ggHParameterIndex,ggHParameterIndex+3.5,parameters_STXS[ggHParameters[ggHParameterIndex]]['SMXS']*parameters_STXS[ggHParameters[ggHParameterIndex]]['mu_value'])
     ggHSTXS.SetPointEYlow(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['SMXS']*parameters_STXS[ggHParameters[ggHParameterIndex]]['uncert_down'])
     ggHSTXS.SetPointEYhigh(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['SMXS']*parameters_STXS[ggHParameters[ggHParameterIndex]]['uncert_up'])
-    ggHSTXS.SetMarkerColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
-    ggHSTXS.SetLineColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
+    #ggHSTXS.SetMarkerColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
+    #ggHSTXS.SetLineColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
 ggHSTXS.SetMarkerStyle(21)
-ggHSTXS.SetLineWidth(3)
+ggHSTXS.SetMarkerSize(0.5)
+ggHSTXS.SetLineWidth(2)
 
 qqHSTXS = ROOT.TGraphAsymmErrors(len(qqHParameters))
 for qqHParameterIndex in range(len(qqHParameters)):
     qqHSTXS.SetPoint(qqHParameterIndex,qqHParameterIndex+3.5+len(ggHParameters),parameters_STXS[qqHParameters[qqHParameterIndex]]['SMXS']*parameters_STXS[qqHParameters[qqHParameterIndex]]['mu_value'])
     qqHSTXS.SetPointEYlow(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['SMXS']*parameters_STXS[qqHParameters[qqHParameterIndex]]['uncert_down'])
     qqHSTXS.SetPointEYhigh(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['SMXS']*parameters_STXS[qqHParameters[qqHParameterIndex]]['uncert_up'])
-    qqHSTXS.SetMarkerColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
-    qqHSTXS.SetLineColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
+    #qqHSTXS.SetMarkerColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
+    #qqHSTXS.SetLineColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
 qqHSTXS.SetMarkerStyle(21)
-qqHSTXS.SetLineWidth(3)
+qqHSTXS.SetMarkerSize(0.5)
+qqHSTXS.SetLineWidth(2)
 
 VBFTOPOSTXS = ROOT.TGraphAsymmErrors(len(VBFTOPOParameters))
 for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
     VBFTOPOSTXS.SetPoint(VBFTOPOParameterIndex,VBFTOPOParameterIndex+3.5+len(ggHParameters)+len(qqHParameters),parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['mu_value'])
     VBFTOPOSTXS.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_down'])
     VBFTOPOSTXS.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_up'])
-    VBFTOPOSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
-    VBFTOPOSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    #VBFTOPOSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    #VBFTOPOSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
 VBFTOPOSTXS.SetMarkerStyle(21)
-VBFTOPOSTXS.SetLineWidth(3)
+VBFTOPOSTXS.SetMarkerSize(0.5)
+VBFTOPOSTXS.SetLineWidth(2)
+
+inclusive_Stat_Graph = inclusiveGraph.Clone()
+inclusive_Stat_Graph.SetPointEYlow(0,parameters_STXS['r']['SMXS']*parameters_STXS['r']['stat_uncert_down'])
+inclusive_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r']['SMXS']*parameters_STXS['r']['stat_uncert_up'])
+inclusive_Stat_Graph.SetPointEXlow(0,0.125)
+inclusive_Stat_Graph.SetPointEXhigh(0,0.125)
+inclusive_Stat_Graph.SetMarkerStyle(21)
+inclusive_Stat_Graph.SetMarkerSize(0.5)
+inclusive_Stat_Graph.SetFillColor(ROOT.kBlack)
+#inclusive_Stat_Graph.SetFillStyle(3001)
+
+ggH_Stat_Graph = ggHGraph.Clone()
+ggH_Stat_Graph.SetPointEYlow(0,parameters_STXS['r_ggH']['SMXS']*parameters_STXS['r_ggH']['stat_uncert_down'])
+ggH_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r_ggH']['SMXS']*parameters_STXS['r_ggH']['stat_uncert_up'])
+ggH_Stat_Graph.SetPointEXlow(0,0.125)
+ggH_Stat_Graph.SetPointEXhigh(0,0.125)
+ggH_Stat_Graph.SetMarkerStyle(21)
+ggH_Stat_Graph.SetMarkerSize(0.5)
+ggH_Stat_Graph.SetFillColor(ROOT.kAzure+7)
+#ggH_Stat_Graph.SetFillStyle(3001)
+
+qqH_Stat_Graph = qqHGraph.Clone()
+qqH_Stat_Graph.SetPointEYlow(0,parameters_STXS['r_qqH']['SMXS']*parameters_STXS['r_qqH']['stat_uncert_down'])
+qqH_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r_qqH']['SMXS']*parameters_STXS['r_qqH']['stat_uncert_up'])
+qqH_Stat_Graph.SetPointEXlow(0,0.125)
+qqH_Stat_Graph.SetPointEXhigh(0,0.125)
+qqH_Stat_Graph.SetMarkerStyle(21)
+qqH_Stat_Graph.SetMarkerSize(0.5)
+qqH_Stat_Graph.SetFillColor(ROOT.kOrange-3)
+#qqH_Stat_Graph.SetFillStyle(3001)
+
+ggHSTXS_Stat_Graph = ggHSTXS.Clone()
+for ggHParameterIndex in range(len(ggHParameters)):
+    ggHSTXS_Stat_Graph.SetPointEYlow(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['SMXS']*parameters_STXS[ggHParameters[ggHParameterIndex]]['stat_uncert_down'])
+    ggHSTXS_Stat_Graph.SetPointEYhigh(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['SMXS']*parameters_STXS[ggHParameters[ggHParameterIndex]]['stat_uncert_up'])
+    ggHSTXS_Stat_Graph.SetPointEXlow(ggHParameterIndex,0.125)
+    ggHSTXS_Stat_Graph.SetPointEXhigh(ggHParameterIndex,0.125)
+ggHSTXS_Stat_Graph.SetFillColor(ROOT.kAzure+7)
+
+qqHSTXS_Stat_Graph = qqHSTXS.Clone()
+for qqHParameterIndex in range(len(qqHParameters)):
+    qqHSTXS_Stat_Graph.SetPointEYlow(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['SMXS']*parameters_STXS[qqHParameters[qqHParameterIndex]]['stat_uncert_down'])
+    qqHSTXS_Stat_Graph.SetPointEYhigh(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['SMXS']*parameters_STXS[qqHParameters[qqHParameterIndex]]['stat_uncert_up'])
+    qqHSTXS_Stat_Graph.SetPointEXlow(qqHParameterIndex,0.125)
+    qqHSTXS_Stat_Graph.SetPointEXhigh(qqHParameterIndex,0.125)
+qqHSTXS_Stat_Graph.SetFillColor(ROOT.kOrange-3)
+
+VBFTOPOSTXS_Stat_Graph = VBFTOPOSTXS.Clone()
+for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
+    VBFTOPOSTXS_Stat_Graph.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['stat_uncert_down'])
+    VBFTOPOSTXS_Stat_Graph.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['SMXS']*parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['stat_uncert_up'])
+    VBFTOPOSTXS_Stat_Graph.SetPointEXlow(VBFTOPOParameterIndex,0.125)
+    VBFTOPOSTXS_Stat_Graph.SetPointEXhigh(VBFTOPOParameterIndex,0.125)
+VBFTOPOSTXS_Stat_Graph.SetFillColor(ROOT.kGreen+1)
+
+for parameter in parameters_STXS:
+    nominalValue = roundToSigDigits(parameters_STXS[parameter]['mu_value']*parameters_STXS[parameter]['SMXS'],3)
+    completeUp = roundToSigDigits(parameters_STXS[parameter]['uncert_up']*parameters_STXS[parameter]['SMXS'],3)
+    completeDown = roundToSigDigits(parameters_STXS[parameter]['uncert_down']*parameters_STXS[parameter]['SMXS'],3)
+    statUp = roundToSigDigits(parameters_STXS[parameter]['stat_uncert_up']*parameters_STXS[parameter]['SMXS'],3)
+    statDown = roundToSigDigits(parameters_STXS[parameter]['stat_uncert_down']*parameters_STXS[parameter]['SMXS'],3)
+
+    othersUp = roundToSigDigits(math.sqrt(completeUp**2-statUp**2),3)
+    othersDown = roundToSigDigits(math.sqrt(completeDown**2-statDown**2),3)
+
+    print(parameter+': '+str(nominalValue))
+    print('\t'+'-'+str(completeDown)+'/+'+str(completeUp))
+    print('\t'+'-'
++str(statDown)+'(stat)-'+str(othersDown)+'(others)'+'/+'+str(statUp)+'(stat)+'+str(othersUp)+'(others)')
 
 overallXSGraph = ROOT.TMultiGraph()
 overallXSGraph.Add(inclusiveGraph)
@@ -305,6 +408,14 @@ overallXSGraph.Add(qqHGraph)
 overallXSGraph.Add(ggHSTXS)
 overallXSGraph.Add(qqHSTXS)
 overallXSGraph.Add(VBFTOPOSTXS)
+
+overallXS_Stat_Graph = ROOT.TMultiGraph()
+overallXS_Stat_Graph.Add(inclusive_Stat_Graph)
+overallXS_Stat_Graph.Add(ggH_Stat_Graph)
+overallXS_Stat_Graph.Add(qqH_Stat_Graph)
+overallXS_Stat_Graph.Add(ggHSTXS_Stat_Graph)
+overallXS_Stat_Graph.Add(qqHSTXS_Stat_Graph)
+overallXS_Stat_Graph.Add(VBFTOPOSTXS_Stat_Graph)
 
 SMXSErrorHisto = ROOT.TGraphAsymmErrors(len(parameterOrder))
 for parameterIndex in range(len(parameters_STXS)):
@@ -324,55 +435,113 @@ inclusiveRatioGraph.SetPointEYhigh(0,parameters_STXS['r']['uncert_up'])
 inclusiveRatioGraph.SetMarkerColor(parameters_STXS['r']['color'])
 inclusiveRatioGraph.SetLineColor(parameters_STXS['r']['color'])
 inclusiveRatioGraph.SetMarkerStyle(21)
-inclusiveRatioGraph.SetLineWidth(3)
+inclusiveRatioGraph.SetMarkerSize(0.5)
+inclusiveRatioGraph.SetLineWidth(2)
 
 ggHRatioGraph = ROOT.TGraphAsymmErrors(1)
 ggHRatioGraph.SetPoint(0,1.5,parameters_STXS['r_ggH']['mu_value'])
 ggHRatioGraph.SetPointEYlow(0,parameters_STXS['r_ggH']['uncert_down'])
 ggHRatioGraph.SetPointEYhigh(0,parameters_STXS['r_ggH']['uncert_up'])
-ggHRatioGraph.SetMarkerColor(parameters_STXS['r_ggH']['color'])
-ggHRatioGraph.SetLineColor(parameters_STXS['r_ggH']['color'])
+#ggHRatioGraph.SetMarkerColor(parameters_STXS['r_ggH']['color'])
+#ggHRatioGraph.SetLineColor(parameters_STXS['r_ggH']['color'])
 ggHRatioGraph.SetMarkerStyle(21)
-ggHRatioGraph.SetLineWidth(3)
+ggHRatioGraph.SetMarkerSize(0.5)
+ggHRatioGraph.SetLineWidth(2)
 
 qqHRatioGraph = ROOT.TGraphAsymmErrors(1)
 qqHRatioGraph.SetPoint(0,2.5,parameters_STXS['r_qqH']['mu_value'])
 qqHRatioGraph.SetPointEYlow(0,parameters_STXS['r_qqH']['uncert_down'])
 qqHRatioGraph.SetPointEYhigh(0,parameters_STXS['r_qqH']['uncert_up'])
-qqHRatioGraph.SetMarkerColor(parameters_STXS['r_qqH']['color'])
-qqHRatioGraph.SetLineColor(parameters_STXS['r_qqH']['color'])
+#qqHRatioGraph.SetMarkerColor(parameters_STXS['r_qqH']['color'])
+#qqHRatioGraph.SetLineColor(parameters_STXS['r_qqH']['color'])
 qqHRatioGraph.SetMarkerStyle(21)
-qqHRatioGraph.SetLineWidth(3)
+qqHRatioGraph.SetMarkerSize(0.5)
+qqHRatioGraph.SetLineWidth(2)
 
 ggHRatioSTXS = ROOT.TGraphAsymmErrors(len(ggHParameters))
 for ggHParameterIndex in range(len(ggHParameters)):
     ggHRatioSTXS.SetPoint(ggHParameterIndex,ggHParameterIndex+3.5,parameters_STXS[ggHParameters[ggHParameterIndex]]['mu_value'])
     ggHRatioSTXS.SetPointEYlow(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['uncert_down'])
     ggHRatioSTXS.SetPointEYhigh(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['uncert_up'])
-    ggHRatioSTXS.SetMarkerColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
-    ggHRatioSTXS.SetLineColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
+    #ggHRatioSTXS.SetMarkerColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
+    #ggHRatioSTXS.SetLineColor(parameters_STXS[ggHParameters[ggHParameterIndex]]['color'])
 ggHRatioSTXS.SetMarkerStyle(21)
-ggHRatioSTXS.SetLineWidth(3)
+ggHRatioSTXS.SetMarkerSize(0.5)
+ggHRatioSTXS.SetLineWidth(2)
 
 qqHRatioSTXS = ROOT.TGraphAsymmErrors(len(qqHParameters))
 for qqHParameterIndex in range(len(qqHParameters)):
     qqHRatioSTXS.SetPoint(qqHParameterIndex,qqHParameterIndex+3.5+len(ggHParameters),parameters_STXS[qqHParameters[qqHParameterIndex]]['mu_value'])
     qqHRatioSTXS.SetPointEYlow(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['uncert_down'])
     qqHRatioSTXS.SetPointEYhigh(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['uncert_up'])
-    qqHRatioSTXS.SetMarkerColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
-    qqHRatioSTXS.SetLineColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
+    #qqHRatioSTXS.SetMarkerColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
+    #qqHRatioSTXS.SetLineColor(parameters_STXS[qqHParameters[qqHParameterIndex]]['color'])
 qqHRatioSTXS.SetMarkerStyle(21)
-qqHRatioSTXS.SetLineWidth(3)
+qqHRatioSTXS.SetMarkerSize(0.5)
+qqHRatioSTXS.SetLineWidth(2)
 
 VBFTOPORatioSTXS = ROOT.TGraphAsymmErrors(len(VBFTOPOParameters))
 for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
     VBFTOPORatioSTXS.SetPoint(VBFTOPOParameterIndex,VBFTOPOParameterIndex+3.5+len(ggHParameters)+len(qqHParameters),parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['mu_value'])
     VBFTOPORatioSTXS.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_down'])
     VBFTOPORatioSTXS.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['uncert_up'])
-    VBFTOPORatioSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
-    VBFTOPORatioSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    #VBFTOPORatioSTXS.SetMarkerColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
+    #VBFTOPORatioSTXS.SetLineColor(parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['color'])
 VBFTOPORatioSTXS.SetMarkerStyle(21)
-VBFTOPORatioSTXS.SetLineWidth(3)
+VBFTOPORatioSTXS.SetMarkerSize(0.5)
+VBFTOPORatioSTXS.SetLineWidth(2)
+
+inclusiveRatio_Stat_Graph = inclusiveRatioGraph.Clone()
+inclusiveRatio_Stat_Graph.SetPointEYlow(0,parameters_STXS['r']['stat_uncert_down'])
+inclusiveRatio_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r']['stat_uncert_up'])
+inclusiveRatio_Stat_Graph.SetPointEXlow(0,0.125)
+inclusiveRatio_Stat_Graph.SetPointEXhigh(0,0.125)
+inclusiveRatio_Stat_Graph.SetMarkerStyle(21)
+inclusiveRatio_Stat_Graph.SetMarkerSize(0.5)
+inclusiveRatio_Stat_Graph.SetFillColor(ROOT.kBlack)
+
+
+ggHRatio_Stat_Graph = ggHRatioGraph.Clone()
+ggHRatio_Stat_Graph.SetPointEYlow(0,parameters_STXS['r_ggH']['stat_uncert_down'])
+ggHRatio_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r_ggH']['stat_uncert_up'])
+ggHRatio_Stat_Graph.SetPointEXlow(0,0.125)
+ggHRatio_Stat_Graph.SetPointEXhigh(0,0.125)
+ggHRatio_Stat_Graph.SetMarkerStyle(21)
+ggHRatio_Stat_Graph.SetMarkerSize(0.5)
+ggHRatio_Stat_Graph.SetFillColor(ROOT.kAzure+7)
+
+qqHRatio_Stat_Graph = qqHRatioGraph.Clone()
+qqHRatio_Stat_Graph.SetPointEYlow(0,parameters_STXS['r_qqH']['stat_uncert_down'])
+qqHRatio_Stat_Graph.SetPointEYhigh(0,parameters_STXS['r_qqH']['stat_uncert_up'])
+qqHRatio_Stat_Graph.SetPointEXlow(0,0.125)
+qqHRatio_Stat_Graph.SetPointEXhigh(0,0.125)
+qqHRatio_Stat_Graph.SetMarkerStyle(21)
+qqHRatio_Stat_Graph.SetMarkerSize(0.5)
+qqHRatio_Stat_Graph.SetFillColor(ROOT.kOrange-3)
+
+ggHRatioSTXS_Stat_Graph = ggHRatioSTXS.Clone()
+for ggHParameterIndex in range(len(ggHParameters)):
+    ggHRatioSTXS_Stat_Graph.SetPointEYlow(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['stat_uncert_down'])
+    ggHRatioSTXS_Stat_Graph.SetPointEYhigh(ggHParameterIndex,parameters_STXS[ggHParameters[ggHParameterIndex]]['stat_uncert_up'])
+    ggHRatioSTXS_Stat_Graph.SetPointEXlow(ggHParameterIndex,0.125)
+    ggHRatioSTXS_Stat_Graph.SetPointEXhigh(ggHParameterIndex,0.125)
+ggHRatioSTXS_Stat_Graph.SetFillColor(ROOT.kAzure+7)
+
+qqHRatioSTXS_Stat_Graph = qqHRatioSTXS.Clone()
+for qqHParameterIndex in range(len(qqHParameters)):
+    qqHRatioSTXS_Stat_Graph.SetPointEYlow(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['stat_uncert_down'])
+    qqHRatioSTXS_Stat_Graph.SetPointEYhigh(qqHParameterIndex,parameters_STXS[qqHParameters[qqHParameterIndex]]['stat_uncert_up'])
+    qqHRatioSTXS_Stat_Graph.SetPointEXlow(qqHParameterIndex,0.125)
+    qqHRatioSTXS_Stat_Graph.SetPointEXhigh(qqHParameterIndex,0.125)
+qqHRatioSTXS_Stat_Graph.SetFillColor(ROOT.kOrange-3)
+
+VBFTOPORatioSTXS_Stat_Graph = VBFTOPORatioSTXS.Clone()
+for VBFTOPOParameterIndex in range(len(VBFTOPOParameters)):
+    VBFTOPORatioSTXS_Stat_Graph.SetPointEYlow(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['stat_uncert_down'])
+    VBFTOPORatioSTXS_Stat_Graph.SetPointEYhigh(VBFTOPOParameterIndex,parameters_STXS[VBFTOPOParameters[VBFTOPOParameterIndex]]['stat_uncert_up'])
+    VBFTOPORatioSTXS_Stat_Graph.SetPointEXlow(VBFTOPOParameterIndex,0.125)
+    VBFTOPORatioSTXS_Stat_Graph.SetPointEXhigh(VBFTOPOParameterIndex,0.125)
+VBFTOPORatioSTXS_Stat_Graph.SetFillColor(ROOT.kGreen+1)
 
 ratioGraph = ROOT.TMultiGraph()
 ratioGraph.Add(inclusiveRatioGraph)
@@ -381,6 +550,14 @@ ratioGraph.Add(qqHRatioGraph)
 ratioGraph.Add(ggHRatioSTXS)
 ratioGraph.Add(qqHRatioSTXS)
 ratioGraph.Add(VBFTOPORatioSTXS)
+
+ratio_Stat_Graph = ROOT.TMultiGraph()
+ratio_Stat_Graph.Add(inclusiveRatio_Stat_Graph)
+ratio_Stat_Graph.Add(ggHRatio_Stat_Graph)
+ratio_Stat_Graph.Add(qqHRatio_Stat_Graph)
+ratio_Stat_Graph.Add(ggHRatioSTXS_Stat_Graph)
+ratio_Stat_Graph.Add(qqHRatioSTXS_Stat_Graph)
+ratio_Stat_Graph.Add(VBFTOPORatioSTXS_Stat_Graph)
 
 SMXSRatioErrorHisto = ROOT.TGraphAsymmErrors(len(parameterOrder))
 for parameterIndex in range(len(parameters_STXS)):
@@ -406,14 +583,22 @@ plotGridHisto.GetYaxis().SetTitle("#sigmaB (fb)")
 plotGridHisto.GetYaxis().SetTitleOffset(0.6)
 plotGridHisto.GetYaxis().SetTickLength(0.01)
 SMXSErrorHisto.Draw("2")
+overallXS_Stat_Graph.Draw("2")
 overallXSGraph.Draw("0PZ")
 
 #let's draw a legend.
-theLegend = ROOT.TLegend(0.4,0.8,0.98,0.9)
-theLegend.SetNColumns(3)
+dummyGraph = ROOT.TGraph()
+dummyGraph.SetFillColor(ROOT.kBlack)
+dummyGraph.SetMarkerColor(ROOT.kBlack)
+dummyGraph.SetMarkerStyle(21)
+dummyGraph.SetMarkerSize(2)
+
+theLegend = ROOT.TLegend(0.3,0.8,0.98,0.9)
+theLegend.SetNColumns(4)
 theLegend.AddEntry(inclusiveGraph,"Observed","P")
+theLegend.AddEntry(dummyGraph,"#pm1#sigma (stat.)","P")
 theLegend.AddEntry(inclusiveGraph,"#pm1#sigma","L")
-theLegend.AddEntry(SMXSErrorHisto,"Uncertainty on SM prediction","F")
+theLegend.AddEntry(SMXSErrorHisto,"Uncertainty in SM prediction","F")
 theLegend.SetBorderSize(0)
 theLegend.SetFillStyle(0)
 theLegend.Draw()
@@ -448,6 +633,28 @@ for parameterIndex in range(len(parameterOrder)):
             quotedDown = int(quotedDown)
     except ValueError:
         quotedDown = 0        
+
+    #case 1, two decimals, but the end one is zero
+    if quotedUp < 10 and quotedUp >= 1 and len(str(quotedUp)) < 4:
+        quotedUp = str(quotedUp) + '0'
+    #case 2, three decimals, but one or more of the end ones is zero
+    if quotedUp < 1:
+        if len(str(quotedUp) == 3):
+            quotedUp = str(quotedUp) + '00'
+        elif len(str(quotedUp)==4):
+            quotedUp = str(quotedUp) + '0'
+
+    #print(quotedUp)
+
+    if quotedDown < 10 and quotedDown >= 1 and len(str(quotedDown)) < 4:
+        quotedDown = str(quotedDown) + '0'
+    #case 2, three decimals, but one or more of the end ones is zero
+    if quotedDown < 1:
+        if len(str(quotedDown) == 3):
+            quotedDown = str(quotedDown) + '00'
+        elif len(str(quotedDown)==4):
+            quotedDown = str(quotedDown) + '0'
+
     latex.DrawLatex(parameterIndex+0.5,latexAlignments[parameterIndex],str(quotedNominal)+'^{+'+str(quotedUp)+'}_{-'+str(quotedDown)+'}')
     
 #let's draw the other text pieces.
@@ -464,6 +671,10 @@ cmsLatex.SetTextAlign(31)
 cmsLatex.SetTextFont(42)
 cmsLatex.DrawLatex(0.98,0.92,"137 fb^{-1} (13 TeV)")
 
+processLatex = ROOT.TLatex()
+processLatex.SetTextFont(52)
+processLatex.SetNDC()
+processLatex.DrawLatex(0.5,0.75,"Topology-based")
 #draw the ratio plot elements
 ratioPad.cd()
 ratioPad.SetTopMargin(0.025)
@@ -489,6 +700,7 @@ strikeOutPlot.SetFillStyle(3354)
 
 SMXSRatioErrorHisto.Draw('2')
 strikeOutPlot.Draw("SAME")
+ratio_Stat_Graph.Draw("2")
 ratioGraph.Draw("P0Z")
 
 theCanvas.SaveAs("auxCrossSectionTable.png")
