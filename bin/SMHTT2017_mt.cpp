@@ -596,14 +596,28 @@ int main(int argc, char **argv)
 	  TriggerVector = JoinStr({sig_procs,{"VVT","STT","TTT","VVL","STL","TTL","ZL","WH_htt125","ZH_htt125","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}});
 	}
       
-      AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2017","CMS_m_FakeTau_eta0p4to0p8_2017",
-	    "CMS_m_FakeTau_eta0p8to1p2_2017","CMS_m_FakeTau_eta1p2to1p7_2017",
-	    "CMS_m_FakeTau_etagt1p7_2017","CMS_m_FakeTau_taupt30to40_2017",
-	    "CMS_m_FakeTau_taupt40to50_2017","CMS_m_FakeTau_tauptgt50_2017"},
-	{"ZL"},
-	&cb,
-	1.00,
-	TheFile,CategoryArgs);
+      if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+	{
+	  AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2017","CMS_m_FakeTau_eta0p4to0p8_2017",
+		"CMS_m_FakeTau_eta0p8to1p2_2017","CMS_m_FakeTau_eta1p2to1p7_2017",
+		"CMS_m_FakeTau_etagt1p7_2017","CMS_m_FakeTau_taupt30to50_2017",
+		"CMS_m_FakeTau_taupt50to70_2017","CMS_m_FakeTau_tauptgt70_2017"},
+	    {"ZL"},
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	}
+      else
+	{
+	  AddShapesIfNotEmpty({"CMS_m_FakeTau_etalt0p4_2017","CMS_m_FakeTau_eta0p4to0p8_2017",
+		"CMS_m_FakeTau_eta0p8to1p2_2017","CMS_m_FakeTau_eta1p2to1p7_2017",
+		"CMS_m_FakeTau_etagt1p7_2017","CMS_m_FakeTau_taupt30to40_2017",
+		"CMS_m_FakeTau_taupt40to50_2017","CMS_m_FakeTau_tauptgt50_2017"},
+	    {"ZL"},
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);
+	}
 
       AddShapesIfNotEmpty({"CMS_etauFR_vloose_barrel_2017","CMS_etauFR_vloose_endcap_2017"},
         {"STL","TTL","VVL"},
