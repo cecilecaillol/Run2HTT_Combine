@@ -618,7 +618,7 @@ int main(int argc, char **argv)
 	    TheFile,{"et_0jet","et_boosted1","et_boosted2"});
 	}
 
-        AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to40_2017","CMS_efaket_norm_pt40to50_2017","CMS_efaket_norm_ptgt50_2017","CMS_etauFR_barrel_2017","CMS_etauFR_endcap_2017"},
+        AddShapesIfNotEmpty({"CMS_efaket_norm_pt30to50_2017","CMS_efaket_norm_pt50to70_2017","CMS_efaket_norm_ptgt70_2017","CMS_etauFR_barrel_2017","CMS_etauFR_endcap_2017"},
         {"ZL","STL","TTL","VVL"},
         &cb,
         1.00,
@@ -685,11 +685,11 @@ int main(int argc, char **argv)
 		//"CMS_FF_closure_mt_et_w_unc1_2017",
 		//"CMS_FF_closure_mt_et_w_unc2_2017",
 		"CMS_FF_closure_pth_et_w_2017",
-		"CMS_FF_closure_norm_et_0jet_2017",
-		"CMS_FF_closure_norm_et_1jet_2017",
-		"CMS_FF_closure_norm_et_2jet_2017",
-		"CMS_FF_closure_norm_et_3jet_2017",
-		"CMS_FF_closure_norm_et_4jet_2017",
+		"CMS_FF_norm_et_0jet_2017",
+		"CMS_FF_norm_et_1jet_2017",
+		"CMS_FF_norm_et_2jet_2017",
+		"CMS_FF_norm_et_3jet_2017",
+		"CMS_FF_norm_et_4jet_2017",
 		},
 	    {"jetFakes"},
 	    &cb,
