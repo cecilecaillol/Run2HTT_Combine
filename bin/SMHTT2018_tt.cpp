@@ -573,7 +573,6 @@ int main(int argc, char **argv)
   cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_ghostsAndSatellites", "lnN", SystMap<>::init(1.001));
 
   cb.cp().process({"VVL","STL","ZL","TTL"}).AddSyst(cb, "CMS_efaketau_tt_2018", "lnN", SystMap<>::init(1.50));
-
   cb.cp().process({"jetFakes"}).bin({"tt_0jet"}).AddSyst(cb,"CMS_jetFakesNorm_0jet_tt_2018","lnN",SystMap<>::init(1.05));
   cb.cp().process({"jetFakes"}).bin({"tt_boosted_onejet"}).AddSyst(cb,"CMS_jetFakesNorm_1jet_tt_2018","lnN",SystMap<>::init(1.05));
   cb.cp().process({"jetFakes"}).bin({"tt_boosted_multijet"}).AddSyst(cb,"CMS_jetFakesNorm_2jet_tt_2018","lnN",SystMap<>::init(1.05));
@@ -628,9 +627,13 @@ int main(int argc, char **argv)
 	  AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_0jet_2018",
 		"CMS_rawFF_tt_qcd_1jet_2018",
 		"CMS_rawFF_tt_qcd_2jet_2018",
-		"CMS_FF_closure_tau2pt_tt_qcd_0jet",
-		"CMS_FF_closure_tau2pt_tt_qcd_1jet",
-		"CMS_FF_closure_tau2pt_tt_qcd_2jet",
+		"CMS_FF_closure_tau2pt_tt_qcd_2018",
+		"CMS_FF_closure_jet1pt_tt_qcd_2018",
+		"CMS_FF_norm_tt_0jet_2018",
+		"CMS_FF_norm_tt_1jet_2018",
+		"CMS_FF_norm_tt_2jet_2018",
+		"CMS_FF_norm_tt_3jet_2018",
+		"CMS_FF_norm_tt_4jet_2018",
 		"CMS_FF_closure_tt_qcd_osss_2018",},
 	    {"jetFakes"},
 	    &cb,
