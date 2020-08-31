@@ -5,3 +5,5 @@
 *.out
 *.pyc
 *#
+*.pdf
+*.png
