@@ -142,68 +142,7 @@ parametersToMeasure = []
 WorkspaceName = OutputDir+"Workspace_"+args.MeasurementType+".root"
 WorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
 if args.fiducialCrossSection:
-    if args.MeasurementType == "pth":
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*htt.*:r_H_PTH_0_45[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_45_80.*htt.*:r_H_PTH_45_80[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_80_120.*htt.*:r_H_PTH_80_120[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_120_200.*htt.*:r_H_PTH_120_200[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_200_350.*htt.*:r_H_PTH_200_350[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*htt.*:r_H_PTH_350_450[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH.*htt.*:r_H_PTH_Fid[1,-25,25]' "
-        parametersToMeasure = [        
-            'r_H_PTH_0_45',
-            'r_H_PTH_45_80',
-            'r_H_PTH_80_120',
-            'r_H_PTH_120_200',
-            'r_H_PTH_200_350',
-            'r_H_PTH_350_450',
-            'r_H_PTH_Fid'
-            ]
-    elif args.MeasurementType == "mjj":
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_0_150.*htt.*:r_H_MJJ_0_150[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_150_300.*htt.*:r_H_MJJ_150_300[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_300_450.*htt.*:r_H_MJJ_300_450[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_450_600.*htt.*:r_H_MJJ_450_600[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_600_1000.*htt.*:r_H_MJJ_600_1000[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_1000_1400.*htt.*:r_H_MJJ_1000_1400[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ_1400_1800.*htt.*:r_H_MJJ_1400_1800[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*MJJ.*htt.*:r_H_MJJ_Fid[1,-25,25]' "
-        parametersToMeasure = [
-            'r_H_MJJ_0_150',
-            'r_H_MJJ_150_300',
-            'r_H_MJJ_300_450',
-            'r_H_MJJ_450_600',
-            'r_H_MJJ_600_1000',
-            'r_H_MJJ_1000_1400',
-            'r_H_MJJ_1400_1800',
-            'r_H_MJJ_Fid'
-        ]
-    elif args.MeasurementType == 'njets':
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_0.*htt.*:r_H_NJETS_0[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_1.*htt.*:r_H_NJETS_1[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_2.*htt.*:r_H_NJETS_2[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_3.*htt.*:r_H_NJETS_3[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS.*htt.*:r_H_NJETS_Fid[1,-25,25]' "
-        parametersToMeasure=[
-            'r_H_NJETS_0',
-            'r_H_NJETS_1',
-            'r_H_NJETS_2',
-            'r_H_NJETS_3',
-            'r_H_NJETS_Fid'
-        ]
-    elif args.MeasurementType == 'ljpt':
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_30_60.*htt.*:r_H_LJPT_30_60[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_60_120.*htt.*:r_H_LJPT_60_120[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_120_200.*htt.*:r_H_LJPT_120_200[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_200_350.*htt.*:r_H_LJPT_200_350[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_Fid.*htt.*:r_H_LJPT_Fid[1,-25,25]' "
-        parametersToMeasure=[
-            'r_H_LJPT_30_60',        
-            'r_H_LJPT_60_120',
-            'r_H_LJPT_120_200',
-            'r_H_LJPT_200_350',
-            'r_H_LJPT_Fid',
-        ]
+    raise RuntimeError("Proper fiducial cross section measurement not written yet. FIX ME!")
 else:
     if args.MeasurementType == "pth":
         WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*htt.*:r_H_PTH_0_45[1,-25,25]' "
@@ -260,12 +199,14 @@ else:
         WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_120_200.*htt.*:r_H_LJPT_120_200[1,-25,25]' "
         WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_200_350.*htt.*:r_H_LJPT_200_350[1,-25,25]' "
         WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_G.350.*htt.*:r_H_LJPT_GT350[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_0.*htt.*:r_H_NJETS_0[1,-25,25]' "
         parametersToMeasure=[
             'r_H_LJPT_30_60',        
             'r_H_LJPT_60_120',
             'r_H_LJPT_120_200',
             'r_H_LJPT_200_350',
             'r_H_LJPT_GT350',
+            'r_H_NJETS_0',
         ]
 WorkspaceCommand+= CombinedCardName+" -o "+WorkspaceName+" -m 125"
 
