@@ -113,6 +113,7 @@ int main(int argc, char **argv) {
       "ggH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) ggH_STXS = {
+      "ggH_NJETS_0_htt125",
       "ggH_LJPT_30_60_htt125",
       "ggH_LJPT_60_120_htt125",
       "ggH_LJPT_120_200_htt125",
@@ -167,6 +168,7 @@ int main(int argc, char **argv) {
       "qqH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) qqH_STXS = {
+      "qqH_NJETS_0_htt125",
       "qqH_LJPT_30_60_htt125",
       "qqH_LJPT_60_120_htt125",
       "qqH_LJPT_120_200_htt125",
@@ -215,6 +217,7 @@ int main(int argc, char **argv) {
       "WH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) WH_STXS = {
+      "WH_NJETS_0_htt125",
       "WH_LJPT_30_60_htt125",
       "WH_LJPT_60_120_htt125",
       "WH_LJPT_120_200_htt125",
@@ -266,6 +269,7 @@ int main(int argc, char **argv) {
       "ZH_MJJ_GE1800_htt125",
     };
   else if (Input.OptionExists("-dljpt")) ZH_STXS = {
+      "ZH_NJETS_0_htt125",
       "ZH_LJPT_30_60_htt125",
       "ZH_LJPT_60_120_htt125",
       "ZH_LJPT_120_200_htt125",
