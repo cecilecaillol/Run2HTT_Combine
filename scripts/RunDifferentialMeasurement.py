@@ -239,7 +239,7 @@ for parameter in parametersToMeasure:
     if args.DontPrintResults:
         os.system(MeasurementCommand+" > /dev/null")
     else:
-        os.system(MeasurementCommand+" | tee -a "+outputLoggingFile)
+        os.system(MeasurementCommand+" | tee -a "+outputLoggingFile)        
     os.system(" mv *"+DateTag+"* "+OutputDir)
 
 if args.MakePlots:
@@ -256,6 +256,15 @@ if args.MakePlots:
     else:
         os.system(plotMakingCommand+" | tee -a "+outputLoggingFile)
     os.system(" mv *"+DateTag+"* "+OutputDir)
+    
+    #Run the postfit processing
+    currentDir = os.getcwd()
+    os.chdir(OutputDir)
+    prefitPostfitProcessingCommand = 'PostFitShapesFromWorkspace -o prefitFile_'+DateTag+'.root -m 125 -f fitDiagnostics'+DateTag+'_Plots.root:fit_s --postfit --sampling --print -d FinalCard_'+DateTag+'.txt -w Workspace_'+args.MeasurementType+'.root'
+    logging.info('Compelete pre/post-fit processing command:')
+    logging.info('\n\n'+prefitPostfitProcessingCommand+'\n')
+    os.system(prefitPostfitProcessingCommand)
+    os.chdir(currentDir)
 
 if args.ComputeGOF:
     os.chdir(OutputDir)
