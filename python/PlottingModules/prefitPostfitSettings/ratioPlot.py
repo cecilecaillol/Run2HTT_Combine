@@ -11,7 +11,7 @@ ratioYAxisTitleOffset = 0.62
 ratioYAxisLabelSize = 0.1
 ratioYAxisNDivisions = (6,0,0)
 
-errorFillStyle = 3444
+errorFillStyle = 3001 #3444
 errorFillColor = 15
 
 def poisson_errors(N,coverage=0.6827):
@@ -52,26 +52,30 @@ def setRatioErrors(ratio,theData):
             output.SetPointEYhigh(i,0)
     return output
 
-def MakeRatioPlot(theStack,theData):    
+def MakeRatioPlot(theStack,stackErrors,theData):    
     
-    nBins,binBoundaries = Utilities.GetHistogramAxisInfo(theData)
-    binBoundaryArray = array('f',binBoundaries)    
+    #nBins,binBoundaries = Utilities.GetHistogramAxisInfo(theData)
+    #binBoundaryArray = array('f',binBoundaries)    
 
-    ratioHist = ROOT.TH1F('Ratio',
-                          'Ratio',
-                          nBins,
-                          binBoundaryArray)
+    #ratioHist = ROOT.TH1F('Ratio',
+    #                      'Ratio',
+    #                      nBins,
+    #                      binBoundaryArray)
+    ratioHist = theData.Clone()
+    #ratioHist.Reset()
 
-    ratioHist.Sumw2()
-    ratioHist.Add(theData)    
+    #ratioHist.Sumw2()
+    #ratioHist.Add(theData)    
     #ratioHist = theData.Clone()
     #ratioHist.SetNameTitle('Ratio','Ratio')
     #ratioHist.SetBinErrorOption(ROOT.TH1.kPoisson)
 
-    denominatorHistos = ROOT.TH1F('denominatorHistos',
-                                  'denominatorHistos',
-                                  nBins,
-                                  binBoundaryArray)
+    #denominatorHistos = ROOT.TH1F('denominatorHistos',
+    #                              'denominatorHistos',
+    #                              nBins,
+    #                              binBoundaryArray)
+    denominatorHistos = theStack.GetHists().At(0).Clone()
+    denominatorHistos.Reset()
     listOfStackHistograms = theStack.GetHists()
     for i in range(theStack.GetNhists()):        
         denominatorHistos.Add(theStack.GetHists().At(i))        
@@ -93,13 +97,15 @@ def MakeRatioPlot(theStack,theData):
     ratioHist.SetMarkerStyle(ratioMarkerStyle)
     #ratioHist.GetXaxis().SetRangeUser(theData.GetXaxis().GetXmin(),theData.GetXaxis().GetXmax())     
 
-    MCErrors = ROOT.TH1F("MCErrors","MCErrors",
-                         nBins,
-                         binBoundaryArray)
+    #MCErrors = ROOT.TH1F("MCErrors","MCErrors",
+    #                     nBins,
+    #                     binBoundaryArray)
+    MCErrors = stackErrors.Clone()
+    MCErrors.Reset()
     for i in range (1,MCErrors.GetNbinsX()+1):
         MCErrors.SetBinContent(i,1.0)
         try:
-            MCErrors.SetBinError(i,denominatorHistos.GetBinError(i)/denominatorHistos.GetBinContent(i))
+            MCErrors.SetBinError(i,stackErrors.GetBinError(i)/denominatorHistos.GetBinContent(i))
         except:
             MCErrors.SetBinError(i,0)
     MCErrors.SetFillStyle(errorFillStyle)

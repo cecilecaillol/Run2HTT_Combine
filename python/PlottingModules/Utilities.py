@@ -11,17 +11,21 @@ def StackDictionary(histogramDictionary):
 #quick utility function for making a histogram that has the errors of a stack
 #some of these settings should probably be offloaded to other modules.
 def MakeStackErrors(TheStack):
-    nBins,BinBoundaries = GetHistogramAxisInfo(TheStack.GetHists().At(0))    
-    BinBoundaryArray = array('f',BinBoundaries)
-    DenominatorHistos = ROOT.TH1F("DenominatorHistos","DenominatorHistos",
-                                  nBins,
-                                  BinBoundaryArray)
+    #nBins,BinBoundaries = GetHistogramAxisInfo(TheStack.GetHists().At(0))    
+    #BinBoundaryArray = array('f',BinBoundaries)
+    #DenominatorHistos = ROOT.TH1F("DenominatorHistos","DenominatorHistos",
+    #nBins,
+    #                             BinBoundaryArray)
+    DenominatorHistos = TheStack.GetHists().At(0).Clone()
+    DenominatorHistos.Reset()
     for i in range(TheStack.GetNhists()):        
-        newNBins,newBinBoundaries = GetHistogramAxisInfo(TheStack.GetHists().At(i))
+        #newNBins,newBinBoundaries = GetHistogramAxisInfo(TheStack.GetHists().At(i))
         DenominatorHistos.Add(TheStack.GetHists().At(i))
-    TheErrorHisto = ROOT.TH1F("TheErrorHisto","",
-                              nBins,
-                              BinBoundaryArray)
+    TheErrorHisto = DenominatorHistos.Clone()
+    TheErrorHisto.Reset()
+    #TheErrorHisto = ROOT.TH1F("TheErrorHisto","",
+    #                          nBins,
+    #                          BinBoundaryArray)
 
     for i in range(1,DenominatorHistos.GetNbinsX()+1):
         TheErrorHisto.SetBinContent(i,DenominatorHistos.GetBinContent(i))
