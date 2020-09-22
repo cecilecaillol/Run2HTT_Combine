@@ -142,7 +142,28 @@ parametersToMeasure = []
 WorkspaceName = OutputDir+"Workspace_"+args.MeasurementType+".root"
 WorkspaceCommand = "text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
 if args.fiducialCrossSection:
-    raise RuntimeError("Proper fiducial cross section measurement not written yet. FIX ME!")
+    if args.MeasurementType == 'pth':
+        WorkspaceCommand = "text2workspace.py -P CombineHarvester.Run2HTT_Combine.Models.FiducialPTHModel:fiducialPTH "
+        parametersToMeasure = [
+            'rho_0_45',
+            'rho_45_80',
+            'rho_80_120',
+            'rho_120_200',
+            'rho_200_350',
+            'rho_350_450',
+            'mu_fid',
+            ]
+    elif args.MeasurementType == 'njets':
+        WorkspaceCommand = "text2workspace.py -P CombineHarvester.Run2HTT_Combine.Models.FiducialNJETSModel:fiducialNJETS "
+        parametersToMeasure = [
+            'rho_0',
+            'rho_1',
+            'rho_2',
+            'rho_3',            
+            'mu_fid',
+            ]
+    elif args.MeasurementType == 'ljpt':
+        raise RuntimeError("Proper fiducial cross section measurement for leading jet pt not written yet. FIX ME!")
 else:
     if args.MeasurementType == "pth":
         WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*htt.*:r_H_PTH_0_45[1,-25,25]' "
@@ -226,6 +247,8 @@ if args.workspaceOnly:
 
 for parameter in parametersToMeasure:
 
+    if args.fiducialCrossSection and 'rho' in parameter: #these are irrelevant in the overall measurement
+        continue
     MeasurementCommand = "combineTool.py -M MultiDimFit "+WorkspaceName+"  --robustFit=1 --X-rtd MINIMIZER_analytic --X-rtd FAST_VERTICAL_MORPH --algo=singles --cl=0.68 -n "+DateTag+"_"+args.MeasurementType
     if not args.Unblind:
         MeasurementCommand+=" -t -1"
