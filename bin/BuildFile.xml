@@ -34,6 +34,9 @@
 <bin file="ZH2018_llet.cpp" name="ZH2018_llet"></bin>
 <bin file="ZH2018_llmt.cpp" name="ZH2018_llmt"></bin>
 <bin file="ZH2018_lltt.cpp" name="ZH2018_lltt"></bin>
+<bin file="ZH2016_all6.cpp" name="ZH2016"></bin>
+<bin file="ZH2017_all6.cpp" name="ZH2017"></bin>
+<bin file="ZH2018_all6.cpp" name="ZH2018"></bin>
 <use name="root"/>
 <use name="rootmath"/>
 <use name="roofit"/>

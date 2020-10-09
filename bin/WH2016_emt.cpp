@@ -12,19 +12,15 @@
 #include "CombineHarvester/CombineTools/interface/Systematics.h"
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
-#include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
 
 using namespace std;
 
-int main(int argc, char **argv)
-{
-  InputParserUtility Input(argc,argv);
+int main(int argc, char **argv) {
   //! [part1]
   // First define the location of the "auxiliaries" directory where we can
   // source the input files containing the datacard shapes
-  
-
   cout<<"test"<<endl;
+  InputParserUtility Input(argc,argv);
   string aux_shapes = string(getenv("CMSSW_BASE")) + "/src/auxiliaries/shapes/";
 
   // Create an emtpty CombineHarvester instance that will hold all of the
@@ -59,8 +55,8 @@ int main(int argc, char **argv)
   cb.cp().process({"DY"}).AddSyst(cb, "CMH_htt_zXsec_13TeV", "lnN", SystMap<>::init(1.02));
   cb.cp().process({"TT"}).AddSyst(cb, "CMS_htt_tjXsec_13TeV", "lnN", SystMap<>::init(1.042));
   cb.cp().process({"allFakes"}).AddSyst(cb, "reducible_norm_emt", "lnN", SystMap<>::init(1.15));
-  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
-  cb.cp().process({"WZ"}).AddSyst(cb, "CMS_htt_wzXsec_13TeV", "lnN", SystMap<>::init(1.032));
+  cb.cp().process({"WZ"}).AddSyst(cb, "CMS_htt_zzXsec_13TeV", "lnN", SystMap<>::init(1.032));
+  cb.cp().process({"ZZ"}).AddSyst(cb, "CMS_htt_wzXsec_13TeV", "lnN", SystMap<>::init(1.032));
   cb.cp().process({"ttZ"}).AddSyst(cb, "CMS_htt_ttzXsec_13TeV", "lnN", SystMap<>::init(1.25));
   cb.cp().process({"TriBoson"}).AddSyst(cb, "CMS_htt_triboson_13TeV", "lnN", SystMap<>::init(1.25));
 
@@ -72,6 +68,7 @@ int main(int argc, char **argv)
   cb.cp().process({"WH_had_htt","WH_lep_PTH_0_75","WH_lep_PTV_75_150","WH_lep_PTV_150_250_0J_htt","WH_lep_PTV_150_250_GE1J_htt","WH_lep_PTV_GT250_htt","WH_lep_hww125","WH_lep_htt"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.019));
   cb.cp().process({"ZH_lep_htt","ggZH_lep_htt","ZH_lep_hww125"}).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.016));
 
+  cb.cp().process({"ZH_lep_htt","WH_lep_htt","WH_lep_PTV_GT250_htt","WH_lep_PTV_0_75_htt","WH_lep_PTV_75_150_htt","WH_lep_PTV_150_250_0J_htt","WH_lep_PTV_150_250_GE1J_htt"}).AddSyst(cb,"qqVH_NLOEWK", "shape", SystMap<>::init(1.00));
   cb.cp().process({"WH_lep_htt"}).AddSyst(cb,"WHlep_scale", "shape", SystMap<>::init(1.00));
   cb.cp().process({"ZH_lep_htt"}).AddSyst(cb,"ZHlep_scale", "shape", SystMap<>::init(1.00));
   cb.cp().process({"WH_lep_PTV_0_75_htt","WH_lep_PTV_75_150_htt","WH_lep_PTV_150_250_0J_htt","WH_lep_PTV_150_250_GE1J_htt"}).AddSyst(cb,"WH_scale_lowpt", "shape", SystMap<>::init(1.00));
@@ -141,27 +138,27 @@ int main(int argc, char **argv)
   cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeMu_pt30to40_2016", "shape", SystMap<>::init(1.00));
   cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeMu_ptgt40_2016", "shape", SystMap<>::init(1.00));
 
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt20to25_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt25to30_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt30to35_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt35to40_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt40to50_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_pt50to60_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm0_ptgt60_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt20to25_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt25to30_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt30to35_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt35to40_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt40to50_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_pt50to60_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm1_ptgt60_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt20to25_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt25to30_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt30to35_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt35to40_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt40to50_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_pt50to60_2016", "shape", SystMap<>::init(1.00));
-  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_dm10_ptgt60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt20to25_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt25to30_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt30to35_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt35to40_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt40to50_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_pt50to60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm0_ptgt60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt20to25_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt25to30_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt30to35_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt35to40_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt40to50_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_pt50to60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm1_ptgt60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt20to25_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt25to30_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt30to35_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt35to40_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt40to50_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_pt50to60_2016", "shape", SystMap<>::init(1.00));
+  cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeTauVT_Te_dm10_ptgt60_2016", "shape", SystMap<>::init(1.00));
 
   cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeEle_promptSubtraction_2016", "shape", SystMap<>::init(1.00));
   cb.cp().process({"allFakes"}).AddSyst(cb,"CMS_fakeMu_promptSubtraction_2016", "shape", SystMap<>::init(1.00));
@@ -223,8 +220,7 @@ int main(int argc, char **argv)
       // We need to filter on both the mass and the mass hypothesis,
       // where we must remtemtber to include the "*" mass entry to get
       // all the data and backgrounds.
-      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", 
-						    output);
+      cb.cp().bin({b}).mass({m, "*"}).WriteDatacard(Input.ReturnToken(0)+"/"+b + "_" + m + ".txt", output);
     }
   }
   //! [part9]

@@ -19,7 +19,7 @@ parser.add_argument('--analysisStyle',nargs="+",choices=['Standard','WH','ZH'],h
 parser.add_argument('--years',nargs="+",choices=['2016','2017','2018'],help="Specify the year(s) to run the fit for",required=True)
 parser.add_argument('--channels',nargs="+",choices=['mt','et','tt','em'],help="specify the channels to create standard data cards for")
 parser.add_argument('--WHChannels',nargs="+",choices=['emt','ett','mmt','mtt'],help="specify the channels to create WH datacards for")
-parser.add_argument('--ZHChannels',nargs="+",choices=['llem','llet','llmt','lltt'],help='specify the channels to create ZH datacards for')
+parser.add_argument('--ZHChannels',nargs="+",choices=['eeet','eemt','eett','mmet','mmmt','mmtt'],help='specify the channels to create ZH datacards for')
 parser.add_argument('--RunShapeless',help="Run combine model without using any shape uncertainties",action="store_true")
 parser.add_argument('--RunWithBinByBin',help="Run combine model without using bin-by-bin uncertainties",action="store_true")
 parser.add_argument('--RunWithoutAutoMCStats',help="Run with auto mc stats command appended to data cards",action="store_true")
@@ -171,11 +171,12 @@ if 'WH' in args.analysisStyle:
 
 if 'ZH' in args.analysisStyle:
     for year in args.years:
-        for channel in args.ZHChannels:
-            DataCardCreationCommand="ZH"+year+"_"+channel+" "+OutputDir
-            logging.info("ZH Datacard Creation Command:")
-            logging.info('\n\n'+DataCardCreationCommand+'\n')
-            assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0, "Model exited with status !=0. Please check for errors"
+        #one executable handles all channels now, so multiples don't have to be called.
+        #for channel in args.ZHChannels:
+        DataCardCreationCommand="ZH"+year+" "+OutputDir
+        logging.info("ZH Datacard Creation Command:")
+        logging.info('\n\n'+DataCardCreationCommand+'\n')
+        assert os.system(DataCardCreationCommand+" | tee -a "+outputLoggingFile) == 0, "Model exited with status !=0. Please check for errors"
 
 #combine all cards together
 #we can't do this the old way of first mashing all channels together and then mashing those into a final card
@@ -225,8 +226,16 @@ if 'WH' in args.analysisStyle:
 
 if 'ZH' in args.analysisStyle:
     for year in args.years:
+        zhCardIndex={
+            'eeet': 1,
+            'eemt': 2,
+            'eett': 3,
+            'mmet': 4,
+            'mmmt': 5,
+            'mmtt': 6,
+        }#these are now handled in the same executable, and are indexed specifically
         for channel in args.ZHChannels:
-            zhCardName="zh_"+channel+"_1_"+year+"_125.txt"
+            zhCardName="zh_all8_"+str(zhCardIndex[channel])+"_"+year+"_125.txt"
             CardFile = open(OutputDir+zhCardName,"a+")
             CardFile.write("* autoMCStats 0.0\n")
             CardFile.close()
