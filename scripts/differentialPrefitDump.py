@@ -6,6 +6,22 @@ import CombineHarvester.Run2HTT_Combine.PlottingModules.Utilities as utils
 import CombineHarvester.Run2HTT_Combine.PlottingModules.prefitPostfitSettings.ratioPlot as RP
 import os
 
+massBins = {
+    1:'50-70',
+    2:'70-90',
+    3:'90-110',
+    4:'110-130',
+    5:'130-150',
+    6:'150-170',
+    7:'170-210',
+    8:'210-250',
+    0:'250-290',
+    }
+
+def setMassBinAxisTitles(theHistogram):
+    for i in range(1,theHistogram.GetNbinsX()+1):
+        theHistogram.GetXaxis().SetBinLabel(i,massBins[(i%9)])
+
 def AddIfExists(directory,originalObject,histogramName):
     if directory.GetListOfKeys().Contains(histogramName):
         originalObject.Add(directory.Get(histogramName))
@@ -53,8 +69,17 @@ def MakeSignalStrengthHisto(histograms,ratioErrors):
     #okay, now we do the same thing for signal and we can get the heck out of here.
     higgsHisto = histograms['signal'].Clone()
     higgsHisto.Divide(ratioErrors)
+    higgsHisto.SetLineColor(ROOT.kRed)
+    higgsHisto.SetFillStyle(4000)
+    higgsHisto.SetLineWidth(2)
 
-    return signalStrengthHisto,higgsHisto
+    unitRatioError = ratioErrors.Clone()
+    for i in range(1,unitRatioError.GetNbinsX()+1):
+        unitRatioError.SetBinContent(i,0)
+        unitRatioError.SetBinError(i,1)
+        #unitRatioError.Divide(ratioErrors)
+
+    return signalStrengthHisto,higgsHisto,unitRatioError
 
 parser = argparse.ArgumentParser(description="Quick script for duping prefit plots from differential analysis")
 parser.add_argument('theFile',nargs='?',help='The file to retrieve plots and dump from')
@@ -62,6 +87,7 @@ parser.add_argument('--measurementType',nargs='?',choices=['pth','njets','ljpt']
 parser.add_argument('--prefitOrPostfit',nargs='?',choices=['prefit','postfit'],help='make prefit or postfit plots',default='prefit')
 parser.add_argument('--pause',action='store_true',help='pause after every histogram made')
 parser.add_argument('--unblind',action='store_true',help='unblind the datapoints in each histogram')
+parser.add_argument('--lowerPad',nargs='?',choices=['ratio','signal'],help='Choose ratio or (obs-bkg)/err plot for the lower pad',default='ratio')
 
 args = parser.parse_args()
 theFile = ROOT.TFile(args.theFile)
@@ -491,11 +517,11 @@ for directory in theFile.GetListOfKeys():
     ratioPlot,ratioPlotErrors = RP.MakeRatioPlot(theBackgroundStack,theStackErrors,histograms['data'])
 
     print('making signal strength...')
-    dataSignalStrength,predictedSignalStrength = MakeSignalStrengthHisto(histograms,ratioPlotErrors)
+    dataSignalStrength,predictedSignalStrength,unitRatioError = MakeSignalStrengthHisto(histograms,ratioPlotErrors)
 
     #okay, let's set up the canvas and pads and stuff
     print('Drawing...')
-    theCanvas = ROOT.TCanvas("prefitCanvas"+'_'+channel+'_'+category,"prefitCanvas"+'_'+channel+'_'+category)
+    theCanvas = ROOT.TCanvas("prefitCanvas"+'_'+channel+'_'+category,"prefitCanvas"+'_'+channel+'_'+category,0,0,2000,600)
     theCanvas.Divide(1,2)#theCanvas.Divide(1,3)
     plotPad = theCanvas.GetPrimitive(theCanvas.GetName()+"_1")
     #signalStrengthPad = theCanvas.GetPrimitive(theCanvas.GetName()+"_2")
@@ -520,8 +546,8 @@ for directory in theFile.GetListOfKeys():
     ratioPad.SetTickx()
     ratioPad.SetTicky()
     ratioPad.SetTopMargin(0.0)
-    ratioPad.SetBottomMargin(0.3)
-    plotPad.SetBottomMargin(0.0)
+    ratioPad.SetBottomMargin(0.35)
+    plotPad.SetBottomMargin(0.02)
 
     #let's come up with a full title
     fullTitle=year+' '
@@ -680,15 +706,42 @@ for directory in theFile.GetListOfKeys():
     
     print('ratio pad...')
     ratioPad.cd()
-    ROOT.gStyle.SetOptStat(0)
-    ratioPad.SetGridy()
-    ratioPlotErrors.Draw('e2')
-    ratioPlot.Draw('E0P')
-    ratioPlotErrors.SetTitle('')    
-    ratioPlotErrors.GetXaxis().SetLabelSize(0.1)
-    ratioPlotErrors.GetXaxis().SetTitle('Bin Number')
-    ratioPlotErrors.GetXaxis().SetTitleSize(0.1)
-    ratioPlotErrors.GetXaxis().SetTitleOffset(1.2)
+    ROOT.gStyle.SetOptStat(0)    
+    if args.lowerPad == 'ratio':
+        ratioPad.SetGridy()
+        ratioPlotErrors.Draw('e2')
+        ratioPlot.Draw('E0P')
+        ratioPlotErrors.SetTitle('')    
+        ratioPlotErrors.GetXaxis().SetLabelSize(0.1)
+        setMassBinAxisTitles(ratioPlotErrors)
+        ratioPlotErrors.GetXaxis().SetTitle('m_{#tau#tau}')
+        ratioPlotErrors.GetXaxis().SetTitleSize(0.1)
+        ratioPlotErrors.GetXaxis().SetTitleOffset(1.2)
+    elif args.lowerPad == 'signal':
+        unitRatioError.Draw('e2')
+        unitRatioError.GetYaxis().SetTitle('#frac{Obs.-bkg.}{Bkg. unc.}')
+        unitRatioError.GetYaxis().SetRangeUser(-2,
+                                               max(dataSignalStrength.GetMaximum(),
+                                                   predictedSignalStrength.GetMaximum())*2)
+        unitRatioError.GetYaxis().SetTitleOffset(0.5)
+        predictedSignalStrength.Draw('HIST SAME')
+        dataSignalStrength.Draw('E0P SAME')
+        unitRatioError.SetTitle('')
+        unitRatioError.GetXaxis().SetLabelSize(0.1)
+        setMassBinAxisTitles(unitRatioError)
+        unitRatioError.GetXaxis().SetTitle('m_{#tau#tau}')
+        unitRatioError.GetXaxis().SetTitleSize(0.1)
+        unitRatioError.GetXaxis().SetTitleOffset(1.8)
+        
+        signalPlotLegend = ROOT.TLegend(0.12,0.78,0.88,0.88)
+        signalPlotLegend.AddEntry(dataSignalStrength,'(Obs.-bkg.)/Bkg. unc.','LP')
+        signalPlotLegend.AddEntry(predictedSignalStrength, 'H#rightarrow#tau#tau/Bkg. unc.','L')
+        signalPlotLegend.AddEntry(unitRatioError, 'Bkg. unc.','F')
+        signalPlotLegend.SetNColumns(3)
+        signalPlotLegend.SetBorderSize(0)
+        signalPlotLegend.SetFillStyle(0)
+        signalPlotLegend.Draw()
+        
     
     ratioGridPad = ROOT.TPad('slices','slices',0,0,1,1)    
     ratioGridPad.Draw()
@@ -704,15 +757,7 @@ for directory in theFile.GetListOfKeys():
     ratioGridHisto = plotGridHisto.Clone()
     ratioGridHisto.Draw()
     ratioGridHisto.GetXaxis().SetNdivisions(-900-(histograms['data'].GetNbinsX()/9))
-    ratioGridHisto.SetFillStyle(4000)    
-
-    """
-    print('signal strength...')
-    signalStrengthPad.cd()
-    ratioPlotErrors.Draw('e2')
-    dataSignalStrength.Draw('SAME e1')
-    predictedSignalStrength.Draw('SAME HIST')
-    """
+    ratioGridHisto.SetFillStyle(4000)        
 
     if args.pause:
         raw_input('Press Enter To Continue...')
