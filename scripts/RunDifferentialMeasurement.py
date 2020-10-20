@@ -115,7 +115,13 @@ CardCombiningCommand="combineCards.py"
 for year in args.years:
     for channel in args.channels:
         #add in the autoMCstats
-        for i in range(1,8):
+        nCategories = 0
+        #need to do this so we don't accidentally create cards by appending text to non-existing ones
+        if channel == 'em':
+            nCategories = 1
+        else:
+            nCategories = 3
+        for i in range(1,nCategories+1):
             CardFile = open(OutputDir+"smh"+year+"_"+channel+"_"+str(i)+"_13TeV_.txt","a+")
             CardFile.write("* autoMCStats 0.0\n")
             CardFile.close()
