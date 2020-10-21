@@ -74,15 +74,16 @@ for year in args.years:
             DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
         elif channel == 'mt':
             measurementString = ''
+            measurementString = ''
             if args.MeasurementType == 'pth':
-                measurementString = 'HiggsPt'
+                measurementString = 'PTH'
             elif args.MeasurementType == 'njets':
-                measurementString = 'NJets'
+                measurementString = 'NJ'
             elif args.MeasurementType == 'ljpt':
-                measurementString = 'LeadingJetPt'
-            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString            
-            DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
+                measurementString = 'J1PT'
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_LowTauPt"
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_IntermediateTauPt"
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_HighTauPt"
         elif channel == 'et':
             measurementString = ''
             if args.MeasurementType == 'pth':
@@ -172,13 +173,13 @@ if args.fiducialCrossSection:
         raise RuntimeError("Proper fiducial cross section measurement for leading jet pt not written yet. FIX ME!")
 else:
     if args.MeasurementType == "pth":
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*htt.*:r_H_PTH_0_45[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_45_80.*htt.*:r_H_PTH_45_80[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_80_120.*htt.*:r_H_PTH_80_120[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_120_200.*htt.*:r_H_PTH_120_200[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_200_350.*htt.*:r_H_PTH_200_350[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*htt.*:r_H_PTH_350_450[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_G.450.*htt.*:r_H_PTH_GT450[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_0_45.*:r_H_PTH_0_45[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_45_80.*:r_H_PTH_45_80[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_80_120.*:r_H_PTH_80_120[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_120_200.*:r_H_PTH_120_200[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_200_350.*:r_H_PTH_200_350[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_350_450.*:r_H_PTH_350_450[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*PTH_G.450.*:r_H_PTH_GT450[1,-25,25]' "
         parametersToMeasure = [        
             'r_H_PTH_0_45',
             'r_H_PTH_45_80',
@@ -208,11 +209,11 @@ else:
             'r_H_MJJ_GE1800'
         ]
     elif args.MeasurementType == 'njets':
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_0.*htt.*:r_H_NJETS_0[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_1.*htt.*:r_H_NJETS_1[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_2.*htt.*:r_H_NJETS_2[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_3.*htt.*:r_H_NJETS_3[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_GE4.*htt.*:r_H_NJETS_GE4[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_0.*:r_H_NJETS_0[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_1.*:r_H_NJETS_1[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_2.*:r_H_NJETS_2[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_3.*:r_H_NJETS_3[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_GE4.*:r_H_NJETS_GE4[1,-25,25]' "
         parametersToMeasure=[
             'r_H_NJETS_0',
             'r_H_NJETS_1',
@@ -221,12 +222,12 @@ else:
             'r_H_NJETS_GE4'
         ]
     elif args.MeasurementType == 'ljpt':
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_30_60.*htt.*:r_H_LJPT_30_60[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_60_120.*htt.*:r_H_LJPT_60_120[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_120_200.*htt.*:r_H_LJPT_120_200[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_200_350.*htt.*:r_H_LJPT_200_350[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*LJPT_G.350.*htt.*:r_H_LJPT_GT350[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJETS_0.*htt.*:r_H_NJETS_0[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*J1PT_30_60.*:r_H_LJPT_30_60[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*J1PT_60_120.*:r_H_LJPT_60_120[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*J1PT_120_200.*:r_H_LJPT_120_200[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*J1PT_200_350.*:r_H_LJPT_200_350[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*J1PT_G.350.*:r_H_LJPT_GT350[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_0.*:r_H_NJETS_0[1,-25,25]' "
         parametersToMeasure=[
             'r_H_LJPT_30_60',        
             'r_H_LJPT_60_120',
