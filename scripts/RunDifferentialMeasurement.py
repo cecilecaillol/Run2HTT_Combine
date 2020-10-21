@@ -181,7 +181,7 @@ else:
         WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_1.*:r_H_NJETS_1[1,-25,25]' "
         WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_2.*:r_H_NJETS_2[1,-25,25]' "
         WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_3.*:r_H_NJETS_3[1,-25,25]' "
-        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_GE4.*:r_H_NJETS_GE4[1,-25,25]' "
+        WorkspaceCommand += "--PO 'map=.*/.*H.*NJ_G.4.*:r_H_NJETS_GE4[1,-25,25]' "
         parametersToMeasure=[
             'r_H_NJETS_0',
             'r_H_NJETS_1',
