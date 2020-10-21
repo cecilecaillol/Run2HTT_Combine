@@ -61,49 +61,17 @@ for year in args.years:
         elif args.MeasurementType=='ljpt':
             DataCardCreationCommand+= ' -dljpt '
         DataCardCreationCommand+=" --Categories"        
-        if channel == 'tt':
-            measurementString = ''
-            if args.MeasurementType == 'pth':
-                measurementString = 'HiggsPt'
-            elif args.MeasurementType == 'njets':
-                measurementString = 'NJets'
-            elif args.MeasurementType == 'ljpt':
-                measurementString = 'LJPT'
-            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
-        elif channel == 'mt':
-            measurementString = ''
-            measurementString = ''
-            if args.MeasurementType == 'pth':
-                measurementString = 'PTH'
-            elif args.MeasurementType == 'njets':
-                measurementString = 'NJ'
-            elif args.MeasurementType == 'ljpt':
-                measurementString = 'J1PT'
-            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_LowTauPt"
-            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_IntermediateTauPt"
-            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_HighTauPt"
-        elif channel == 'et':
-            measurementString = ''
-            if args.MeasurementType == 'pth':
-                measurementString = 'HiggsPt'
-            elif args.MeasurementType == 'njets':
-                measurementString = 'njets'
-            elif args.MeasurementType == 'ljpt':
-                measurementString = 'j1pt'
-            DataCardCreationCommand+=" "+channel+"_LowTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_IntermediateTauPt_"+measurementString
-            DataCardCreationCommand+=" "+channel+"_HighTauPt_"+measurementString
-        elif channel == 'em':
-            measurementString = ''
-            if args.MeasurementType == 'pth':
-                measurementString = 'HiggsPt'
-            elif args.MeasurementType == 'njets':
-                measurementString = 'njets'
-            elif args.MeasurementType == 'ljpt':
-                measurementString = 'j1pt'
-            DataCardCreationCommand+=" "+channel+"_"+measurementString
+
+        measurementString = ''
+        if args.MeasurementType == 'pth':
+            measurementString = 'PTH'
+        elif args.MeasurementType == 'njets':
+            measurementString = 'NJ'
+        elif args.MeasurementType == 'ljpt':
+            measurementString = 'J1PT'
+        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_LowTauPt"
+        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_IntermediateTauPt"
+        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_HighTauPt"
             
         print("Creating data cards")
         logging.info('Data Card Creation Command:')
