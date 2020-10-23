@@ -1037,6 +1037,10 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
+      else if (Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+	{
+	  std::cout<<"No WG1 uncertainties used in differential measurements"<<std::endl;
+	}
       //unscaled for either mu measurement
       else if(not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
 	{
