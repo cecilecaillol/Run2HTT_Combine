@@ -111,7 +111,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       "ggH_J1PT_60_120",
       "ggH_J1PT_120_200",
       "ggH_J1PT_200_350",
-      "ggH_J1PT_GT350",
+      "ggH_J1PT_GE350",
     };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
@@ -166,7 +166,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       "xH_J1PT_60_120",
       "xH_J1PT_120_200",
       "xH_J1PT_200_350",
-      "xH_J1PT_GT350",
+      "xH_J1PT_GE350",
     };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
@@ -747,6 +747,10 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	    1.00,
 	    TheFile,CategoryArgs);
 	}
+      else if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+        {
+	  std::cout << "No WG1 uncertainties for differential measurements " << std::endl;
+        }
       //unscaled for either mu measurement
       else if(not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
 	{
