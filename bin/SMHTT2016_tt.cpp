@@ -112,7 +112,7 @@ int main(int argc, char **argv)
       "ggH_J1PT_60_120",
       "ggH_J1PT_120_200",
       "ggH_J1PT_200_350",
-      "ggH_J1PT_GE350",
+      "ggH_J1PT_GT350",
     };
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
       "xH_J1PT_60_120",
       "xH_J1PT_120_200",
       "xH_J1PT_200_350",
-      "xH_J1PT_GE350",
+      "xH_J1PT_GT350",
     };
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
@@ -714,8 +714,8 @@ int main(int argc, char **argv)
 
       // JES
       std::cout<<"JES"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_JetAbsolute","CMS_JetAbsolute_2016","CMS_JetBBEC1","CMS_JetBBEC1_2016","CMS_JetEC2","CMS_JetEC2_2016",
-	    "CMS_JetFlavorQCD","CMS_JetHF","CMS_JetHF_2016","CMS_JetRelativeBal"},
+      AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2016","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2016","CMS_scale_j_EC2","CMS_scale_j_EC2_2016",
+	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2016","CMS_scale_j_RelativeBal"},
 	JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 	&cb,
 	1.000,
@@ -724,7 +724,7 @@ int main(int argc, char **argv)
 
       //JER
       std::cout<<"JER"<<std::endl;
-      AddShapesIfNotEmpty({"CMS_JER_2016"},
+      AddShapesIfNotEmpty({"CMS_res_j_2016"},
 			  JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
 			  &cb,
 			  1.000,
@@ -1020,6 +1020,10 @@ int main(int argc, char **argv)
 			  );
       */
     }
+
+  // Shape for looser Deep tau ID vsLep than recommanded WP 
+  if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+    cb.cp().process({"embedded","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb,"CMS_looser_lep_wp_2016", "shape", SystMap<>::init(1.00));
 
   //***********************************************************
   //embedded uncertainties. 
