@@ -962,8 +962,8 @@ int main(int argc, char **argv) {
 			  TheFile,CategoryArgs);
 
       // Jet Energy Correction Uncertainties            
-      AddShapesIfNotEmpty({"CMS_JetAbsolute","CMS_JetAbsolute_2018","CMS_JetBBEC1","CMS_JetBBEC1_2018","CMS_JetEC2","CMS_JetEC2_2018",
-	    "CMS_JetFlavorQCD","CMS_JetHF","CMS_JetHF_2018","CMS_JetRelativeSample_2018","CMS_JetRelativeBal"},
+      AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2018","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2018","CMS_scale_j_EC2","CMS_scale_j_EC2_2018",
+	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2018","CMS_scale_j_RelativeSample_2018","CMS_scale_j_RelativeBal"},
 	JESVector,
 	&cb,
 	1.000,
@@ -991,7 +991,7 @@ int main(int argc, char **argv) {
       */
 
       //JER      
-      AddShapesIfNotEmpty({"CMS_JER_2018"},
+      AddShapesIfNotEmpty({"CMS_res_j_2018"},
 			  JESVector,
 			  &cb,
 			  1.000,
