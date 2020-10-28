@@ -25,6 +25,7 @@ parser.add_argument('--fiducialCrossSection',help='create a fiducial cross secti
 parser.add_argument('--ComputeGOF',help="Compute saturated GOF use on forcefully blinded datacards",action="store_true")
 parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. BE SURE ABOUT THIS.",action="store_true")
 parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
+parser.add_argument('--ComputeImpacts',help="Compute expected impacts on POIs",action="store_true")
 
 args = parser.parse_args()
 
@@ -69,9 +70,12 @@ for year in args.years:
             measurementString = 'NJ'
         elif args.MeasurementType == 'ljpt':
             measurementString = 'J1PT'
-        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_LowTauPt"
-        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_IntermediateTauPt"
-        DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_HighTauPt"
+        if channel == 'em':
+            DataCardCreationCommand+= " htt_"+measurementString+"_em"
+        else:
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_LowTauPt"
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_IntermediateTauPt"
+            DataCardCreationCommand+=" htt_"+measurementString+"_"+channel+"_HighTauPt"
             
         print("Creating data cards")
         logging.info('Data Card Creation Command:')
@@ -263,6 +267,61 @@ if args.MakePlots:
     logging.info('\n\n'+prefitPostfitProcessingCommand+'\n')
     os.system(prefitPostfitProcessingCommand)
     os.chdir(currentDir)
+
+if args.ComputeImpacts:
+    os.chdir(OutputDir)
+    print("\nCalculating Impacts, this may take a while...\n")
+    print("Initial fit")
+    ImpactCommand = "combineTool.py -M Impacts -d "+WorkspaceName+" -m 125 --doInitialFit --robustFit 1 --expectSignal=1" 
+    if not args.Unblind:
+        ImpactCommand+=" -t -1"
+    ImpactCommand+= " --parallel 8 --X-rtd MINIMIZER_analytic --X-rtd FAST_VERTICAL_MORPH "
+    
+    logging.info("Initial Fit Impact Command:")
+    logging.info('\n\n'+ImpactCommand+'\n')
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)        
+
+    print("Full fit")
+    ImpactCommand = "combineTool.py -M Impacts -d "+WorkspaceName+" -m 125 --robustFit 1 --doFits --expectSignal=1"
+    if not args.Unblind:
+        ImpactCommand += " -t -1"
+    ImpactCommand+=" --parallel 8 --X-rtd MINIMIZER_analytic --X-rtd FAST_VERTICAL_MORPH "
+
+    logging.info("Full Fit Impact Command:")
+    logging.info('\n\n'+ImpactCommand+'\n')
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+
+    print("json-ifying")
+    ImpactJsonName = "impacts_final_"+DateTag+".json"
+    ImpactCommand = "combineTool.py -M Impacts -d "+WorkspaceName+" -m 125 -o "+ImpactJsonName
+    logging.info("JSON Output Impact Command:")
+    logging.info('\n\n'+ImpactCommand+'\n')
+    if args.DontPrintResults:
+        os.system(ImpactCommand+" > /dev/null")
+    else:
+        os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+    
+    print("final impact plot")
+    for parameter in parametersToMeasure:
+        FinalImpactName = "impacts_final_"+parameter+"_"+DateTag
+        ImpactCommand = "plotImpacts.py -i "+ImpactJsonName+" -o "+FinalImpactName+" --POI "+parameter
+        if args.DontPrintResults:
+            ImpactCommand += ' --blind'
+        logging.info("Plotting Impact Command:")
+        logging.info('\n\n'+ImpactCommand+'\n')
+        if args.DontPrintResults:
+            os.system(ImpactCommand+" > /dev/null")
+        else:
+            os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+
+    os.chdir("../../")
+    
 
 if args.ComputeGOF:
     os.chdir(OutputDir)
