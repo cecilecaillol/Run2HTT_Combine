@@ -266,12 +266,12 @@ int main(int argc, char **argv)
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));
-      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
-      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
-      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
-      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
-      cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
-      cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
+      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
+      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
+      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
+      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
+      cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
+      cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "pdf_Higgs_qq", "lnN", SystMap<>::init(1.021));
     }
   cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_PU_alphas", "lnN", ch::syst::SystMapAsymm<>::init(1.0066,1.0063));
   cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_PU_mq", "lnN", ch::syst::SystMapAsymm<>::init(1.0099,1.0098));
@@ -465,11 +465,11 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
   cb.cp().process({qqH_STXS}).bin({"em_vbfhigh"}).AddSyst(cb,"pdf_Higgs_qq_ACCEPT","lnN",SystMap<>::init(1.007));
 
   //Electron ID efficiency
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","TTL","VVL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.02));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","TTL","VVL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"},sig_procs})).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.02));
   cb.cp().process({"W"}).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.01)); 
 
   //Muon ID efficiency
-  cb.cp().process(JoinStr({{"ZT","TTT","VVT","TTL","VVL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"},sig_procs})).AddSyst(cb,"CMS_eff_m_2016","lnN",SystMap<>::init(1.02));
+  cb.cp().process(JoinStr({{"ZT","TTT","VVT","TTL","VVL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"},sig_procs})).AddSyst(cb,"CMS_eff_m_2016","lnN",SystMap<>::init(1.02));
   cb.cp().process({"W"}).AddSyst(cb,"CMS_eff_m_2016","lnN",SystMap<>::init(1.01));
 
   // b-tagging efficiency
@@ -491,11 +491,11 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
   cb.cp().process({"ZL"}).AddSyst(cb,"CMS_htt_elltoellFR_2016", "lnN", SystMap<>::init(1.3));
  
   //Luminosity Uncertainty
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_2016", "lnN", SystMap<>::init(1.022));
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_XY", "lnN", SystMap<>::init(1.009));
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_BBD", "lnN", SystMap<>::init(1.004));
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_DB", "lnN", SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_GS", "lnN", SystMap<>::init(1.004));
+  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_2016", "lnN", SystMap<>::init(1.022));
+  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_XY", "lnN", SystMap<>::init(1.009));
+  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_BBD", "lnN", SystMap<>::init(1.004));
+  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_DB", "lnN", SystMap<>::init(1.005));
+  cb.cp().process(JoinStr({sig_procs,{"W","VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_GS", "lnN", SystMap<>::init(1.004));
 
   cb.cp().process({"TTL","TTT"}).bin({"em_0jet"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
   //cb.cp().process({"TTL","TTT"}).bin({"em_0jethigh"}).AddSyst(cb,"CMS_ttbar_njet_2016","lnN",SystMap<>::init(1.10));
@@ -522,7 +522,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       
       // Prefiring
       AddShapesIfNotEmpty({"CMS_prefiring"},
-			  JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}), 
+			  JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}), 
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
@@ -667,7 +667,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       std::cout<<"JES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2016","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2016","CMS_scale_j_EC2","CMS_scale_j_EC2_2016",
 	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2016","CMS_scale_j_RelativeBal"},
-	JoinStr({sig_procs,{"ZT","VVL","TTL","VVT","STL","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+	JoinStr({sig_procs,{"ZT","VVL","TTL","VVT","STL","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);      
@@ -675,7 +675,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       //JER
       std::cout<<"JER"<<std::endl;
       AddShapesIfNotEmpty({"CMS_res_j_2016"},
-			  JoinStr({sig_procs,{"ZT","VVL","TTL","VVT","STL","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"ZT","VVL","TTL","VVT","STL","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
@@ -729,21 +729,21 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 
       //Muon Energy scale uncertainties
       AddShapesIfNotEmpty({"CMS_scale_m_etalt1p2","CMS_scale_m_eta1p2to2p1","CMS_scale_m_eta2p1to2p4"},
-	JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+	JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
 
       //Electron Energy scale uncertainties
       AddShapesIfNotEmpty({"CMS_scale_e"},
-			  JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
         &cb,
         1.00,
         TheFile,CategoryArgs);
 
       // Trigger uncertainties
       AddShapesIfNotEmpty({"CMS_mu8e23trg_2016","CMS_mu23e12trg_2016","CMS_bothmuetrg_2016"},
-                          JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          JoinStr({sig_procs,{"ZT","VVT","TTT","VVL","TTL","STT","STL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
         &cb,
         1.00,
         TheFile,CategoryArgs);

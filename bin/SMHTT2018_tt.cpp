@@ -479,13 +479,13 @@ int main(int argc, char **argv)
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
   
   //Luminosity Uncertainty
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_2018", "lnN", SystMap<>::init(1.020));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_XY", "lnN", SystMap<>::init(1.008));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_LS", "lnN", SystMap<>::init(1.003));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_BBD", "lnN", SystMap<>::init(1.004));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_DB", "lnN", SystMap<>::init(1.005));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_BCC", "lnN", SystMap<>::init(1.003));
-  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}})).AddSyst(cb, "lumi_13TeV_GS", "lnN", SystMap<>::init(1.001));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_2018", "lnN", SystMap<>::init(1.020));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_XY", "lnN", SystMap<>::init(1.008));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_LS", "lnN", SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_BBD", "lnN", SystMap<>::init(1.004));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_DB", "lnN", SystMap<>::init(1.005));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_BCC", "lnN", SystMap<>::init(1.003));
+  cb.cp().process(JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}})).AddSyst(cb, "lumi_13TeV_GS", "lnN", SystMap<>::init(1.001));
 
   cb.cp().process({"VVL","STL","ZL","TTL"}).AddSyst(cb, "CMS_efaketau_tt_2018", "lnN", SystMap<>::init(1.50));
   cb.cp().process({"jetFakes"}).bin({"tt_0jet"}).AddSyst(cb,"CMS_jetFakesNorm_0jet_tt_2018","lnN",SystMap<>::init(1.05));
@@ -506,7 +506,7 @@ int main(int argc, char **argv)
       // Tau ID eff in DM bins
       std::cout<<"Tau ID eff"<<std::endl;
       AddShapesIfNotEmpty({"CMS_tauideff_dm0_2018","CMS_tauideff_dm1_2018","CMS_tauideff_dm10_2018","CMS_tauideff_dm11_2018"},
-                          JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
@@ -515,7 +515,7 @@ int main(int argc, char **argv)
 
       std::cout<<"Trigger eff"<<std::endl;
       AddShapesIfNotEmpty({"CMS_doubletautrg_dm0_2018","CMS_doubletautrg_dm1_2018","CMS_doubletautrg_dm10_2018","CMS_doubletautrg_dm11_2018"},
-                          JoinStr({sig_procs,{"VVL","STL","TTL","ZL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          JoinStr({sig_procs,{"VVL","STL","TTL","ZL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
@@ -732,7 +732,7 @@ int main(int argc, char **argv)
       //TES Uncertainty                  
       std::cout<<"TES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_t_1prong_2018","CMS_scale_t_3prong_2018","CMS_scale_t_1prong1pizero_2018","CMS_scale_t_3prong1pizero_2018"},
-                          JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+                          JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
                           &cb,
                           1.00,
                           TheFile,CategoryArgs);
@@ -740,14 +740,14 @@ int main(int argc, char **argv)
       std::cout<<"JES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2018","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2018","CMS_scale_j_EC2","CMS_scale_j_EC2_2018",
 	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2018","CMS_scale_j_RelativeSample_2018","CMS_scale_j_RelativeBal"},
-	JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+	JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);
 
       //JER      
       AddShapesIfNotEmpty({"CMS_res_j_2018"},
-			  JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125","WH_htt_nonfid125","ZH_htt_nonfid125"}}),
+			  JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
