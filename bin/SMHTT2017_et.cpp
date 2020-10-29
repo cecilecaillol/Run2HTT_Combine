@@ -303,8 +303,8 @@ int main(int argc, char **argv)
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_THU", "lnN", SystMap<>::init(1.017));
-      cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
-      cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
+      //cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.008));
+      //cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "QCDScale_VH", "lnN", SystMap<>::init(1.009));
       cb.cp().process(JoinStr({WH_STXS,{"WH_hww125","WH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.018));
       cb.cp().process(JoinStr({ZH_STXS,{"ZH_hww125","ZH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_VH", "lnN", SystMap<>::init(1.013));
       cb.cp().process(JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}})).AddSyst(cb, "pdf_Higgs_gg", "lnN", SystMap<>::init(1.032));
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
   cb.cp().process({"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb, "BR_hww_THU", "lnN", SystMap<>::init(1.0099));  
   //cb.cp().process(JoinStr({qqH_STXS,{"qqH_hww125"}})).AddSyst(cb, "QCDScale_qqH", "lnN", SystMap<>::init(1.005));  
 
-  cb.cp().process({"WH_lep_PTV_0_75_htt125","WH_lep_PTV_75_150_htt125","WH_lep_PTV_150_250_0J_htt125","WH_lep_PTV_PTV_150_250_GE1J_htt125","WH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_WH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.993,1.005));
+  cb.cp().process({"WH_had_htt125","WH_lep_htt125","WH_hww125","WH_lep_PTV_0_75_htt125","WH_lep_PTV_75_150_htt125","WH_lep_PTV_150_250_0J_htt125","WH_lep_PTV_PTV_150_250_GE1J_htt125","WH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_WH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.993,1.005));
   cb.cp().process({"WH_lep_PTV_0_75_htt125"}).AddSyst(cb, "THU_WH_mig75", "lnN", SystMap<>::init(0.965));
   cb.cp().process({"WH_lep_PTV_75_150_htt125","WH_lep_PTV_150_250_0J_htt125","WH_lep_PTV_150_250_GE1J_htt125","WH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_WH_mig75", "lnN", SystMap<>::init(1.039));
   cb.cp().process({"WH_lep_PTV_75_150_htt125"}).AddSyst(cb,"THU_WH_mig150","lnN", SystMap<>::init(0.995));
@@ -325,7 +325,7 @@ int main(int argc, char **argv)
   cb.cp().process({"WH_lep_PTV_150_250_0J"}).AddSyst(cb, "THU_WH_mig01", "lnN", SystMap<>::init(0.961));
   cb.cp().process({"WH_lep_PTV_150_250_GE1J"}).AddSyst(cb, "THU_WH_mig01", "lnN", SystMap<>::init(1.053));
 
-  cb.cp().process({"ZH_lep_PTV_0_75_htt125","ZH_lep_PTV_75_150_htt125","ZH_lep_PTV_150_250_0J_htt125","ZH_lep_PTV_PTV_150_250_GE1J_htt125","ZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ZH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.994,1.005));
+  cb.cp().process({"ZH_had_htt125","ZH_lep_htt125","ZH_hww125","ZH_lep_PTV_0_75_htt125","ZH_lep_PTV_75_150_htt125","ZH_lep_PTV_150_250_0J_htt125","ZH_lep_PTV_PTV_150_250_GE1J_htt125","ZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ZH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.994,1.005));
   cb.cp().process({"ZH_lep_PTV_0_75_htt125"}).AddSyst(cb, "THU_ZH_mig75", "lnN", SystMap<>::init(0.963));
   cb.cp().process({"ZH_lep_PTV_75_150_htt125","ZH_lep_PTV_150_250_0J_htt125","ZH_lep_PTV_150_250_GE1J_htt125","ZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ZH_mig75", "lnN", SystMap<>::init(1.04));
   cb.cp().process({"ZH_lep_PTV_75_150_htt125"}).AddSyst(cb,"THU_ZH_mig150","lnN", SystMap<>::init(0.995));
@@ -335,7 +335,7 @@ int main(int argc, char **argv)
   cb.cp().process({"ZH_lep_PTV_150_250_0J"}).AddSyst(cb, "THU_ZH_mig01", "lnN", SystMap<>::init(0.956));
   cb.cp().process({"ZH_lep_PTV_150_250_GE1J"}).AddSyst(cb, "THU_ZH_mig01", "lnN", SystMap<>::init(1.053));
 
-  cb.cp().process({"ggZH_lep_PTV_0_75_htt125","ggZH_lep_PTV_75_150_htt125","ggZH_lep_PTV_150_250_0J_htt125","ggZH_lep_PTV_PTV_150_250_GE1J_htt125","ggZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ggZH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.811,1.251));
+  cb.cp().process({"ggZH_had_htt125","ggZH_lep_htt125","ggZH_lep_PTV_0_75_htt125","ggZH_lep_PTV_75_150_htt125","ggZH_lep_PTV_150_250_0J_htt125","ggZH_lep_PTV_PTV_150_250_GE1J_htt125","ggZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ggZH_inc", "lnN", ch::syst::SystMapAsymm<>::init(0.811,1.251));
   cb.cp().process({"ggZH_lep_PTV_0_75_htt125"}).AddSyst(cb, "THU_ggZH_mig75", "lnN", ch::syst::SystMapAsymm<>::init(1.9,0.1));
   cb.cp().process({"ggZH_lep_PTV_75_150_htt125","ggZH_lep_PTV_150_250_0J_htt125","ggZH_lep_PTV_150_250_GE1J_htt125","ggZH_lep_PTV_GT250_htt125"}).AddSyst(cb, "THU_ggZH_mig75", "lnN", SystMap<>::init(1.27));
   cb.cp().process({"ggZH_lep_PTV_75_150_htt125"}).AddSyst(cb,"THU_ggZH_mig150","lnN", SystMap<>::init(0.882));
