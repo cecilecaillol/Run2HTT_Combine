@@ -664,43 +664,10 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017",
 		"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017",
 		"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
-	    JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125"}}),
+	    JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","OutsideAcceptance"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"tt_0jet"});
-      
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"tt_1jet"});
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
-				  JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"tt_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
-				  JoinStr({ggH_STXS,qqH_STXS,{"ZL","ggH_hww125","qqH_hww125","ggH_htt_nonfid125","qqH_htt_nonfid125"}}),
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"tt_2jetlow","tt_2jethigh","tt_3jetlow","tt_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -769,7 +736,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	  std::cout<<"Scaled ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
 		"THU_ggH_VBF3j_norm","THU_ggH_qmtop_norm","THU_ggH_PT60_norm","THU_ggH_PT120_norm"},
-	    JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
+	    JoinStr({ggH_STXS,{"ggH_hww125"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);            
@@ -779,7 +746,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	  std::cout<<"qqH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
 		"THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
-	    JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125",}}),
+	    JoinStr({qqH_STXS,{"qqH_hww125"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
@@ -794,7 +761,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	  std::cout<<"ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
 		"THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
-	    JoinStr({ggH_STXS,{"ggH_hww125","ggH_htt_nonfid125"}}),
+	    JoinStr({ggH_STXS,{"ggH_hww125"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);            
@@ -803,7 +770,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	  std::cout<<"qqH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_qqH_yield","THU_qqH_PTH200","THU_qqH_Mjj60","THU_qqH_Mjj120","THU_qqH_Mjj350","THU_qqH_Mjj700",
 		"THU_qqH_Mjj1000","THU_qqH_Mjj1500","THU_qqH_PTH25","THU_qqH_JET01"},
-	    JoinStr({qqH_STXS,{"qqH_hww125","qqH_htt_nonfid125",}}),
+	    JoinStr({qqH_STXS,{"qqH_hww125"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
