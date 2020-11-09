@@ -1,4 +1,4 @@
-#!/usr/env/bin python
+#!/usr/bin/env python
 import ROOT
 import argparse
 import re
@@ -28,8 +28,10 @@ def AddIfExists(directory,originalObject,histogramName):
 
 def CompileSignals(directory,signalName,listOfSignalBins):
     #okay, let's find the first thing in the list of these elements that is not empty.
+    #directory.ls()
+    #print listOfSignalBins
     for signalBin in listOfSignalBins:
-        fullHistoName = signalName+'_'+signalBin+'_htt125'
+        fullHistoName = signalName+'_'+signalBin
         if directory.GetListOfKeys().Contains(fullHistoName):
             initialSignalHisto = directory.Get(fullHistoName)
             listOfSignalBins.remove(signalBin)
@@ -58,7 +60,8 @@ def MakeSignalStrengthHisto(histograms,ratioErrors):
     backgroundHistogram.Add(histograms['jetFakes'])
     backgroundHistogram.Add(histograms['ttbar'])
     backgroundHistogram.Add(histograms['diboson'])
-    backgroundHistogram.Add(histograms['singleTop'])
+    if 'singleTop' in histograms.keys():
+        backgroundHistogram.Add(histograms['singleTop'])
     backgroundHistogram.Add(histograms['ZL'])
 
     signalStrengthHisto = histograms['data'].Clone()
@@ -149,255 +152,62 @@ for directory in theFile.GetListOfKeys():
     #let's collect up signal samples
     print('Getting signal...')
     #theDirectory.ls()
-    if args.measurementType == 'pth':        
-        if channel == 'tt':
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['PTH_0_45',
-                                           'PTH_45_80',
-                                           'PTH_80_120',
-                                           'PTH_120_200',
-                                           'PTH_200_350',
-                                           'PTH_350_450',
-                                           'PTH_GE_450,'])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['PTH_0_45',
-                                           'PTH_45_80',
-                                           'PTH_80_120',
-                                           'PTH_120_200',
-                                           'PTH_200_350',
-                                           'PTH_350_450',
-                                           'PTH_GE_450,'])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['had_PTH_0_45',
-                                          'had_PTH_45_80',
-                                          'had_PTH_80_120',
-                                          'had_PTH_120_200',
-                                          'had_PTH_200_350',
-                                          'had_PTH_350_450',
-                                          'had_PTH_GE450',
-                                          'lep_PTH_0_45',
-                                          'lep_PTH_45_80',
-                                          'lep_PTH_80_120',
-                                          'lep_PTH_120_200',
-                                          'lep_PTH_200_350',
-                                          'lep_PTH_350_450',
-                                          'lep_PTH_GE450',])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['had_PTH_0_45',
-                                          'had_PTH_45_80',
-                                          'had_PTH_80_120',
-                                          'had_PTH_120_200',
-                                          'had_PTH_200_350',
-                                          'had_PTH_350_450',
-                                          'had_PTH_GE450',
-                                          'lep_PTH_0_45',
-                                          'lep_PTH_45_80',
-                                          'lep_PTH_80_120',
-                                          'lep_PTH_120_200',
-                                          'lep_PTH_200_350',
-                                          'lep_PTH_350_450',
-                                          'lep_PTH_GE450',])
-        else:
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['PTH_0_45',
-                                           'PTH_45_80',
-                                           'PTH_80_120',
-                                           'PTH_120_200',
-                                           'PTH_200_350',
-                                           'PTH_350_450',
-                                           'PTH_GT_450'])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['PTH_0_45',
-                                           'PTH_45_80',
-                                           'PTH_80_120',
-                                           'PTH_120_200',
-                                           'PTH_200_350',
-                                           'PTH_350_450',
-                                           'PTH_GT_450,'])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['PTH_0_45',
-                                          'PTH_45_80',
-                                          'PTH_80_120',
-                                          'PTH_120_200',
-                                          'PTH_200_350',
-                                          'PTH_350_450',
-                                          'PTH_GT450'])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['PTH_0_45',
-                                          'PTH_45_80',
-                                          'PTH_80_120',
-                                          'PTH_120_200',
-                                          'PTH_200_350',
-                                          'PTH_350_450',
-                                          'PTH_GT450'])
-                                        
-
-    elif args.measurementType == 'njets':
-        if channel == 'tt':
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['NJETS_0',
-                                           'NJETS_1',
-                                           'NJETS_2',
-                                           'NJETS_3',
-                                           'NJETS_GE4',])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['NJETS_0',
-                                           'NJETS_1',
-                                           'NJETS_2',
-                                           'NJETS_3',
-                                           'NJETS_GE4',])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['had_NJETS_0',
-                                          'had_NJETS_1',
-                                          'had_NJETS_2',
-                                          'had_NJETS_3',
-                                          'had_NJETS_GE4',
-                                          'lep_NJETS_0',
-                                          'lep_NJETS_1',
-                                          'lep_NJETS_2',
-                                          'lep_NJETS_3',
-                                          'lep_NJETS_GE4',])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['had_NJETS_0',
-                                          'had_NJETS_1',
-                                          'had_NJETS_2',
-                                          'had_NJETS_3',
-                                          'had_NJETS_GE4',
-                                          'lep_NJETS_0',
-                                          'lep_NJETS_1',
-                                          'lep_NJETS_2',
-                                          'lep_NJETS_3',
-                                          'lep_NJETS_GE4',])
-        else:
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['NJETS_0',
-                                           'NJETS_1',
-                                           'NJETS_2',
-                                           'NJETS_3',
-                                           'NJETS_GE4',])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['NJETS_0',
-                                           'NJETS_1',
-                                           'NJETS_2',
-                                           'NJETS_3',
-                                           'NJETS_GE4',])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['NJETS_0',
-                                           'NJETS_1',
-                                           'NJETS_2',
-                                           'NJETS_3',
-                                           'NJETS_GE4',])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['NJETS_0',
-                                          'NJETS_1',
-                                          'NJETS_2',
-                                          'NJETS_3',
-                                          'NJETS_GE4',])
+    if args.measurementType == 'pth':                
+        ggHHistogram = CompileSignals(theDirectory,
+                                      'ggH',
+                                      ['PTH_0_45',
+                                       'PTH_45_80',
+                                       'PTH_80_120',
+                                       'PTH_120_200',
+                                       'PTH_200_350',
+                                       'PTH_350_450',
+                                       'PTH_GT_450'])
+        xHHistogram = CompileSignals(theDirectory,
+                                      'xH',
+                                      ['PTH_0_45',
+                                       'PTH_45_80',
+                                       'PTH_80_120',
+                                       'PTH_120_200',
+                                       'PTH_200_350',
+                                       'PTH_350_450',
+                                       'PTH_GT_450,'])
+    elif args.measurementType == 'njets':                
+        ggHHistogram = CompileSignals(theDirectory,
+                                      'ggH',
+                                      ['NJ_0',
+                                       'NJ_1',
+                                       'NJ_2',
+                                       'NJ_3',
+                                       'NJ_GE4',])
+        xHHistogram = CompileSignals(theDirectory,
+                                      'xH',
+                                      ['NJ_0',
+                                       'NJ_1',
+                                       'NJ_2',
+                                       'NJ_3',
+                                       'NJ_GE4',])
     elif args.measurementType == 'ljpt':
-        if channel == 'tt':
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['LJPT_30_60',
-                                           'LJPT_60_120',
-                                           'LJPT_120_200',
-                                           'LJPT_200_350',
-                                           'LJPT_GE350',
-                                           'NJETS_0'])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['LJPT_30_60',
-                                           'LJPT_60_120',
-                                           'LJPT_120_200',
-                                           'LJPT_200_350',
-                                           'LJPT_GE350',
-                                           'NJETS_0'])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['had_LJPT_30_60',
-                                          'had_LJPT_60_120',
-                                          'had_LJPT_120_200',
-                                          'had_LJPT_200_350',
-                                          'had_LJPT_GE350',
-                                          'had_NJETS_0',
-                                          'lep_LJPT_30_60',
-                                          'lep_LJPT_60_120',
-                                          'lep_LJPT_120_200',
-                                          'lep_LJPT_200_350',
-                                          'lep_LJPT_GE350',
-                                          'lep_NJETS_0'])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['had_LJPT_30_60',
-                                          'had_LJPT_60_120',
-                                          'had_LJPT_120_200',
-                                          'had_LJPT_200_350',
-                                          'had_LJPT_GE350',
-                                          'had_NJETS_0',
-                                          'lep_LJPT_30_60',
-                                          'lep_LJPT_60_120',
-                                          'lep_LJPT_120_200',
-                                          'lep_LJPT_200_350',
-                                          'lep_LJPT_GE350',
-                                          'lep_NJETS_0'])
-        else:
-            ggHHistogram = CompileSignals(theDirectory,
-                                          'ggH',
-                                          ['LJPT_30_60',
-                                           'LJPT_60_120',
-                                           'LJPT_120_200',
-                                           'LJPT_200_350',
-                                           'LJPT_GT350',
-                                           'NJETS_0'])
-            qqHHistogram = CompileSignals(theDirectory,
-                                          'qqH',
-                                          ['LJPT_30_60',
-                                           'LJPT_60_120',
-                                           'LJPT_120_200',
-                                           'LJPT_200_350',
-                                           'LJPT_GT350',
-                                           'NJETS_0'])
-            WHHistogram = CompileSignals(theDirectory,
-                                         'WH',
-                                         ['LJPT_30_60',
-                                          'LJPT_60_120',
-                                          'LJPT_120_200',
-                                          'LJPT_200_350',
-                                          'LJPT_GT350',
-                                          'NJETS_0'])
-            ZHHistogram = CompileSignals(theDirectory,
-                                         'ZH',
-                                         ['LJPT_30_60',
-                                          'LJPT_60_120',
-                                          'LJPT_120_200',
-                                          'LJPT_200_350',
-                                          'LJPT_GT350',
-                                          'NJETS_0'])
-        
+        ggHHistogram = CompileSignals(theDirectory,
+                                      'ggH',
+                                      ['J1PT_30_60',
+                                       'J1PT_60_120',
+                                       'J1PT_120_200',
+                                       'J1PT_200_350',
+                                       'J1PT_GT350',
+                                       'NJ_0'])
+        xHHistogram = CompileSignals(theDirectory,
+                                      'xH',
+                                      ['J1PT_30_60',
+                                       'J1PT_60_120',
+                                       'J1PT_120_200',
+                                       'J1PT_200_350',
+                                       'J1PT_GT350',
+                                       'NJ_0'])
     histograms['ggH'] = ggHHistogram
-    histograms['qqH'] = qqHHistogram
-    histograms['WH'] = WHHistogram
-    histograms['ZH'] = ZHHistogram
+    histograms['xH'] = xHHistogram
     print('Making final signal...')
     signalHistogram = ggHHistogram.Clone()
-    signalHistogram.Add(qqHHistogram)
-    signalHistogram.Add(WHHistogram)
-    signalHistogram.Add(ZHHistogram)
+    signalHistogram.Add(xHHistogram)
     #signalHistogram.Scale(20)
     
     histograms['signal'] = signalHistogram
@@ -413,12 +223,13 @@ for directory in theFile.GetListOfKeys():
         AddIfExists(theDirectory,dibosonHistogram,'VVT')        
     histograms['diboson'] = dibosonHistogram
     
-    print('STL...')
-    singleTopHistogram = theDirectory.Get('STL').Clone()
-    print('STT...')
-    if not isEMChannel:
-        AddIfExists(theDirectory,singleTopHistogram,'STT')        
-    histograms['singleTop'] = singleTopHistogram
+    if not (channel == 'et' and year=='2018'):
+        print('STL...')
+        singleTopHistogram = theDirectory.Get('STL').Clone()
+        print('STT...')
+        if not isEMChannel:
+            AddIfExists(theDirectory,singleTopHistogram,'STT')        
+        histograms['singleTop'] = singleTopHistogram
 
     print('TTL...')
     ttbarHistogram = theDirectory.Get('TTL').Clone()
@@ -429,8 +240,9 @@ for directory in theFile.GetListOfKeys():
 
     print('Making others histogram...')
     othersHistogram= dibosonHistogram.Clone()
-    print('single top...')
-    othersHistogram.Add(singleTopHistogram)
+    if not (channel=='et' and year == '2018'):
+        print('single top...')
+        othersHistogram.Add(singleTopHistogram)
     #print('signal...')
     #othersHistogram.Add(signalHistogram)
     histograms['other'] = othersHistogram    
@@ -448,26 +260,18 @@ for directory in theFile.GetListOfKeys():
 
     if channel == 'em':
         if args.measurementType == 'pth':
-            theDataFileDirectory = theDataFile.Get('em_HiggsPt')
+            theDataFileDirectory = theDataFile.Get('htt_PTH_em')
         elif args.measurementType == 'njets':
-            theDataFileDirectory = theDataFile.Get('em_njets')
+            theDataFileDirectory = theDataFile.Get('htt_NJ_em')
         elif args.measurementType == 'ljpt':
-            theDataFileDirectory = theDataFile.Get('em_j1pt')
+            theDataFileDirectory = theDataFile.Get('htt_J1PT_em')
     else:
         if args.measurementType == 'pth':
-            theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'HiggsPt')
+            theDataFileDirectory = theDataFile.Get('htt_PTH_'+channel+'_'+category)
         elif args.measurementType == 'njets':
-            if channel == 'mt' or channel == 'tt':
-                theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'NJets')
-            else:
-                theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'njets')
-        elif args.measurementType == 'ljpt':
-            if channel == 'mt':
-                theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'LeadingJetPt')
-            elif channel == 'et' or channel == 'em':
-                theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'j1pt')
-            elif channel == 'tt':
-                theDataFileDirectory = theDataFile.Get(channel+'_'+category+'_'+'LJPT')
+            theDataFileDirectory = theDataFile.Get('htt_NJ_'+channel+'_'+category)
+        elif args.measurementType == 'ljpt':            
+            theDataFileDirectory = theDataFile.Get('htt_J1PT_'+channel+'_'+category)
 
     #dataHistogram = theDirectory.Get('data_obs')
     dataHistogram = theDataFileDirectory.Get('data_obs')
