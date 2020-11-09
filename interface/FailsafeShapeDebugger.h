@@ -23,7 +23,7 @@ class FailsafeShapeDebugger
   FailsafeShapeDebugger& cp();
   FailsafeShapeDebugger& process(std::vector<std::string>);
   FailsafeShapeDebugger& bin(std::vector<std::string>);
-  FailsafeShapeDebugger& AddSyst(ch::CombineHarvester, std::string, std::string, ch::syst::SystMap<>);
+  FailsafeShapeDebugger& AddSyst(ch::CombineHarvester&, std::string, std::string, ch::syst::SystMap<>);
   void report();  
   std::vector<std::string> SetToVector(std::set<std::string>);
 

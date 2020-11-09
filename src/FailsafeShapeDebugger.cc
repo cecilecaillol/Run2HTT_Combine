@@ -50,7 +50,7 @@ FailsafeShapeDebugger& FailsafeShapeDebugger::bin(std::vector<std::string> bins)
 //technically, we don't really to reprovide the cb at this point, since we store an unspoiled copy
 //but this keeps the notation consistent
 //this is also where all the magic and the checks happen.
-FailsafeShapeDebugger& FailsafeShapeDebugger::AddSyst(ch::CombineHarvester cb, std::string syst, std::string type, ch::syst::SystMap<> theMap)
+FailsafeShapeDebugger& FailsafeShapeDebugger::AddSyst(ch::CombineHarvester& cb, std::string syst, std::string type, ch::syst::SystMap<> theMap)
 {
   //values to store and keep our the final things we will try to add   
   std::set<std::string> workingCopyBins = this->workingCopy.bin_set();
@@ -98,7 +98,7 @@ FailsafeShapeDebugger& FailsafeShapeDebugger::AddSyst(ch::CombineHarvester cb, s
 		      if(result.second) this->nonFatalErrors++;		      
 		    }		  
 		  else //this uncertainty is valid, let's add it'
-		    {
+		    {		      
 		      this->workingCopy.cp().bin({*directoryIter}).process({*procIter}).AddSyst(cb,syst,type,theMap);
 		    }
 		}
