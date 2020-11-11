@@ -415,10 +415,10 @@ for directory in theFile.GetListOfKeys():
 
     #okay, let's make some labels
     latex = ROOT.TLatex()
-    latex.SetTextSize(0.04)
+    latex.SetTextSize(0.06)
     latex.SetTextAlign(21)
     latex.SetTextFont(52)
-    verticalLocation = max(theBackgroundStack.GetMaximum(),histograms['data'].GetMaximum())*10
+    verticalLocation = max(theBackgroundStack.GetMaximum(),histograms['data'].GetMaximum())*5
     if args.measurementType == 'pth':
         if channel == 'tt' and category == 'HighTauPt':
             latex.DrawLatex(4.5,verticalLocation,'0<p_{t}^{H}<80')
@@ -494,7 +494,7 @@ for directory in theFile.GetListOfKeys():
     if channel != 'em':
         theLegend.AddEntry(histograms['jetFakes'],'Jet#rightarrow#tau_{h} mis-ID','F')
     else:
-        theLegend.AddEntry(histograms['jetFakes'],'Jet#rightarrow e/#mu} mis-ID','F')
+        theLegend.AddEntry(histograms['jetFakes'],'Jet#rightarrow e/#mu mis-ID','F')
     theLegend.AddEntry(histograms['ZL'],'Z #rightarrow ee/#mu#mu','F')
     theLegend.AddEntry(histograms['ttbar'],'t#bar{t} + Jets','F')
     theLegend.AddEntry(histograms['other'],'Others','F')
@@ -504,6 +504,7 @@ for directory in theFile.GetListOfKeys():
     theLegend.SetNColumns(4)
     theLegend.SetBorderSize(0)
     theLegend.SetFillStyle(0)
+    theLegend.SetTextSize(0.06)
     theLegend.Draw()
     
     
