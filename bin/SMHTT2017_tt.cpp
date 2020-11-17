@@ -18,6 +18,7 @@
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
+#include "CombineHarvester/CombineTools/interface/AutoRebin.h"
 
 using namespace std;
 
@@ -1068,10 +1069,9 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_doubletautrg_emb_dm11_2017","shape",SystMap<>::init(0.866));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_doubletautrg_dm11_2017","shape",SystMap<>::init(0.500));
 
-    }
+    }  
 
   //********************************************************************************************************************************                          
-
   if (Input.OptionExists("-c"))
     {
       cb.cp().backgrounds().ExtractShapes(
@@ -1116,6 +1116,10 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 				      "$BIN/$PROCESS$MASS",
 				      "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
+  //auto rebinning of low background bins
+  auto rebin = ch::AutoRebin()
+    .SetBinThreshold(0.25);
+  rebin.Rebin(cb.cp().channel({"tt"}), cb);
   //! [part7]
 
   //! [part8]

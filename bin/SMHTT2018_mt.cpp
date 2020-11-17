@@ -20,6 +20,7 @@
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
+#include "CombineHarvester/CombineTools/interface/AutoRebin.h"
 
 using namespace std;
 
@@ -1383,9 +1384,9 @@ int main(int argc, char **argv) {
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_1prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_3prong1pizero_emb_2018","shape",SystMap<>::init(1.00));
 
-    }
-  //********************************************************************************************************************************                          
+    }  
 
+  //********************************************************************************************************************************                          
   if(Input.OptionExists("-c"))
     {
       cb.cp().backgrounds().ExtractShapes(
@@ -1430,6 +1431,11 @@ int main(int argc, char **argv) {
 				      "$BIN/$PROCESS$MASS",
 				      "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
+  //auto rebinning of low background bins
+  auto rebin = ch::AutoRebin()
+    .SetBinThreshold(0.25);
+  rebin.Rebin(cb.cp().channel({"mt"}), cb);
+
   //! [part7]
 
   //! [part8]

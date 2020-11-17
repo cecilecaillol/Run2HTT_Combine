@@ -21,6 +21,7 @@
 #include "CombineHarvester/CombineTools/interface/BinByBin.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/InputParserUtility.h"
 #include "CombineHarvester/Run2HTT_Combine/interface/UtilityFunctions.h"
+#include "CombineHarvester/CombineTools/interface/AutoRebin.h"
 
 using namespace std;
 
@@ -1047,7 +1048,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu8e23trg_2016","shape",SystMap<>::init(0.5));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_mu23e12trg_2016","shape",SystMap<>::init(0.5));      
 
-    }
+    }  
 
   //****************************************************************************************************
   if (Input.OptionExists("-c"))
@@ -1094,6 +1095,10 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 				      "$BIN/$PROCESS$MASS",
 				      "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     }
+  //auto rebinning of low background bins.
+  auto rebin = ch::AutoRebin()
+    .SetBinThreshold(0.25);
+  rebin.Rebin(cb.cp().channel({"em"}), cb);
   //! [part7]
 
   //! [part8]
