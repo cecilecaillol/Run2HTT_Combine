@@ -1457,7 +1457,7 @@ int main(int argc, char **argv)
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.25);
+    .SetBinThreshold(0.01);
   rebin.Rebin(cb.cp().channel({"mt"}), cb);
   //! [part7]
 

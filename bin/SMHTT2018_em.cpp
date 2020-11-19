@@ -1130,7 +1130,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.25);
+    .SetBinThreshold(0.01);
   rebin.Rebin(cb.cp().channel({"em"}), cb);
   //! [part7]
 

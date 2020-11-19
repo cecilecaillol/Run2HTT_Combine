@@ -1118,7 +1118,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.25);
+    .SetBinThreshold(0.01);
   rebin.Rebin(cb.cp().channel({"tt"}), cb);
   //! [part7]
 

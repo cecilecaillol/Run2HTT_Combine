@@ -1283,7 +1283,7 @@ vector<string> ggH_STXS;
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.25);
+    .SetBinThreshold(0.01);
   rebin.Rebin(cb.cp().channel({"et"}), cb);
   //! [part7]
 
