@@ -1358,6 +1358,8 @@ int main(int argc, char **argv)
   //***************************************************
   if(not Input.OptionExists("-e"))
     {      
+      //test embedded zero jet normalization uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet", "shape", SystMap<>::init(1.00));
      
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_2017","lnN",SystMap<>::init(1.010));

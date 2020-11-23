@@ -1336,6 +1336,9 @@ int main(int argc, char **argv) {
   //*************************************************
   if(not Input.OptionExists("-e"))
     {
+      //test zero jet uncertainty for embedded
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet", "shape", SystMap<>::init(1.00));
+
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_2018","lnN",SystMap<>::init(1.010));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_embedded_2018","lnN",SystMap<>::init(1.01732));
