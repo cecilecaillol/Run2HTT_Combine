@@ -649,13 +649,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_mt_w_2jet_unc2_2017",
 		"CMS_rawFF_mt_tt_unc1_2017",
 		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_0jet",
-		//"CMS_FF_closure_mvis_mt_w_0jet",
-		//"CMS_FF_closure_mvis_mt_qcd_1jet",
-		//"CMS_FF_closure_mvis_mt_w_1jet",
-		//"CMS_FF_closure_mvis_mt_qcd_2jet",
-		//"CMS_FF_closure_mvis_mt_w_2jet",
-		//"CMS_FF_closure_mvis_mt_tt",            
 		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
@@ -688,13 +681,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_mt_w_2jet_unc2_2017",
 		"CMS_rawFF_mt_tt_unc1_2017",
 		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_0jet",
-		//"CMS_FF_closure_mvis_mt_w_0jet",
-		//"CMS_FF_closure_mvis_mt_qcd_1jet",
-		//"CMS_FF_closure_mvis_mt_w_1jet",
-		//"CMS_FF_closure_mvis_mt_qcd_2jet",
-		//"CMS_FF_closure_mvis_mt_w_2jet",
-		//"CMS_FF_closure_mvis_mt_tt",            
 		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
@@ -702,8 +688,6 @@ int main(int argc, char **argv)
 		"CMS_FF_closure_lpt_mt_w",
 		"CMS_FF_closure_lpt_mt_tt",
 		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
-		//"CMS_FF_closure_mt_mt_w_unc1_2017",
-		//"CMS_FF_closure_mt_mt_w_unc2_2017",
 		"CMS_FF_closure_pth_mt_w_2017",
 		"CMS_FF_norm_mt_0jet_2017",
 		"CMS_FF_norm_mt_1jet_2017",
@@ -716,114 +700,6 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,
 	    CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({
-	      "CMS_rawFF_mt_qcd_0jet_unc1_2017",
-		"CMS_rawFF_mt_qcd_0jet_unc2_2017",
-		"CMS_rawFF_mt_w_0jet_unc1_2017",
-		"CMS_rawFF_mt_w_0jet_unc2_2017",
-		"CMS_rawFF_mt_tt_unc1_2017",
-		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_0jet",
-		//"CMS_FF_closure_mvis_mt_w_0jet",
-		//"CMS_FF_closure_mvis_mt_tt",       
-		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
-		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
-		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
-		"CMS_FF_closure_lpt_mt_qcd",
-		"CMS_FF_closure_lpt_mt_w",
-		"CMS_FF_closure_lpt_mt_tt",
-		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
-		"CMS_FF_closure_mt_mt_w_unc1_2017",
-		"CMS_FF_closure_mt_mt_w_unc2_2017"},
-	    {"jetFakes"},
-	    &cb,
-	    1.00,
-	    TheFile,
-	    {"mt_0jet"});
-
-	  AddShapesIfNotEmpty({
-	      "CMS_rawFF_mt_qcd_1jet_unc1_2017",
-		"CMS_rawFF_mt_qcd_1jet_unc2_2017",
-		"CMS_rawFF_mt_w_1jet_unc1_2017",
-		"CMS_rawFF_mt_w_1jet_unc2_2017",
-		"CMS_rawFF_mt_tt_unc1_2017",
-		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_1jet",
-		//"CMS_FF_closure_mvis_mt_w_1jet",
-		//"CMS_FF_closure_mvis_mt_tt",            
-		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
-		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
-		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
-		"CMS_FF_closure_lpt_mt_qcd",
-		"CMS_FF_closure_lpt_mt_w",
-		"CMS_FF_closure_lpt_mt_tt",
-		"CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
-		"CMS_FF_closure_mt_mt_w_unc1_2017",
-		"CMS_FF_closure_mt_mt_w_unc2_2017"},
-	    {"jetFakes"},
-	    &cb,
-	    1.00,
-	    TheFile,
-	    {"mt_1jet"});
-	  
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({
-		  "CMS_rawFF_mt_qcd_2jet_unc1_2017",
-		    "CMS_rawFF_mt_qcd_2jet_unc2_2017",
-		    "CMS_rawFF_mt_w_2jet_unc1_2017",
-		    "CMS_rawFF_mt_w_2jet_unc2_2017",
-		    "CMS_rawFF_mt_tt_unc1_2017",
-		    "CMS_rawFF_mt_tt_unc2_2017",
-		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
-		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
-		    //"CMS_FF_closure_mvis_mt_tt",            
-		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
-		    "CMS_FF_closure_lpt_xtrg_mt_w_2017",
-		    "CMS_FF_closure_lpt_xtrg_mt_tt_2017",
-		    "CMS_FF_closure_lpt_mt_qcd_2017",
-		    "CMS_FF_closure_lpt_mt_w_2017",
-		    "CMS_FF_closure_lpt_mt_tt_2017",
-		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
-		    "CMS_FF_closure_mt_mt_w_unc1_2017",
-		    "CMS_FF_closure_mt_mt_w_unc2_2017"
-		    },
-		{"jetFakes"},
-		&cb,
-		1.00,
-		TheFile,
-		{"mt_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({
-		  "CMS_rawFF_mt_qcd_2jet_unc1_2017",
-		    "CMS_rawFF_mt_qcd_2jet_unc2_2017",
-		    "CMS_rawFF_mt_w_2jet_unc1_2017",
-		    "CMS_rawFF_mt_w_2jet_unc2_2017",
-		    "CMS_rawFF_mt_tt_unc1_2017",
-		    "CMS_rawFF_mt_tt_unc2_2017",
-		    //"CMS_FF_closure_mvis_mt_qcd_2jet",
-		    //"CMS_FF_closure_mvis_mt_w_2jet",	    
-		    //"CMS_FF_closure_mvis_mt_tt",            
-		    "CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
-		    "CMS_FF_closure_lpt_xtrg_mt_w_2017",
-		    "CMS_FF_closure_lpt_xtrg_mt_tt_2017",
-		    "CMS_FF_closure_lpt_mt_qcd_2017",
-		    "CMS_FF_closure_lpt_mt_w_2017",
-		    "CMS_FF_closure_lpt_mt_tt_2017",
-		    "CMS_FF_closure_OSSS_mvis_mt_qcd_2017",            
-		    "CMS_FF_closure_mt_mt_w_unc1_2017",
-		    "CMS_FF_closure_mt_mt_w_unc2_2017"
-		    },
-		{"jetFakes"},
-		&cb,
-		1.00,
-		TheFile,
-		{"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -834,9 +710,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_mt_w_0jet_unc2_2017",
 		"CMS_rawFF_mt_tt_unc1_2017",
 		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_0jet",
-		//"CMS_FF_closure_mvis_mt_w_0jet",
-		//"CMS_FF_closure_mvis_mt_tt",       
 		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
@@ -859,9 +732,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_mt_w_1jet_unc2_2017",
 		"CMS_rawFF_mt_tt_unc1_2017",
 		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_1jet",
-		//"CMS_FF_closure_mvis_mt_w_1jet",
-		//"CMS_FF_closure_mvis_mt_tt",            
 		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
@@ -884,9 +754,6 @@ int main(int argc, char **argv)
 		"CMS_rawFF_mt_w_2jet_unc2_2017",
 		"CMS_rawFF_mt_tt_unc1_2017",
 		"CMS_rawFF_mt_tt_unc2_2017",
-		//"CMS_FF_closure_mvis_mt_qcd_2jet",
-		//"CMS_FF_closure_mvis_mt_w_2jet",	    
-		//"CMS_FF_closure_mvis_mt_tt",            
 		"CMS_FF_closure_lpt_xtrg_mt_qcd_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_w_2017",
 		"CMS_FF_closure_lpt_xtrg_mt_tt_2017",
@@ -934,40 +801,6 @@ int main(int argc, char **argv)
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2017","CMS_htt_boson_scale_met_0jet_2017"},
-			      RecoilVector,
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"mt_0jet"});
-      
-	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_1jet_2017","CMS_htt_boson_scale_met_1jet_2017"},
-			      RecoilVector,
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"mt_1jet"});
-	  
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
-			      RecoilVector,
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"mt_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_2jet_2017","CMS_htt_boson_scale_met_2jet_2017"},
-			      RecoilVector,
-			      &cb,
-			      1.00,
-			      TheFile,
-				  {"mt_2jetlow","mt_2jethigh","mt_3jetlow","mt_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -1025,28 +858,6 @@ int main(int argc, char **argv)
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);
-      /*
-      AddShapesIfNotEmpty({"CMS_JetRelativeBal_2017","CMS_JetEta3to5_2017","CMS_JetEta0to5_2017",
-	    "CMS_JetEta0to3_2017"},
-	JESVector,
-	&cb,
-	0.707,
-	TheFile,CategoryArgs);            
-
-      AddShapesIfNotEmpty({"CMS_JetRelativeBal","CMS_JetEta3to5","CMS_JetEta0to5",
-            "CMS_JetEta0to3"},
-        JESVector,
-        &cb,
-        0.707,
-        TheFile,CategoryArgs);
-
-      AddShapesIfNotEmpty({"CMS_JetRelativeSample_2017","CMS_JetEC2_2017"},
-        JESVector,
-        &cb,
-        1.000,
-        TheFile,CategoryArgs);
-      */
-
       //JER      
       AddShapesIfNotEmpty({"CMS_res_j_2017"},
 			  JESVector,
@@ -1109,24 +920,6 @@ int main(int argc, char **argv)
 	TheFile,CategoryArgs);
       
       //new theory shapes
-      //inclusive shapes
-      /*
-      AddShapesIfNotEmpty({"ggH_scale"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale"},
-			  {"qqH_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
       AddShapesIfNotEmpty({"VH_scale"},
 			  {"WH_had_htt125",
 			      "ZH_had_htt125"},
@@ -1315,43 +1108,6 @@ int main(int argc, char **argv)
 			  TheFile,
 			  CategoryArgs
 			  );
-      
-      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
-      /*
-      AddShapesIfNotEmpty({"WH_scale_lowpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_lowpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      
-      
-      AddShapesIfNotEmpty({"WH_scale_highpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_highpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
-
     }
   //***************************************************
   //embedded uncertainties. 
@@ -1359,7 +1115,7 @@ int main(int argc, char **argv)
   if(not Input.OptionExists("-e"))
     {      
       //test embedded zero jet normalization uncertainty
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet", "shape", SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2017", "shape", SystMap<>::init(1.00));
      
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_2017","lnN",SystMap<>::init(1.010));
@@ -1373,10 +1129,6 @@ int main(int argc, char **argv)
  
       // Embedded normalization
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_doublemutrg_2017", "lnN", SystMap<>::init(1.04));
-
-      // Tracking uncertainty
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_1ProngPi0Eff","lnN",ch::syst::SystMapAsymm<>::init(0.9934,1.011));
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_3ProngEff","lnN",ch::syst::SystMapAsymm<>::init(0.969,1.005));
       
       //ttbar contamination in embedded
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_emb_ttbar_2017", "shape", SystMap<>::init(1.00));    
@@ -1476,19 +1228,6 @@ int main(int argc, char **argv)
       bbb.AddBinByBin(cb.cp().signals(), cb);
     }
 
-  /*auto bbb = ch::BinByBinFactory()
-    .SetAddThreshold(0.0)
-    .SetFixNorm(false);
-
-  //bbb.AddBinByBin(cb.cp().backgrounds(), cb);
-  bbb.AddBinByBin(cb.cp().signals(), cb);
-  bbb.AddBinByBin(cb.cp().process({"TT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"QCD"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"W"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"VV"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZTT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZLL"}), cb);
-*/
   // This function modifies every entry to have a standardised bin name of
   // the form: {analysis}_{channel}_{bin_id}_{era}
   // which is commonly used in the htt analyses

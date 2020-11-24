@@ -294,14 +294,6 @@ int main(int argc, char **argv)
   cb.cp().process({"STT","STL"}).AddSyst(cb,"CMS_htt_stXsec", "lnN", SystMap<>::init(1.05));
   cb.cp().process({"ZT","ZL"}).AddSyst(cb,"CMS_htt_zjXsec", "lnN", SystMap<>::init(1.02));
 
-  //Electron Fake Rate Uncertainty
-  /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm"))
-    {
-      std::cout<<"OLD STYLE NORM LNN STILL IN USE. FIXME"<<std::endl;
-      cb.cp().process({"ZL","TTL","STL","VVL"}).AddSyst(cb, "CMS_eFakeTau_2017", "lnN",SystMap<>::init(1.15)); 
-    }
-  cb.cp().process({"TTL","STL","VVL"}).AddSyst(cb, "CMS_eFakeTau_2017", "lnN",SystMap<>::init(1.15));    */
-
   //Theory uncerts
   if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
     {
@@ -644,8 +636,6 @@ int main(int argc, char **argv)
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
 		"CMS_FF_closure_OSSS_mvis_et_qcd_2017",            
-		//"CMS_FF_closure_mt_et_w_unc1_2017",
-		//"CMS_FF_closure_mt_et_w_unc2_2017",
 		"CMS_FF_closure_pth_et_w_2017",
 		"CMS_FF_norm_et_0jet_2017",
 		"CMS_FF_norm_et_1jet_2017",
@@ -658,102 +648,6 @@ int main(int argc, char **argv)
 	    1.00,
 	    TheFile,
 	    CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({
-	      "CMS_rawFF_et_qcd_0jet_unc1_2017",
-		"CMS_rawFF_et_qcd_0jet_unc2_2017",
-		"CMS_rawFF_et_w_0jet_unc1_2017",
-		"CMS_rawFF_et_w_0jet_unc2_2017",
-		"CMS_rawFF_et_tt_unc1_2017",
-		"CMS_rawFF_et_tt_unc2_2017",      
-		"CMS_FF_closure_lpt_xtrg_et_qcd_2017",
-		"CMS_FF_closure_lpt_xtrg_et_w_2017",
-		"CMS_FF_closure_lpt_xtrg_et_tt_2017",
-		"CMS_FF_closure_lpt_et_qcd",
-		"CMS_FF_closure_lpt_et_w",
-		"CMS_FF_closure_lpt_et_tt",
-		"CMS_FF_closure_OSSS_mvis_et_qcd_2017",            
-		"CMS_FF_closure_mt_et_w_unc1_2017",
-		"CMS_FF_closure_mt_et_w_unc2_2017"},
-	    {"jetFakes"},
-	    &cb,
-	    1.00,
-	    TheFile,
-	    {"et_0jet"});
-
-	  AddShapesIfNotEmpty({
-       	  "CMS_rawFF_et_qcd_1jet_unc1_2017",
-	    "CMS_rawFF_et_qcd_1jet_unc2_2017",
-       	    "CMS_rawFF_et_w_1jet_unc1_2017",
-	    "CMS_rawFF_et_w_1jet_unc2_2017",
-       	    "CMS_rawFF_et_tt_unc1_2017",
-	    "CMS_rawFF_et_tt_unc2_2017",      
-	    "CMS_FF_closure_lpt_xtrg_et_qcd_2017",
-	    "CMS_FF_closure_lpt_xtrg_et_w_2017",
-	    "CMS_FF_closure_lpt_xtrg_et_tt_2017",
-	    "CMS_FF_closure_lpt_et_qcd",
-	    "CMS_FF_closure_lpt_et_w",
-	    "CMS_FF_closure_lpt_et_tt",
-	    "CMS_FF_closure_OSSS_mvis_et_qcd_2017",            
-	    "CMS_FF_closure_mt_et_w_unc1_2017",
-	    "CMS_FF_closure_mt_et_w_unc2_2017"},
-       	{"jetFakes"},
-       	&cb,
-       	1.00,
-       	TheFile,
-       	{"et_1jet"});
-
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({
-		  "CMS_rawFF_et_qcd_2jet_unc1_2017",
-		    "CMS_rawFF_et_qcd_2jet_unc2_2017",
-		    "CMS_rawFF_et_w_2jet_unc1_2017",
-		    "CMS_rawFF_et_w_2jet_unc2_2017",
-		    "CMS_rawFF_et_tt_unc1_2017",
-		    "CMS_rawFF_et_tt_unc2_2017", 
-		    "CMS_FF_closure_lpt_xtrg_et_qcd_2017",
-		    "CMS_FF_closure_lpt_xtrg_et_w_2017",
-		    "CMS_FF_closure_lpt_xtrg_et_tt_2017",
-		    "CMS_FF_closure_lpt_et_qcd",
-		    "CMS_FF_closure_lpt_et_w",
-		    "CMS_FF_closure_lpt_et_tt",
-		    "CMS_FF_closure_OSSS_mvis_et_qcd_2017",            
-		    "CMS_FF_closure_mt_et_w_unc1_2017",
-		    "CMS_FF_closure_mt_et_w_unc2_2017"
-		    },
-		{"jetFakes"},
-		&cb,
-		1.00,
-		TheFile,
-		{"et_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({
-		  "CMS_rawFF_et_qcd_2jet_unc1_2017",
-		    "CMS_rawFF_et_qcd_2jet_unc2_2017",
-		    "CMS_rawFF_et_w_2jet_unc1_2017",
-		    "CMS_rawFF_et_w_2jet_unc2_2017",
-		    "CMS_rawFF_et_tt_unc1_2017",
-		    "CMS_rawFF_et_tt_unc2_2017", 
-		    "CMS_FF_closure_lpt_xtrg_et_qcd_2017",
-		    "CMS_FF_closure_lpt_xtrg_et_w_2017",
-		    "CMS_FF_closure_lpt_xtrg_et_tt_2017",
-		    "CMS_FF_closure_lpt_et_qcd",
-		    "CMS_FF_closure_lpt_et_w",
-		    "CMS_FF_closure_lpt_et_tt",
-		    "CMS_FF_closure_OSSS_mvis_et_qcd_2017",            
-		    "CMS_FF_closure_mt_et_w_unc1_2017",
-		    "CMS_FF_closure_mt_et_w_unc2_2017"
-		    },
-		{"jetFakes"},
-		&cb,
-		1.00,
-		TheFile,
-		{"et_2jetlow","et_2jethigh","et_3jetlow","et_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -980,24 +874,6 @@ int main(int argc, char **argv)
 	TheFile,CategoryArgs);
 
       //new theory shapes
-      //inclusive shapes
-      /*
-      AddShapesIfNotEmpty({"ggH_scale"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale"},
-			  {"qqH_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
       AddShapesIfNotEmpty({"VH_scale"},
 			  {"WH_had_htt125",
 			      "ZH_had_htt125"},
@@ -1187,41 +1063,6 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       
-      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
-      /*
-      AddShapesIfNotEmpty({"WH_scale_lowpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_lowpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      
-      
-      AddShapesIfNotEmpty({"WH_scale_highpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_highpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
     }
   //******************************************************
 
@@ -1229,6 +1070,8 @@ int main(int argc, char **argv)
   //******************************************************
   if(not Input.OptionExists("-e"))
     {      
+      //test embedded zero jet normalization uncertainty
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2017", "shape", SystMap<>::init(1.00));
 
       //Tracking Uncertainty
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_prong_emb_2017","shape",SystMap<>::init(1.00));
@@ -1338,19 +1181,6 @@ int main(int argc, char **argv)
       bbb.AddBinByBin(cb.cp().signals(), cb);
     }
 
-  /*auto bbb = ch::BinByBinFactory()
-    .SetAddThreshold(0.0)
-    .SetFixNorm(false);
-
-  //bbb.AddBinByBin(cb.cp().backgrounds(), cb);
-  bbb.AddBinByBin(cb.cp().signals(), cb);
-  bbb.AddBinByBin(cb.cp().process({"TT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"QCD"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"W"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"VV"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZTT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZLL"}), cb);
-*/
   // This function modifies every entry to have a standardised bin name of
   // the form: {analysis}_{channel}_{bin_id}_{era}
   // which is commonly used in the htt analyses

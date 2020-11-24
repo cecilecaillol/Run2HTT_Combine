@@ -578,39 +578,6 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	  /*
-	  AddShapesIfNotEmpty({"CMS_QCD_njet0_intercept_2017","CMS_QCD_njet0_slope_2017","CMS_QCD_stat_pte15to25_ptmu15to25_2017","CMS_QCD_stat_pte15to25_ptmugt25_2017","CMS_QCD_stat_pte25to35_ptmu15to25_2017","CMS_QCD_stat_pte25to35_ptmugt25_2017","CMS_QCD_stat_ptegt35_ptmu15to25_2017","CMS_QCD_stat_ptegt35_ptmugt25_2017"},
-			      {"QCD"},
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"em_0jet"});
-	  AddShapesIfNotEmpty({"CMS_QCD_njet1_intercept_2017","CMS_QCD_njet1_slope_2017","CMS_QCD_stat_pte15to25_ptmu15to25_2017","CMS_QCD_stat_pte15to25_ptmugt25_2017","CMS_QCD_stat_pte25to35_ptmu15to25_2017","CMS_QCD_stat_pte25to35_ptmugt25_2017","CMS_QCD_stat_ptegt35_ptmu15to25_2017","CMS_QCD_stat_ptegt35_ptmugt25_2017"},
-			      {"QCD"},
-			      &cb,
-			      1.00,
-			      TheFile,
-			      {"em_1jet"});
-
-	  if(Input.OptionExists("-dm"))
-	    {
-	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2017","CMS_QCD_njet2_slope_2017","CMS_QCD_stat_pte15to25_ptmu15to25_2017","CMS_QCD_stat_pte15to25_ptmugt25_2017","CMS_QCD_stat_pte25to35_ptmu15to25_2017","CMS_QCD_stat_pte25to35_ptmugt25_2017","CMS_QCD_stat_ptegt35_ptmu15to25_2017","CMS_QCD_stat_ptegt35_ptmugt25_2017"},
-				  {"QCD"},
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"em_2jet"});
-	    }
-	  else
-	    {
-	      AddShapesIfNotEmpty({"CMS_QCD_njet2_intercept_2017","CMS_QCD_njet2_slope_2017","CMS_QCD_stat_pte15to25_ptmu15to25_2017","CMS_QCD_stat_pte15to25_ptmugt25_2017","CMS_QCD_stat_pte25to35_ptmu15to25_2017","CMS_QCD_stat_pte25to35_ptmugt25_2017","CMS_QCD_stat_ptegt35_ptmu15to25_2017","CMS_QCD_stat_ptegt35_ptmugt25_2017"},
-				  {"QCD"},
-				  &cb,
-				  1.00,
-				  TheFile,
-				  {"em_2jetlow","em_2jethigh","em_3jetlow","em_3jethigh"});
-	    }
-	  */
 	}
       else
 	{
@@ -792,24 +759,6 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
         TheFile,CategoryArgs);
 
       //new theory shapes
-      //inclusive shapes
-      /*
-      AddShapesIfNotEmpty({"ggH_scale"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale"},
-			  {"qqH_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
       AddShapesIfNotEmpty({"VH_scale"},
 			  {"WH_had_htt125",
 			      "ZH_had_htt125"},
@@ -999,41 +948,6 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 			  CategoryArgs
 			  );
       
-      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
-      /*
-      AddShapesIfNotEmpty({"WH_scale_lowpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_lowpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      
-      
-      AddShapesIfNotEmpty({"WH_scale_highpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_highpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
     }
   //**********************************************************************************************************
   //embedded uncertainties. 

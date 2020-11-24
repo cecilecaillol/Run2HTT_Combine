@@ -567,48 +567,6 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	 /*
-	 AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_0jet_2017",	    
-		"CMS_FF_closure_tau2pt_tt_qcd_0jet",
-		"CMS_FF_closure_tt_qcd_osss_2017",},
-	    {"jetFakes"},
-	    &cb,
-	    1.00,
-	    TheFile,
-	    {"tt_0jet"});
-
-	  AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_1jet_2017",	    
-		"CMS_FF_closure_tau2pt_tt_qcd_1jet",
-		"CMS_FF_closure_tt_qcd_osss_2017",},
-	    {"jetFakes"},
-	    &cb,
-	    1.00,
-	    TheFile,
-	    {"tt_1jet"});
-	  
-	 if(Input.OptionExists("-dm"))
-	   {
-	     AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_2jet_2017",	    
-		   "CMS_FF_closure_tau2pt_tt_qcd_2jet",
-		   "CMS_FF_closure_tt_qcd_osss_2017",},
-	       {"jetFakes"},
-	       &cb,
-	       1.00,
-	       TheFile,
-	       {"tt_2jet"});
-	   }
-	 else
-	   {
-	     AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_2jet_2017",	    
-		   "CMS_FF_closure_tau2pt_tt_qcd_2jet",
-		   "CMS_FF_closure_tt_qcd_osss_2017",},
-	       {"jetFakes"},
-	       &cb,
-	       1.00,
-	       TheFile,
-	       {"tt_2jetlow","tt_2jethigh","tt_3jetlow","tt_3jethigh"});
-	   }
-	 */
        }
       else
 	{
@@ -778,24 +736,6 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	}
 
       //new theory shapes
-      //inclusive shapes
-      /*
-      AddShapesIfNotEmpty({"ggH_scale"},
-			  {"ggH_htt125",
-			      "ggZH_had_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"vbf_scale"},
-			  {"qqH_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
       AddShapesIfNotEmpty({"VH_scale"},
 			  {"WH_had_htt125",
 			      "ZH_had_htt125"},
@@ -985,42 +925,6 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 			  CategoryArgs
 			  );
       
-      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
-      /*
-      AddShapesIfNotEmpty({"WH_scale_lowpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_lowpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      
-      
-      AddShapesIfNotEmpty({"WH_scale_highpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_highpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
-      
     }
 
   // Shape for looser Deep tau ID vsLep than recommanded WP
@@ -1031,12 +935,6 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
   //*****************************************************************
   if(not Input.OptionExists("-e"))
     {      
-       //Tau ID eff
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_2017", "lnN", SystMap<>::init(1.040));
-
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_1ProngPi0Eff","lnN",ch::syst::SystMapAsymm<>::init(0.9934,1.011));
-      //cb.cp().process({"embedded"}).AddSyst(cb,"CMS_3ProngEff","lnN",ch::syst::SystMapAsymm<>::init(0.969,1.005));
-
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_htt_doublemutrg_2017", "lnN", SystMap<>::init(1.04));
       // Tau ID eff
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_t_embedded_dm0_2017", "shape", SystMap<>::init(1.000));
@@ -1136,19 +1034,6 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       bbb.AddBinByBin(cb.cp().signals(), cb);
     }
 
-  /*auto bbb = ch::BinByBinFactory()
-    .SetAddThreshold(0.0)
-    .SetFixNorm(false);
-
-  //bbb.AddBinByBin(cb.cp().backgrounds(), cb);
-  bbb.AddBinByBin(cb.cp().signals(), cb);
-  bbb.AddBinByBin(cb.cp().process({"TT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"QCD"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"W"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"VV"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZTT"}), cb);
-  bbb.AddBinByBin(cb.cp().process({"ZLL"}), cb);
-*/
   // This function modifies every entry to have a standardised bin name of
   // the form: {analysis}_{channel}_{bin_id}_{era}
   // which is commonly used in the htt analyses
