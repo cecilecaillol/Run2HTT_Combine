@@ -968,41 +968,15 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
 	
-      //FIX ME: shapes are valid on split VH_lep, but we do not use seperated VH_lep at the moment.
-      /*
-      AddShapesIfNotEmpty({"WH_scale_lowpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_lowpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      
-      
-      AddShapesIfNotEmpty({"WH_scale_highpt"},
-			  {"WH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      AddShapesIfNotEmpty({"ZH_scale_highpt"},
-			  {"ZH_lep_htt125",
-			      "ggZH_lep_htt125"},
-			  &cb,
-			  1.00,
-			  TheFile,
-			  CategoryArgs
-			  );
-      */
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+	{
+	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
+			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs);
+	}
     }
 
   //**********************************************************************************************************

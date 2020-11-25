@@ -524,8 +524,11 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
                           1.00,
                           TheFile,CategoryArgs);
 
-      // Trg eff. 
+      // Shape for looser Deep tau ID vsLep than recommanded WP
+      if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+	cb.cp().process({"embedded","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb,"CMS_looser_lep_wp_2017", "shape", SystMap<>::init(1.00));
 
+      // Trg eff. 
       std::cout<<"Trigger eff"<<std::endl;
       AddShapesIfNotEmpty({"CMS_doubletautrg_dm0_2017","CMS_doubletautrg_dm1_2017","CMS_doubletautrg_dm10_2017","CMS_doubletautrg_dm11_2017"},
                           JoinStr({sig_procs,{"VVL","STL","TTL","ZL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
@@ -931,11 +934,17 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 			  CategoryArgs
 			  );
       
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+	{
+	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
+			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
+			      &cb,
+			      1.00,
+			      TheFile,
+			      CategoryArgs);
+	}
     }
 
-  // Shape for looser Deep tau ID vsLep than recommanded WP
-  if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
-    cb.cp().process({"embedded","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb,"CMS_looser_lep_wp_2017", "shape", SystMap<>::init(1.00));
   //*****************************************************************
   //embedded uncertainties. 
   //*****************************************************************
