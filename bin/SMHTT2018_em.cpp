@@ -706,7 +706,13 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 	}
       else if (Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
-	  std::cout<<"No WG1 uncertainties used in differential measurements"<<std::endl;
+	  std::cout<<"ggH Theory"<<std::endl;
+	  AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
+		"THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
+	    JoinStr({ggH_STXS,{"ggH_hww125"}}),
+	    &cb,
+	    1.00,
+	    TheFile,CategoryArgs);            
 	}
       //unscaled for either mu measurement
       else if(not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
