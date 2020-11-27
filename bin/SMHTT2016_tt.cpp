@@ -683,7 +683,7 @@ int main(int argc, char **argv)
       std::cout<<"JES"<<std::endl;
       AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2016","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2016","CMS_scale_j_EC2","CMS_scale_j_EC2_2016",
 	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2016","CMS_scale_j_RelativeBal"},
-	JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
+	JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);
@@ -692,13 +692,13 @@ int main(int argc, char **argv)
       //JER
       std::cout<<"JER"<<std::endl;
       AddShapesIfNotEmpty({"CMS_res_j_2016"},
-			  JoinStr({sig_procs,{"VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
+			  JoinStr({sig_procs,{"ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
       
 
-      if (Input.OptionExists("-x0"))
+      /*if (Input.OptionExists("-x0"))
 	{
 	  std::cout<<"Scaled ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
@@ -747,7 +747,7 @@ int main(int argc, char **argv)
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	}
+	}*/
 
       //new theory shapes
       AddShapesIfNotEmpty({"VH_scale"},
@@ -939,7 +939,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       
-      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+      /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
 			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
@@ -947,7 +947,7 @@ int main(int argc, char **argv)
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	}
+	}*/
     }
 
 
@@ -1040,7 +1040,7 @@ int main(int argc, char **argv)
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.01);
+    .SetBinThreshold(0.25);
   rebin.Rebin(cb.cp().channel({"tt"}), cb);
   //! [part7]
 

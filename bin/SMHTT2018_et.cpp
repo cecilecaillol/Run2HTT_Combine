@@ -725,7 +725,7 @@ int main(int argc, char **argv) {
       if (Input.OptionExists("-dm")||Input.OptionExists("-dn")||Input.OptionExists("-dp")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_scale_met_unclustered_2018"},
-			      {"TTT","TTL","VVT","STT"},
+			      {"TTT","VVT"},
 			      &cb,
 			      1.00,
 			      TheFile,
@@ -745,7 +745,7 @@ int main(int argc, char **argv) {
       if (Input.OptionExists("-dp") or Input.OptionExists("-dn") or Input.OptionExists("-dm")||Input.OptionExists("-dljpt")) 
 	{
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2018","CMS_htt_boson_scale_met_0jet_2018","CMS_htt_boson_reso_met_1jet_2018","CMS_htt_boson_scale_met_1jet_2018","CMS_htt_boson_reso_met_2jet_2018","CMS_htt_boson_scale_met_2jet_2018"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ggH_hww125","qqH_hww125","OutsideAcceptance"}}),
+			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","OutsideAcceptance"}}),
 			      &cb,
 			      1.00,
 			      TheFile,
@@ -799,14 +799,14 @@ int main(int argc, char **argv) {
       // Jet Energy Correction Uncertainties            
       AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2018","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2018","CMS_scale_j_EC2","CMS_scale_j_EC2_2018",
 	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2018","CMS_scale_j_RelativeSample_2018","CMS_scale_j_RelativeBal"},
-	JoinStr({sig_procs,{"ZT","VVL","STL","ZL","TTL","TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
+	JoinStr({sig_procs,{"TTT","VVT","STT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);      
 
       //JER      
       AddShapesIfNotEmpty({"CMS_res_j_2018"},
-			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
+			  JoinStr({sig_procs,{"VVT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
@@ -864,7 +864,7 @@ int main(int argc, char **argv) {
 
       //Electron Energy scale uncertainties      
       AddShapesIfNotEmpty({"CMS_scale_e"},
-			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}}),
+			  JoinStr({sig_procs,{"ZT","VVT","TTT","ZL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
@@ -1158,7 +1158,7 @@ int main(int argc, char **argv) {
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.01);
+    .SetBinThreshold(0.25);
   rebin.Rebin(cb.cp().channel({"et"}), cb);
   //! [part7]
 

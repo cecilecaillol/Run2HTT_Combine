@@ -531,11 +531,12 @@ int main(int argc, char **argv)
       vector<string> TopVector;
       vector<string> TESVector;
       vector<string> JESVector;
+      vector<string> RESVector;
       vector<string> MuESVector;
       vector<string> PrefiringVector;
       vector<string> TauIDVector;
       vector<string> TriggerVector;
-      METUESVector = {"TTT","TTL","VVT","VVL","STT","STL"};
+      METUESVector = {"TTT","VVT","STT"};
       TopVector = {"TTL","TTT"};
       if(Input.OptionExists("-e"))
 	{	  
@@ -543,6 +544,7 @@ int main(int argc, char **argv)
 	  ZPTVector = {"ZT","ZL"};	  
 	  TESVector = JoinStr({sig_procs,{"VVT","STT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  JESVector = JoinStr({sig_procs,{"ZT","VVT","STT","TTT","VVL","STL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
+          RESVector = JoinStr({sig_procs,{"VVT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  MuESVector = JoinStr({sig_procs,{"ZT","VVT","STT","TTT","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  PrefiringVector = JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","ZT","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  TauIDVector = JoinStr({sig_procs,{"VVT","STT","ZT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
@@ -554,6 +556,7 @@ int main(int argc, char **argv)
 	  ZPTVector = {"ZL"};	  
 	  TESVector = JoinStr({sig_procs,{"VVT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  JESVector = JoinStr({sig_procs,{"VVT","TTT","VVL","ZL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
+          RESVector = JoinStr({sig_procs,{"VVT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  MuESVector = JoinStr({sig_procs,{"ZL","VVT","TTT","VVL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  PrefiringVector = JoinStr({sig_procs,{"VVL","VVT","STT","STL","ZL","TTL","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
 	  TauIDVector = JoinStr({sig_procs,{"VVT","STT","TTT","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125","OutsideAcceptance"}});
@@ -862,7 +865,7 @@ int main(int argc, char **argv)
       //JER
       std::cout<<"JER"<<std::endl;
       AddShapesIfNotEmpty({"CMS_res_j_2016"},
-			  JESVector,
+			  RESVector,
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
@@ -1062,7 +1065,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
 
-      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+      /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
 			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
@@ -1070,7 +1073,7 @@ int main(int argc, char **argv)
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	}
+	}*/
     }
   //**************************************
   //embedded uncertainties. 
@@ -1177,7 +1180,7 @@ int main(int argc, char **argv)
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.01);
+    .SetBinThreshold(0.25);
   rebin.Rebin(cb.cp().channel({"mt"}), cb);
   //! [part7]
 

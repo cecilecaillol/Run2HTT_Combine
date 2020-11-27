@@ -38,13 +38,20 @@ outputLoggingFile = "outputLog_"+DateTag+".txt"
 for year in args.years:
     for channel in args.channels:
         if args.DecorrelateForMe:
-            AddShapeCommand = "python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential.root "
+            AddShapeCommand = "python scripts/PrepDecorrelatedCard.py --year "+year+" --DataCard "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential_nocorrelation.root --OutputFileName "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential_correlated.root "
             if channel == "et" or channel == "em":
                 AddShapeCommand += "--TrimYears"
             print("Duplicating shapes for year correlations")
             logging.info("Shape duplication command:")
             logging.info('\n\n'+AddShapeCommand+'\n')
             os.system(AddShapeCommand+" | tee -a "+outputLoggingFile)            
+
+            SmoothingCommand = "python scripts/SmoothShapesDifferential.py -c "+channel+" -i "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential_correlated.root -o "+os.environ['CMSSW_BASE']+"/src/auxiliaries/shapes/smh"+year+channel+"_Differential.root -y "+year
+            print("Smoothing")
+            logging.info("Smoothing command:")
+            logging.info('\n\n'+SmoothingCommand+'\n')
+            os.system(SmoothingCommand+" | tee -a "+outputLoggingFile)
+
 
         DataCardCreationCommand="SMHTT"+year
         DataCardCreationCommand+="_"+channel+" "+OutputDir
