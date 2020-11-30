@@ -723,7 +723,7 @@ vector<string> ggH_STXS;
       if (Input.OptionExists("-dm")||Input.OptionExists("-dn")||Input.OptionExists("-dp")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_scale_met_unclustered_2016"},
-			      {"TTT","TTL","VVT","STT"},
+			      {"TTT","VVT"},
 			      &cb,
 			      1.00,
 			      TheFile,
@@ -754,7 +754,7 @@ vector<string> ggH_STXS;
       else if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_htt_boson_reso_met_0jet_2016","CMS_htt_boson_scale_met_0jet_2016","CMS_htt_boson_reso_met_1jet_2016","CMS_htt_boson_scale_met_1jet_2016","CMS_htt_boson_reso_met_2jet_2016","CMS_htt_boson_scale_met_2jet_2016"},
-			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ggH_hww125","qqH_hww125","OutsideAcceptance"}}),
+			      JoinStr({ggH_STXS,qqH_STXS,{"ZT","ZL","ggH_hww125","qqH_hww125","OutsideAcceptance"}}),
 			      &cb,
 			      1.00,
 			      TheFile,
@@ -828,7 +828,7 @@ vector<string> ggH_STXS;
       // JES
       AddShapesIfNotEmpty({"CMS_scale_j_Absolute","CMS_scale_j_Absolute_2016","CMS_scale_j_BBEC1","CMS_scale_j_BBEC1_2016","CMS_scale_j_EC2","CMS_scale_j_EC2_2016",
 	    "CMS_scale_j_FlavorQCD","CMS_scale_j_HF","CMS_scale_j_HF_2016","CMS_scale_j_RelativeBal"},
-	JoinStr({sig_procs,{"ZT","TTT","VVT","STT","OutsideAcceptance"}}),
+	JoinStr({sig_procs,{"ZT","TTT","VVT","OutsideAcceptance"}}),
 	&cb,
 	1.000,
 	TheFile,CategoryArgs);      
@@ -838,7 +838,7 @@ vector<string> ggH_STXS;
       if(Input.OptionExists("-dm")||Input.OptionExists("-dn")||Input.OptionExists("-dp")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"CMS_res_j_2016"},
-			      JoinStr({sig_procs,{"ZT","VVT","STL","STT","TTT","VVL","OutsideAcceptance"}}),
+			      JoinStr({sig_procs,{"VVT","TTT","OutsideAcceptance"}}),
 			      &cb,
 			      1.000,
 			      TheFile,CategoryArgs);
@@ -913,7 +913,7 @@ vector<string> ggH_STXS;
 
       //Electron Energy scale uncertainties
       AddShapesIfNotEmpty({"CMS_scale_e"},
-			  JoinStr({sig_procs,{"ZT","VVT","STT","TTT","OutsideAcceptance"}}),
+			  JoinStr({sig_procs,{"ZT","VVT","TTT"}}),
 	&cb,
 	1.00,
 	TheFile,CategoryArgs);
@@ -1163,7 +1163,7 @@ vector<string> ggH_STXS;
     }
   //auto rebinning of low background bins
   auto rebin = ch::AutoRebin()
-    .SetBinThreshold(0.01);
+    .SetBinThreshold(0.25);
   rebin.Rebin(cb.cp().channel({"et"}), cb);
   //! [part7]
 
