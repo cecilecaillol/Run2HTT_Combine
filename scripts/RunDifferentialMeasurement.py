@@ -243,13 +243,14 @@ for parameter in parametersToMeasure:
         MeasurementCommand+=parameterName+"=1,"
     MeasurementCommand+= " -P "+parameter+" --floatOtherPOIs=1"
 
-    logging.info("Measurement Command:")
-    logging.info("\n\n"+MeasurementCommand+"\n")
-    if args.DontPrintResults:
-        os.system(MeasurementCommand+" > /dev/null")
-    else:
-        os.system(MeasurementCommand+" | tee -a "+outputLoggingFile)        
-    os.system(" mv *"+DateTag+"* "+OutputDir)
+    if not args.ComputeGOF:
+       logging.info("Measurement Command:")
+       logging.info("\n\n"+MeasurementCommand+"\n")
+       if args.DontPrintResults:
+           os.system(MeasurementCommand+" > /dev/null")
+       else:
+           os.system(MeasurementCommand+" | tee -a "+outputLoggingFile)        
+       os.system(" mv *"+DateTag+"* "+OutputDir)
 
 if args.MakePlots:
     plotMakingCommand = "combineTool.py -M FitDiagnostics "+WorkspaceName+" --robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -n "+DateTag+"_Plots "
@@ -334,13 +335,26 @@ if args.ComputeGOF:
     os.chdir(OutputDir)
     GOFJsonName = 'gof_final_'+DateTag+'.json'
 
-    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated.toys'  -t 25 -s 0:19:1 --parallel 12"
+    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated.toys'  -t 30 -s 0:12:1 --parallel 12 "
+    if args.MeasurementType == 'ljpt':
+            ImpactCommand += '--setParameters r_H_NJETS_0=1.0,r_H_LJPT_30_60=1.0,r_H_LJPT_60_120=1.0,r_H_LJPT_120_200=1.0,r_H_LJPT_200_350=1.0,r_H_LJPT_GT350=1.0'
+    if args.MeasurementType == 'njets':
+            ImpactCommand += '--setParameters r_H_NJETS_0=1.0,r_H_NJETS_1=1.0,r_H_NJETS_2=1.0,r_H_NJETS_3=1.0,r_H_NJETS_GE4=1.0'
+    if args.MeasurementType == 'pth':
+            ImpactCommand += '--setParameters r_H_PTH_0_45=1.0,r_H_PTH_45_80=1.0,r_H_PTH_80_120=1.0,r_H_PTH_120_200=1.0,r_H_PTH_200_350=1.0,r_H_PTH_350_450=1.0,r_H_PTH_GT450=1.0'
     if args.DontPrintResults:
         os.system(ImpactCommand+" > /dev/null")
     else:
         os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
 
-    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated'"
+    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated' "
+    if args.MeasurementType == 'ljpt':
+            ImpactCommand += '--setParameters r_H_NJETS_0=1.0,r_H_LJPT_30_60=1.0,r_H_LJPT_60_120=1.0,r_H_LJPT_120_200=1.0,r_H_LJPT_200_350=1.0,r_H_LJPT_GT350=1.0'
+    if args.MeasurementType == 'njets':
+            ImpactCommand += '--setParameters r_H_NJETS_0=1.0,r_H_NJETS_1=1.0,r_H_NJETS_2=1.0,r_H_NJETS_3=1.0,r_H_NJETS_GE4=1.0'
+    if args.MeasurementType == 'pth':
+            ImpactCommand += '--setParameters r_H_PTH_0_45=1.0,r_H_PTH_45_80=1.0,r_H_PTH_80_120=1.0,r_H_PTH_120_200=1.0,r_H_PTH_200_350=1.0,r_H_PTH_350_450=1.0,r_H_PTH_GT450=1.0'
+
     if args.DontPrintResults:
         os.system(ImpactCommand+" > /dev/null")
     else:
