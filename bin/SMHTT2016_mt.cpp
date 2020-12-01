@@ -693,7 +693,7 @@ int main(int argc, char **argv)
 		"CMS_FF_closure_lpt_mt_w",
 		"CMS_FF_closure_lpt_mt_tt",
 		"CMS_FF_closure_OSSS_mvis_mt_qcd_2016",            
-		"CMS_FF_closure_pth_mt_w_2016",
+		"CMS_FF_closure_pth_mt_w",
 		"CMS_FF_norm_mt_0jet_2016",
 		"CMS_FF_norm_mt_1jet_2016",
 		"CMS_FF_norm_mt_2jet_2016",
@@ -1081,7 +1081,7 @@ int main(int argc, char **argv)
   if(not Input.OptionExists("-e"))
     {
       //test embedded zero jet normalization uncertainty
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2016", "shape", SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2016", "shape", SystMap<>::init(0.66));
 
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_m_2018","lnN",SystMap<>::init(1.010));

@@ -633,7 +633,7 @@ int main(int argc, char **argv) {
 		"CMS_FF_closure_lpt_et_w",
 		"CMS_FF_closure_lpt_et_tt",
 		"CMS_FF_closure_OSSS_mvis_et_qcd_2018",            
-		"CMS_FF_closure_pth_et_w_2018",
+		"CMS_FF_closure_pth_et_w",
 		"CMS_FF_norm_et_0jet_2018",
 		"CMS_FF_norm_et_1jet_2018",
 		"CMS_FF_norm_et_2jet_2018",
@@ -1075,7 +1075,7 @@ int main(int argc, char **argv) {
   if(not Input.OptionExists("-e"))
     {
       //test zero jet uncertainty for embedded
-      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2018", "shape", SystMap<>::init(1.00));
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_2018", "shape", SystMap<>::init(0.66));
 
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_2018","lnN",SystMap<>::init(1.010));
