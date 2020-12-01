@@ -526,7 +526,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 
       // Shape for looser Deep tau ID vsLep than recommanded WP
       if(Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
-	cb.cp().process({"embedded","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb,"CMS_looser_lep_wp_2017", "shape", SystMap<>::init(1.00));
+	cb.cp().process({"embedded","ZL","VVL","STL","TTL","ggH_hww125","qqH_hww125","WH_hww125","ZH_hww125"}).AddSyst(cb,"CMS_looser_lep_wp", "shape", SystMap<>::init(1.00));
 
       // Trg eff. 
       std::cout<<"Trigger eff"<<std::endl;
@@ -558,8 +558,8 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	 AddShapesIfNotEmpty({"CMS_rawFF_tt_qcd_0jet_2017",
 	       "CMS_rawFF_tt_qcd_1jet_2017",
 	       "CMS_rawFF_tt_qcd_2jet_2017",
-	       "CMS_FF_closure_tau2pt_tt_qcd_2017",
-	       "CMS_FF_closure_jet1pt_tt_qcd_2017",
+	       "CMS_FF_closure_tau2pt_tt_qcd",
+	       "CMS_FF_closure_jet1pt_tt_qcd",
 	       "CMS_FF_norm_tt_0jet_2017",
 	       "CMS_FF_norm_tt_1jet_2017",
 	       "CMS_FF_norm_tt_2jet_2017",
