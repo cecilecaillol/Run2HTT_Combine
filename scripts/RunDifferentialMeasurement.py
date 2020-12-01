@@ -391,18 +391,57 @@ if args.ComputeGOF:
             elif channel == 'em':
                 rangeEnd = 2
             for i in range(1,rangeEnd):
-                ImpactCommand = 'text2workspace.py -m 125 smh'+year+"_"+channel+"_"+str(i)+"_13TeV_.txt "
+                #ImpactCommand = 'text2workspace.py -m 125 smh'+year+"_"+channel+"_"+str(i)+"_13TeV_.txt "
+                ImpactCommand = "text2workspace.py -m 125 smh"+year+"_"+channel+"_"+str(i)+"_13TeV_.txt -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel "
+                if args.MeasurementType == "pth":
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_0_45.*:r_H_PTH_0_45[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_45_80.*:r_H_PTH_45_80[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_80_120.*:r_H_PTH_80_120[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_120_200.*:r_H_PTH_120_200[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_200_350.*:r_H_PTH_200_350[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_350_450.*:r_H_PTH_350_450[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*PTH_G.450.*:r_H_PTH_GT450[1,-25,25]' "
+                elif args.MeasurementType == 'njets':
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_0.*:r_H_NJETS_0[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_1.*:r_H_NJETS_1[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_2.*:r_H_NJETS_2[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_3.*:r_H_NJETS_3[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_G.4.*:r_H_NJETS_GE4[1,-25,25]' "
+                elif args.MeasurementType == 'ljpt':
+                    ImpactCommand += "--PO 'map=.*/.*H.*J1PT_30_60.*:r_H_LJPT_30_60[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*J1PT_60_120.*:r_H_LJPT_60_120[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*J1PT_120_200.*:r_H_LJPT_120_200[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*J1PT_200_350.*:r_H_LJPT_200_350[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*J1PT_G.350.*:r_H_LJPT_GT350[1,-25,25]' "
+                    ImpactCommand += "--PO 'map=.*/.*H.*NJ_0.*:r_H_NJETS_0[1,-25,25]' "
+
                 if args.DontPrintResults:
                     os.system(ImpactCommand+" > /dev/null")
                 else: 
                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+
                 GOFJsonName = "gof_"+channel+"_"+year+"_"+str(i)+"_"+DateTag+".json"
                 ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(i)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(i)+".toys'  -t 25 -s 0:19:1 --parallel 12"
+                if args.MeasurementType == 'ljpt':
+                        ImpactCommand += ' --setParameters r_H_NJETS_0=1.0,r_H_LJPT_30_60=1.0,r_H_LJPT_60_120=1.0,r_H_LJPT_120_200=1.0,r_H_LJPT_200_350=1.0,r_H_LJPT_GT350=1.0'
+                if args.MeasurementType == 'njets':
+                        ImpactCommand += ' --setParameters r_H_NJETS_0=1.0,r_H_NJETS_1=1.0,r_H_NJETS_2=1.0,r_H_NJETS_3=1.0,r_H_NJETS_GE4=1.0'
+                if args.MeasurementType == 'pth':
+                        ImpactCommand += ' --setParameters r_H_PTH_0_45=1.0,r_H_PTH_45_80=1.0,r_H_PTH_80_120=1.0,r_H_PTH_120_200=1.0,r_H_PTH_200_350=1.0,r_H_PTH_350_450=1.0,r_H_PTH_GT450=1.0'
+
                 if args.DontPrintResults:
                     os.system(ImpactCommand+" > /dev/null")
                 else:
                     os.system(ImpactCommand+" | tee -a "+outputLoggingFile)
+
                 ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d smh"+year+"_"+channel+"_"+str(i)+"_13TeV_.root -n '.saturated."+year+"_"+channel+"_"+str(i)+"'"
+                if args.MeasurementType == 'ljpt':
+                        ImpactCommand += ' --setParameters r_H_NJETS_0=1.0,r_H_LJPT_30_60=1.0,r_H_LJPT_60_120=1.0,r_H_LJPT_120_200=1.0,r_H_LJPT_200_350=1.0,r_H_LJPT_GT350=1.0'
+                if args.MeasurementType == 'njets':
+                        ImpactCommand += ' --setParameters r_H_NJETS_0=1.0,r_H_NJETS_1=1.0,r_H_NJETS_2=1.0,r_H_NJETS_3=1.0,r_H_NJETS_GE4=1.0'
+                if args.MeasurementType == 'pth':
+                        ImpactCommand += ' --setParameters r_H_PTH_0_45=1.0,r_H_PTH_45_80=1.0,r_H_PTH_80_120=1.0,r_H_PTH_120_200=1.0,r_H_PTH_200_350=1.0,r_H_PTH_350_450=1.0,r_H_PTH_GT450=1.0'
+
                 if args.DontPrintResults:
                     os.system(ImpactCommand+" > /dev/null")
                 else:
