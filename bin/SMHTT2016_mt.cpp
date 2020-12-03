@@ -1064,8 +1064,7 @@ int main(int argc, char **argv)
 			  TheFile,
 			  CategoryArgs
 			  );
-
-      /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
 			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
@@ -1073,7 +1072,7 @@ int main(int argc, char **argv)
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	}*/
+	}
     }
   //**************************************
   //embedded uncertainties. 
