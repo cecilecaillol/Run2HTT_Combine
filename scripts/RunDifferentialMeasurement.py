@@ -335,7 +335,7 @@ if args.ComputeGOF:
     os.chdir(OutputDir)
     GOFJsonName = 'gof_final_'+DateTag+'.json'
 
-    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated.toys'  -t 30 -s 0:12:1 --parallel 12 "
+    ImpactCommand = "combineTool.py -M GoodnessOfFit --algorithm saturated -m 125 --there -d " + WorkspaceName+" -n '.saturated.toys'  -t 30 -s 0:11:1 --parallel 12 "
     if args.MeasurementType == 'ljpt':
             ImpactCommand += '--setParameters r_H_NJETS_0=1.0,r_H_LJPT_30_60=1.0,r_H_LJPT_60_120=1.0,r_H_LJPT_120_200=1.0,r_H_LJPT_200_350=1.0,r_H_LJPT_GT350=1.0'
     if args.MeasurementType == 'njets':
