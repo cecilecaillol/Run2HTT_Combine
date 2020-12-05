@@ -253,7 +253,7 @@ for parameter in parametersToMeasure:
        os.system(" mv *"+DateTag+"* "+OutputDir)
 
 if args.MakePlots:
-    plotMakingCommand = "combineTool.py -M FitDiagnostics "+WorkspaceName+" --robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --plots --expectSignal=1 -n "+DateTag+"_Plots "
+    plotMakingCommand = "combineTool.py -M FitDiagnostics "+WorkspaceName+" --robustFit=1 --X-rtd MINIMIZER_analytic --cl=0.68 --saveShapes --saveWithUncertainties --cminDefaultMinimizerStrategy=0 --plots --expectSignal=1 -n "+DateTag+"_Plots "
     if not args.Unblind:
         plotMakingCommand+=' -t -1' 
     plotMakingCommand+= " --setParameters "
@@ -268,6 +268,8 @@ if args.MakePlots:
     os.system(" mv *"+DateTag+"* "+OutputDir)
     
     #Run the postfit processing
+    #not necessary with --saveWithUncertainties
+    """
     currentDir = os.getcwd()
     os.chdir(OutputDir)
     prefitPostfitProcessingCommand = 'PostFitShapesFromWorkspace -o prefitFile_'+DateTag+'.root -m 125 -f fitDiagnostics'+DateTag+'_Plots.root:fit_s --postfit --sampling --print -d FinalCard_'+DateTag+'.txt -w Workspace_'+args.MeasurementType+'.root'
@@ -275,6 +277,7 @@ if args.MakePlots:
     logging.info('\n\n'+prefitPostfitProcessingCommand+'\n')
     os.system(prefitPostfitProcessingCommand)
     os.chdir(currentDir)
+    """
 
 if args.ComputeImpacts:
     os.chdir(OutputDir)
