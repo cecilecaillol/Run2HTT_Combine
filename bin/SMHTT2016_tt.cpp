@@ -698,7 +698,7 @@ int main(int argc, char **argv)
 			  TheFile,CategoryArgs);
       
 
-      /*if (Input.OptionExists("-x0"))
+      if (Input.OptionExists("-x0"))
 	{
 	  std::cout<<"Scaled ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
@@ -747,7 +747,7 @@ int main(int argc, char **argv)
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	}*/
+	}
 
       //new theory shapes
       AddShapesIfNotEmpty({"VH_scale"},
@@ -939,7 +939,7 @@ int main(int argc, char **argv)
 			  CategoryArgs
 			  );
       
-      /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
 			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
@@ -947,7 +947,7 @@ int main(int argc, char **argv)
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	}*/
+	}
     }
 
 

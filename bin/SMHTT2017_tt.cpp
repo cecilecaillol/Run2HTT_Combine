@@ -693,7 +693,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 			  &cb,
 			  1.000,
 			  TheFile,CategoryArgs);
-      /*if (Input.OptionExists("-x0"))
+      if (Input.OptionExists("-x0"))
 	{
 	  std::cout<<"Scaled ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
@@ -742,7 +742,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);
-	}*/
+	}
 
       //new theory shapes
       AddShapesIfNotEmpty({"VH_scale"},
@@ -934,7 +934,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 			  CategoryArgs
 			  );
       
-      /*if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
+      if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists("-dm")||Input.OptionExists("-dljpt"))
 	{
 	  AddShapesIfNotEmpty({"QCDscale_qqH","QCDscale_ggZH","QCDscale_VH","QCDscale_ttH"},
 			      JoinStr({qqH_STXS,{"OutsideAcceptance"}}),
@@ -942,7 +942,7 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 			      1.00,
 			      TheFile,
 			      CategoryArgs);
-	}*/
+	}
     }
 
   //*****************************************************************
