@@ -64,18 +64,10 @@ def MakeSignalStrengthHisto(histograms,ratioErrors):
         backgroundHistogram.Add(histograms['singleTop'])
     backgroundHistogram.Add(histograms['ZL'])
 
-    """signalStrengthHisto = histograms['dataHist'].Clone()
+    signalStrengthHisto = histograms['data'].Clone()
     signalStrengthHisto.Add(backgroundHistogram,-1.0)
     #do the division
-    signalStrengthHisto.Divide(ratioErrors)"""
-
-    signalStrengthHisto = histograms['data'].Clone()
-    p_x = signalStrengthHisto.GetX()
-    p_y = signalStrengthHisto.GetY()
-    for i in range(0,signalStrengthHisto.GetN()):
-        signalStrengthHisto.SetPoint(i,p_x[i],(p_y[i]-backgroundHistogram.GetBinContent(i+1))/(ratioErrors.GetBinContent(i+1)))
-        signalStrengthHisto.SetPointEYhigh(i,signalStrengthHisto.GetErrorYhigh(i)/(ratioErrors.GetBinContent(i+1)+0.0001))
-        signalStrengthHisto.SetPointEYlow(i,signalStrengthHisto.GetErrorYlow(i)/(ratioErrors.GetBinContent(i+1)+0.0001))
+    signalStrengthHisto.Divide(ratioErrors)
     
     #okay, now we do the same thing for signal and we can get the heck out of here.
     higgsHisto = histograms['signal'].Clone()
@@ -107,14 +99,16 @@ theFile = ROOT.TFile(args.theFile)
 
 #shapeDirectory = theFile.Get('shapes_prefit')
 
-if args.prefitOrPostfit == 'prefit':
-    categoryDirectory = theFile.Get("shapes_prefit")
-else:
-    categoryDirectory = theFile.Get("shapes_fit_s")
+for directory in theFile.GetListOfKeys():
+    theDirectory = theFile.Get(directory.GetName())
+    theDirectory.cd()
 
-for directory in categoryDirectory.GetListOfKeys():
-    theDirectory = categoryDirectory.Get(directory.GetName())
-    theDirectory.cd()    
+    if args.prefitOrPostfit == 'postfit':
+        if 'prefit' in theDirectory.GetName():
+            continue
+    else:
+        if 'postfit' in theDirectory.GetName():
+            continue
 
     print(theDirectory.GetName())
     
@@ -258,11 +252,9 @@ for directory in categoryDirectory.GetListOfKeys():
     print(channel)
     category=''
     if channel == 'mt' or channel == 'et' or channel == 'tt':
-        category = re.search('[a-z,A-Z]*$',theDirectory.GetName()).group(0)
+        category = re.search('(?<=[0-9]{4}_).*(?=_(pre|post)fit)',theDirectory.GetName()).group(0)
     print(category)
 
-    #keep this around to make our ratio whatever work
-    """
     dataFileName = 'smh'+year+channel+'_Differential.root'
     theDataFile = ROOT.TFile(os.environ['CMSSW_BASE']+'/src/auxiliaries/shapes/'+dataFileName)
 
@@ -286,19 +278,6 @@ for directory in categoryDirectory.GetListOfKeys():
     if not args.unblind:
         BlindDataHistogram(dataHistogram)
     histograms['data'] = dataHistogram
-    """
-
-    #we use this for proper Poisson Error Drawing
-    dataGraph = theDirectory.Get("data")    
-    dataHist = ROOT.TH1F("Data","Data",dataGraph.GetN(),0,dataGraph.GetN())
-    x = ROOT.Double()
-    y = ROOT.Double()
-    for i in range(0,dataGraph.GetN()):
-        dataGraph.GetPoint(i, x, y)
-        dataHist.Fill(x,y)
-        
-    histograms['data'] = dataGraph
-    histograms['dataHist'] = dataHist
 
     #let's assemble the stuff and do the things.
     #lets assemble some colors
@@ -312,7 +291,6 @@ for directory in categoryDirectory.GetListOfKeys():
     histograms['data'].SetMarkerStyle(20)
     #histograms['signal'].SetLineColor(ROOT.kRed)
     #histograms['signal'].SetLineWidth(2)
-    
 
     #let's assemble the stack
     print('making the stack')
@@ -332,7 +310,7 @@ for directory in categoryDirectory.GetListOfKeys():
     
     print('making stack errors...')
     #theStackErrors = utils.MakeStackErrors(theBackgroundStack)
-    theStackErrors = theDirectory.Get('total_background')
+    theStackErrors = theDirectory.Get('TotalBkg')
     theStackErrors.SetLineColor(0)
     theStackErrors.SetLineWidth(0)
     theStackErrors.SetMarkerStyle(0)
@@ -409,12 +387,12 @@ for directory in categoryDirectory.GetListOfKeys():
     theBackgroundStack.SetMinimum(max(theBackgroundStack.GetMinimum()*0.9,0.1))
     theBackgroundStack.Draw()    
     theBackgroundStack.GetXaxis().SetLabelSize(0)
-    theBackgroundStack.GetXaxis().SetNdivisions(-900-(histograms['embedded'].GetNbinsX()/9))
+    theBackgroundStack.GetXaxis().SetNdivisions(-900-(histograms['data'].GetNbinsX()/9))
     theBackgroundStack.SetTitle(fullTitle)
     theBackgroundStack.GetYaxis().SetTitle('Events')
     theStackErrors.Draw("SAME e2")    
     #histograms['signal'].Draw('SAME HIST')
-    histograms['data'].Draw('E0P')
+    histograms['data'].Draw('SAME e1')
 
     cmsLatex = ROOT.TLatex()
     cmsLatex.SetTextSize(0.06)
@@ -497,7 +475,7 @@ for directory in categoryDirectory.GetListOfKeys():
     plotGridPad.SetFillStyle(4000)
     plotGridPad.SetBottomMargin(plotPad.GetBottomMargin())
 
-    plotGridHisto = histograms['dataHist'].Clone()
+    plotGridHisto = histograms['data'].Clone()
     plotGridHisto.Reset()    
     plotGridHisto.SetTitle('')
     plotGridHisto.GetXaxis().SetLabelSize(0.0)
@@ -506,7 +484,7 @@ for directory in categoryDirectory.GetListOfKeys():
     plotGridHisto.GetYaxis().SetTickSize(0.0)
     plotGridHisto.GetYaxis().SetTitleSize(0.0)
     plotGridHisto.Draw()
-    plotGridHisto.GetXaxis().SetNdivisions(-900-(histograms['dataHist'].GetNbinsX()/9))
+    plotGridHisto.GetXaxis().SetNdivisions(-900-(histograms['data'].GetNbinsX()/9))
     plotGridHisto.SetFillStyle(4000)
 
     #we also want a legend on this pad, so let's make that
@@ -552,7 +530,7 @@ for directory in categoryDirectory.GetListOfKeys():
                                                    predictedSignalStrength.GetMaximum())*2)
         unitRatioError.GetYaxis().SetTitleOffset(0.5)
         predictedSignalStrength.Draw('HIST SAME')
-        dataSignalStrength.Draw('E0P')
+        dataSignalStrength.Draw('E0P SAME')
         unitRatioError.SetTitle('')
         unitRatioError.GetXaxis().SetLabelSize(0.1)
         setMassBinAxisTitles(unitRatioError)
@@ -583,7 +561,7 @@ for directory in categoryDirectory.GetListOfKeys():
     
     ratioGridHisto = plotGridHisto.Clone()
     ratioGridHisto.Draw()
-    ratioGridHisto.GetXaxis().SetNdivisions(-900-(histograms['dataHist'].GetNbinsX()/9))
+    ratioGridHisto.GetXaxis().SetNdivisions(-900-(histograms['data'].GetNbinsX()/9))
     ratioGridHisto.SetFillStyle(4000)        
 
     if args.pause:

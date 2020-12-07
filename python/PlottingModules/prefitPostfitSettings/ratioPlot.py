@@ -53,28 +53,46 @@ def setRatioErrors(ratio,theData):
     return output
 
 def MakeRatioPlot(theStack,stackErrors,theData):    
-        
-    ratioHist = theData.Clone()
+    
+    #nBins,binBoundaries = Utilities.GetHistogramAxisInfo(theData)
+    #binBoundaryArray = array('f',binBoundaries)    
 
+    #ratioHist = ROOT.TH1F('Ratio',
+    #                      'Ratio',
+    #                      nBins,
+    #                      binBoundaryArray)
+    ratioHist = theData.Clone()
+    #ratioHist.Reset()
+
+    #ratioHist.Sumw2()
+    #ratioHist.Add(theData)    
+    #ratioHist = theData.Clone()
+    #ratioHist.SetNameTitle('Ratio','Ratio')
+    #ratioHist.SetBinErrorOption(ROOT.TH1.kPoisson)
+
+    #denominatorHistos = ROOT.TH1F('denominatorHistos',
+    #                              'denominatorHistos',
+    #                              nBins,
+    #                              binBoundaryArray)
     denominatorHistos = theStack.GetHists().At(0).Clone()
     denominatorHistos.Reset()
     listOfStackHistograms = theStack.GetHists()
     for i in range(theStack.GetNhists()):        
         denominatorHistos.Add(theStack.GetHists().At(i))        
+                    
+    ratioHist.Divide(denominatorHistos)    
+
+    """
+    for i in range(1,ratioHist.GetNbinsX()+1):
+        try:
+            ratioHist.SetBinError(i,(theData.GetBinError(i)/theData.GetBinContent(i))*ratioHist.GetBinContent(i))
+        except ZeroDivisionError:
+            ratioHist.SetBinError(i,0)
+    """
         
-    p_x = ratioHist.GetX()
-    p_y = ratioHist.GetY()
-    
-    for i in range(0,theData.GetN()):
-        ratioHist.SetPoint(i,p_x[i],p_y[i]/(denominatorHistos.GetBinContent(i+1)+0.0001))
-        ratioHist.SetPointEYhigh(i,ratioHist.GetErrorYhigh(i)/(denominatorHistos.GetBinContent(i+1)+0.0001))
-        ratioHist.SetPointEYlow(i,ratioHist.GetErrorYlow(i)/(denominatorHistos.GetBinContent(i+1)+0.0001))
-        
-    #ratioHist.Divide(theData,denominatorHistos,'pois')    
-                
     #ratioHist = convert(ratioHist)
     
-    #ratioHist = setRatioErrors(ratioHist,theData)
+    ratioHist = setRatioErrors(ratioHist,theData)
 
     ratioHist.SetMarkerStyle(ratioMarkerStyle)
     #ratioHist.GetXaxis().SetRangeUser(theData.GetXaxis().GetXmin(),theData.GetXaxis().GetXmax())     
