@@ -6,8 +6,8 @@ YBounds = (0.5,1.5)
 
 ratioMarkerStyle = 20
 ratioYAxisTitle = 'Obs / H#rightarrow#tau#tau + Bkg.'
-ratioYAxisTitleSize = 0.08
-ratioYAxisTitleOffset = 0.62
+ratioYAxisTitleSize = 0.16
+ratioYAxisTitleOffset = 0.15
 ratioYAxisLabelSize = 0.1
 ratioYAxisNDivisions = (6,0,0)
 
