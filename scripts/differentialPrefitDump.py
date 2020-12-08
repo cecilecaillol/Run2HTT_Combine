@@ -5,22 +5,76 @@ import re
 import CombineHarvester.Run2HTT_Combine.PlottingModules.Utilities as utils
 import CombineHarvester.Run2HTT_Combine.PlottingModules.prefitPostfitSettings.ratioPlot as RP
 import os
+from array import array
 
-massBins = {
-    1:'50-70',
-    2:'70-90',
-    3:'90-110',
-    4:'110-130',
-    5:'130-150',
-    6:'150-170',
-    7:'170-210',
-    8:'210-250',
-    0:'250-290',
-    }
 
-def setMassBinAxisTitles(theHistogram):
-    for i in range(1,theHistogram.GetNbinsX()+1):
-        theHistogram.GetXaxis().SetBinLabel(i,massBins[(i%9)])
+#accumulated width
+#0-1: 50-70
+#1-2: 70-90
+#2-3: 90-110
+#3-4: 110-130
+#4-5: 130-150
+#5-6: 150-170
+#6-8: 170-210
+#8-10: 210-250
+#10-12: 250-290
+
+#Okay, we need a way to rebin entire histogram sets quickly on the fly.
+def rebinHistogram(histograms, nBins, binsWithNewWidths={}):
+    accumulatedBinWidth = 0
+    theBin=1
+    rebinningScheme = []
+    while accumulatedBinWidth<=nBins*12:
+        rebinningScheme.append(accumulatedBinWidth)
+        if theBin in binsWithNewWidths:
+            accumulatedBinWidth+=binsWithNewWidths[theBin]
+            
+        else:
+            if accumulatedBinWidth%12 in [0,1,2,3,4,5]:
+                accumulatedBinWidth+=1
+            else:
+                accumulatedBinWidth+=2
+        theBin+=1
+    
+    for histogramKey in histograms.keys():
+        if histogramKey != 'data':
+            #we have a standard TH1, so, here's what we do
+            #we make a copy of the histogram
+            tempHisto = histograms[histogramKey].Clone()
+            binningArray = array('d', rebinningScheme)
+            #set the binning to a new binning
+            tempHisto.SetBins(len(rebinningScheme)-1, binningArray)
+            #we have the same number of bins,
+            #so we loop on the old histogram, to duplicate it into the new one.
+            for i in range (1,histograms[histogramKey].GetNbinsX()+1):
+                tempHisto.SetBinContent(i, histograms[histogramKey].GetBinContent(i))
+                tempHisto.SetBinError(i, histograms[histogramKey].GetBinError(i))
+            #we now have a duplicate histogram, set our new histogram to be that
+            histograms[histogramKey] = tempHisto
+        else: #we have to rebin data. This is a TGraphAsymmErrors, so this is a little interesting
+            tempData = ROOT.TGraphAsymmErrors(len(rebinScheme)-1)                        
+            for i in range(0,tempData.GetN()):
+                x = (float(rebinningScheme[i+1])+float(rebinningScheme[i]))/2
+                y = histograms[histogramKey].GetPointY(i)
+                err_Up = histograms[histogramKey].GetErrorYhigh(i)
+                err_Down = histograms[histogramKey].GetErrorYlow(i)
+                tempData.SetPoint(i,x,y)
+                tempData.SetPointEYhigh(i,err_Up)
+                tempData.SetPointEYlow(i,err_Down)
+                tempData.SetPointEXlow(i,x-rebinningScheme[i])
+                tempData.SetPointEXhigh(i,rebinningScheme[i+1]-x)
+            histograms[histogramKey] = tempData
+    return rebinningScheme
+            
+def setMassBinAxisTitles(theHistogram,rebinScheme):
+    for i in range(1,len(rebinScheme)):
+        #let's figure out the string we need
+        #50+20*x
+        lowBinStr = str(50+20*(rebinScheme[i-1]%12))
+        highBinStr = str(50+20*(rebinScheme[i]%12))
+        if rebinScheme[i]%12 == 0:
+            highBinStr = '290'
+        theHistogram.GetXaxis().SetBinLabel(i,lowBinStr+"-"+highBinStr)
 
 def AddIfExists(directory,originalObject,histogramName):
     if directory.GetListOfKeys().Contains(histogramName):
@@ -300,6 +354,72 @@ for directory in categoryDirectory.GetListOfKeys():
     histograms['data'] = dataGraph
     histograms['dataHist'] = dataHist
 
+    histograms['totalBackground'] = theDirectory.Get('total_background')
+
+    #REBINNING HERE
+    rebinScheme = []
+    if args.measurementType == 'pth':
+        if channel == 'et':
+            pass
+        elif channel == 'mt':
+            pass
+        elif channel == 'tt':
+            pass
+        else:
+            if channel == 'tt' and category == 'HighTauPt':
+                rebinScheme = rebinHistogram(histograms,6)
+            elif (channel == 'mt' or channel == 'et') and (category == 'LowTauPt' or category=='IntermediateTauPt'):
+                rebinScheme = rebinHistogram(histograms,6)
+            else:
+                rebinScheme = rebinHistogram(histograms,7)
+                
+    elif args.measurementType == 'njets':
+        if channel == 'et':
+            pass
+        elif channel == 'mt':
+            pass
+        elif channel == 'tt':
+            pass
+        else:
+            rebinScheme = rebinHistogram(histograms,5)
+    elif args.measurementType == 'ljpt':        
+        if channel == 'et':
+            if category == 'HighTauPt':
+                if(year == '2016' or year == '2017'):
+                    rebinScheme = rebinHistogram(histograms,6,{1:4})            
+                else:
+                    rebinScheme = rebinHistogram(histograms,6,{1:3})
+            if category == 'IntermediateTauPt':
+                if (year == '2016' or year == '2017'):
+                    rebinScheme = rebinHistogram(histograms,6,{1:3})
+                else:
+                    rebinScheme = rebinHistogram(histograms,6,{1:2})
+            if category == 'LowTauPt':
+                if year == '2017' or year == '2018':
+                    rebinScheme = rebinHistogram(histograms,6,{1:2})
+                else:
+                    rebinScheme = rebinHistogram(histograms,6)
+        elif channel == 'mt':
+            if category == 'HighTauPt':
+                rebinScheme = rebinHistogram(histograms,6,{1:3})
+            if category == 'IntermediateTauPt':
+                rebinScheme = rebinHistogram(histograms,6,{1:2})
+            else:
+                rebinScheme = rebinHistogram(histograms,6)
+        elif channel == 'tt':
+            if category == 'HighTauPt':
+                if year == '2016':
+                    rebinScheme = rebinHistogram(histograms,6,{1:2,46:2})
+                if year == '2017':
+                    rebinScheme = rebinHistogram(histograms,6,{46:2})
+                if year == '2018':
+                    rebinScheme = rebinHistogram(histograms,6,{46:2,49:3})
+            else:
+                rebinScheme = rebinHistogram(histograms,6)
+        else:
+            rebinScheme = rebinHistogram(histograms,6)
+    rebinArray = array('f', rebinScheme)
+
     #let's assemble the stuff and do the things.
     #lets assemble some colors
     histograms['jetFakes'].SetFillColor(ROOT.TColor.GetColor('#ffccff'))
@@ -311,8 +431,7 @@ for directory in categoryDirectory.GetListOfKeys():
 
     histograms['data'].SetMarkerStyle(20)
     #histograms['signal'].SetLineColor(ROOT.kRed)
-    #histograms['signal'].SetLineWidth(2)
-    
+    #histograms['signal'].SetLineWidth(2)    
 
     #let's assemble the stack
     print('making the stack')
@@ -332,7 +451,7 @@ for directory in categoryDirectory.GetListOfKeys():
     
     print('making stack errors...')
     #theStackErrors = utils.MakeStackErrors(theBackgroundStack)
-    theStackErrors = theDirectory.Get('total_background')
+    theStackErrors = histograms['totalBackground']
     theStackErrors.SetLineColor(0)
     theStackErrors.SetLineWidth(0)
     theStackErrors.SetMarkerStyle(0)
@@ -409,7 +528,7 @@ for directory in categoryDirectory.GetListOfKeys():
     theBackgroundStack.SetMinimum(max(theBackgroundStack.GetMinimum()*0.9,0.1))
     theBackgroundStack.Draw()    
     theBackgroundStack.GetXaxis().SetLabelSize(0)
-    theBackgroundStack.GetXaxis().SetNdivisions(-900-(histograms['embedded'].GetNbinsX()/9))
+    #theBackgroundStack.GetXaxis().SetNdivisions(-900-(histograms['embedded'].GetNbinsX()/9))
     theBackgroundStack.SetTitle(fullTitle)
     theBackgroundStack.GetYaxis().SetTitle('Events')
     theStackErrors.Draw("SAME e2")    
@@ -443,48 +562,48 @@ for directory in categoryDirectory.GetListOfKeys():
     verticalLocation = max(theBackgroundStack.GetMaximum(),histograms['data'].GetMaximum())*5
     if args.measurementType == 'pth':
         if channel == 'tt' and category == 'HighTauPt':
-            latex.DrawLatex(4.5,verticalLocation,'0<p_{t}^{H}<80')
-            latex.DrawLatex(4.5+9,verticalLocation,'80<p_{t}^{H}<120')
-            latex.DrawLatex(4.5+18,verticalLocation,'120<p_{t}^{H}<200')
-            latex.DrawLatex(4.5+27,verticalLocation,'200<p_{t}^{H}<350')
-            latex.DrawLatex(4.5+36,verticalLocation,'350<p_{t}^{H}<450')
-            latex.DrawLatex(4.5+45,verticalLocation,'450<p_{t}^{H}')
+            latex.DrawLatex(5,verticalLocation,'0<p_{t}^{H}<80')
+            latex.DrawLatex(5+12,verticalLocation,'80<p_{t}^{H}<120')
+            latex.DrawLatex(5+24,verticalLocation,'120<p_{t}^{H}<200')
+            latex.DrawLatex(5+36,verticalLocation,'200<p_{t}^{H}<350')
+            latex.DrawLatex(5+48,verticalLocation,'350<p_{t}^{H}<450')
+            latex.DrawLatex(5+60,verticalLocation,'450<p_{t}^{H}')
         elif (channel == 'mt' or channel == 'et') and (category == 'LowTauPt' or category=='IntermediateTauPt'):
-            latex.DrawLatex(4.5,verticalLocation,'0<p_{t}^{H}<45')
-            latex.DrawLatex(4.5+9,verticalLocation,'45<p_{t}^{H}<80')
-            latex.DrawLatex(4.5+18,verticalLocation,'80<p_{t}^{H}<120')
-            latex.DrawLatex(4.5+27,verticalLocation,'120<p_{t}^{H}<200')
-            latex.DrawLatex(4.5+36,verticalLocation,'200<p_{t}^{H}<350')
-            latex.DrawLatex(4.5+45,verticalLocation,'350<p_{t}^{H}')
+            latex.DrawLatex(5,verticalLocation,'0<p_{t}^{H}<45')
+            latex.DrawLatex(5+12,verticalLocation,'45<p_{t}^{H}<80')
+            latex.DrawLatex(5+24,verticalLocation,'80<p_{t}^{H}<120')
+            latex.DrawLatex(5+36,verticalLocation,'120<p_{t}^{H}<200')
+            latex.DrawLatex(5+48,verticalLocation,'200<p_{t}^{H}<350')
+            latex.DrawLatex(5+60,verticalLocation,'350<p_{t}^{H}')
         else:
-            latex.DrawLatex(4.5,verticalLocation,'0<p_{t}^{H}<45')
-            latex.DrawLatex(4.5+9,verticalLocation,'45<p_{t}^{H}<80')
-            latex.DrawLatex(4.5+18,verticalLocation,'80<p_{t}^{H}<120')
-            latex.DrawLatex(4.5+27,verticalLocation,'120<p_{t}^{H}<200')
-            latex.DrawLatex(4.5+36,verticalLocation,'200<p_{t}^{H}<350')
-            latex.DrawLatex(4.5+45,verticalLocation,'350<p_{t}^{H}<450')
-            latex.DrawLatex(4.5+54,verticalLocation,'450<p_{t}^{H}')
+            latex.DrawLatex(5,verticalLocation,'0<p_{t}^{H}<45')
+            latex.DrawLatex(5+12,verticalLocation,'45<p_{t}^{H}<80')
+            latex.DrawLatex(5+24,verticalLocation,'80<p_{t}^{H}<120')
+            latex.DrawLatex(5+36,verticalLocation,'120<p_{t}^{H}<200')
+            latex.DrawLatex(5+48,verticalLocation,'200<p_{t}^{H}<350')
+            latex.DrawLatex(5+60,verticalLocation,'350<p_{t}^{H}<450')
+            latex.DrawLatex(5+72,verticalLocation,'450<p_{t}^{H}')
     if args.measurementType == 'njets':        
-        latex.DrawLatex(4.5,verticalLocation,'N_{Jets}=0')
-        latex.DrawLatex(4.5+9,verticalLocation,'N_{Jets}=1')
-        latex.DrawLatex(4.5+18,verticalLocation,'N_{Jets}=2')
-        latex.DrawLatex(4.5+27,verticalLocation,'N_{Jets}=3')
-        latex.DrawLatex(4.5+36,verticalLocation,'N_{Jets}=4')
+        latex.DrawLatex(5,verticalLocation,'N_{Jets}=0')
+        latex.DrawLatex(5+12,verticalLocation,'N_{Jets}=1')
+        latex.DrawLatex(5+24,verticalLocation,'N_{Jets}=2')
+        latex.DrawLatex(5+36,verticalLocation,'N_{Jets}=3')
+        latex.DrawLatex(5+48,verticalLocation,'N_{Jets}=4')
     if args.measurementType == 'ljpt':
         if channel == 'tt':
-            latex.DrawLatex(4.5,verticalLocation,'30<p_{t}^{Jet}<60')
-            latex.DrawLatex(4.5+9,verticalLocation,'60<p_{t}^{Jet}<120')
-            latex.DrawLatex(4.5+18,verticalLocation,'120<p_{t}^{Jet}<200')
-            latex.DrawLatex(4.5+27,verticalLocation,'200<p_{t}^{Jet}<350')
-            latex.DrawLatex(4.5+36,verticalLocation,'350<p_{t}^{Jet}')            
-            latex.DrawLatex(4.5+45,verticalLocation,'0 Jet')            
+            latex.DrawLatex(5,verticalLocation,'30<p_{t}^{Jet}<60')
+            latex.DrawLatex(5+12,verticalLocation,'60<p_{t}^{Jet}<120')
+            latex.DrawLatex(5+24,verticalLocation,'120<p_{t}^{Jet}<200')
+            latex.DrawLatex(5+36,verticalLocation,'200<p_{t}^{Jet}<350')
+            latex.DrawLatex(5+48,verticalLocation,'350<p_{t}^{Jet}')            
+            latex.DrawLatex(5+60,verticalLocation,'0 Jet')            
         else:
-            latex.DrawLatex(4.5,verticalLocation,'0 Jet')
-            latex.DrawLatex(4.5+9,verticalLocation,'30<p_{t}^{Jet}<60')
-            latex.DrawLatex(4.5+18,verticalLocation,'60<p_{t}^{Jet}<120')
-            latex.DrawLatex(4.5+27,verticalLocation,'120<p_{t}^{Jet}<200')
-            latex.DrawLatex(4.5+36,verticalLocation,'200<p_{t}^{Jet}<350')
-            latex.DrawLatex(4.5+45,verticalLocation,'350<p_{t}^{Jet}')
+            latex.DrawLatex(5,verticalLocation,'0 Jet')
+            latex.DrawLatex(5+12,verticalLocation,'30<p_{t}^{Jet}<60')
+            latex.DrawLatex(5+24,verticalLocation,'60<p_{t}^{Jet}<120')
+            latex.DrawLatex(5+36,verticalLocation,'120<p_{t}^{Jet}<200')
+            latex.DrawLatex(5+48,verticalLocation,'200<p_{t}^{Jet}<350')
+            latex.DrawLatex(5+60,verticalLocation,'350<p_{t}^{Jet}')
 
     #okay, let's force a grid on top
     plotGridPad = ROOT.TPad('slices','slices',0,0,1,1)    
@@ -497,7 +616,20 @@ for directory in categoryDirectory.GetListOfKeys():
     plotGridPad.SetFillStyle(4000)
     plotGridPad.SetBottomMargin(plotPad.GetBottomMargin())
 
-    plotGridHisto = histograms['dataHist'].Clone()
+    #plotGridHisto = histograms['dataHist'].Clone()
+    nSlices = 0
+    if args.measurementType == 'ljpt':
+        nSlices = 6
+    if args.measurementType == 'njets':
+        nSlices = 5
+    if args.measurementType == 'pth':
+        if channel == 'tt' and category == 'HighTauPt':
+            nSlices = 6
+        elif (channel == 'mt' or channel == 'et') and (category == 'LowTauPt' or category=='IntermediateTauPt'):
+            nSlices = 6
+        else:
+            nSlices = 7
+    plotGridHisto = ROOT.TH1F('grid','grid',nSlices*12,0,nSlices*12)
     plotGridHisto.Reset()    
     plotGridHisto.SetTitle('')
     plotGridHisto.GetXaxis().SetLabelSize(0.0)
@@ -505,8 +637,9 @@ for directory in categoryDirectory.GetListOfKeys():
     plotGridHisto.GetXaxis().SetTickLength(0.0)
     plotGridHisto.GetYaxis().SetTickSize(0.0)
     plotGridHisto.GetYaxis().SetTitleSize(0.0)
-    plotGridHisto.Draw()
-    plotGridHisto.GetXaxis().SetNdivisions(-900-(histograms['dataHist'].GetNbinsX()/9))
+    plotGridHisto.Draw()    
+    #plotGridHisto.GetXaxis().SetNdivisions(-900-(histograms['dataHist'].GetNbinsX()/9))
+    plotGridHisto.GetXaxis().SetNdivisions(-1200-nSlices)
     plotGridHisto.SetFillStyle(4000)
 
     #we also want a legend on this pad, so let's make that
@@ -540,7 +673,7 @@ for directory in categoryDirectory.GetListOfKeys():
         ratioPlot.Draw('E0P')
         ratioPlotErrors.SetTitle('')    
         ratioPlotErrors.GetXaxis().SetLabelSize(0.1)
-        setMassBinAxisTitles(ratioPlotErrors)
+        setMassBinAxisTitles(ratioPlotErrors,rebinScheme)
         ratioPlotErrors.GetXaxis().SetTitle('m_{#tau#tau}')
         ratioPlotErrors.GetXaxis().SetTitleSize(0.1)
         ratioPlotErrors.GetXaxis().SetTitleOffset(1.2)
@@ -555,7 +688,7 @@ for directory in categoryDirectory.GetListOfKeys():
         dataSignalStrength.Draw('E0P')
         unitRatioError.SetTitle('')
         unitRatioError.GetXaxis().SetLabelSize(0.1)
-        setMassBinAxisTitles(unitRatioError)
+        setMassBinAxisTitles(unitRatioError,rebinScheme)
         unitRatioError.GetXaxis().SetTitle('m_{#tau#tau}')
         unitRatioError.GetXaxis().SetTitleSize(0.1)
         unitRatioError.GetXaxis().SetTitleOffset(1.8)
@@ -583,7 +716,7 @@ for directory in categoryDirectory.GetListOfKeys():
     
     ratioGridHisto = plotGridHisto.Clone()
     ratioGridHisto.Draw()
-    ratioGridHisto.GetXaxis().SetNdivisions(-900-(histograms['dataHist'].GetNbinsX()/9))
+    ratioGridHisto.GetXaxis().SetNdivisions(-1200-nSlices)
     ratioGridHisto.SetFillStyle(4000)        
 
     if args.pause:
