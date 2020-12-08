@@ -52,10 +52,11 @@ def rebinHistogram(histograms, nBins, binsWithNewWidths={}):
             #we now have a duplicate histogram, set our new histogram to be that
             histograms[histogramKey] = tempHisto
         else: #we have to rebin data. This is a TGraphAsymmErrors, so this is a little interesting
-            tempData = ROOT.TGraphAsymmErrors(len(rebinScheme)-1)                        
+            tempData = ROOT.TGraphAsymmErrors(len(rebinningScheme)-1)                        
+            pointContent = histograms[histogramKey].GetY()
             for i in range(0,tempData.GetN()):
                 x = (float(rebinningScheme[i+1])+float(rebinningScheme[i]))/2
-                y = histograms[histogramKey].GetPointY(i)
+                y = pointContent[i]
                 err_Up = histograms[histogramKey].GetErrorYhigh(i)
                 err_Down = histograms[histogramKey].GetErrorYlow(i)
                 tempData.SetPoint(i,x,y)
@@ -95,7 +96,7 @@ def CompileSignals(directory,signalName,listOfSignalBins):
     #okay, we should now have an initial signal bin histo.
     #now we just add the other elemenrs to it, and then return it
     for signalBin in listOfSignalBins:
-        fullHistoName = signalName+'_'+signalBin+'_htt125'
+        fullHistoName = signalName+'_'+signalBin
         AddIfExists(directory,initialSignalHisto,fullHistoName)
     return initialSignalHisto
 
@@ -297,12 +298,16 @@ for directory in categoryDirectory.GetListOfKeys():
     if not isEMChannel:
         AddIfExists(theDirectory,ttbarHistogram,'TTT')
     histograms['ttbar']=ttbarHistogram
+    
+    print('OutsideAcceptance...')
+    outsideAcceptanceHistogram = theDirectory.Get('OutsideAcceptance').Clone()
 
     print('Making others histogram...')
     othersHistogram= dibosonHistogram.Clone()
     if not (channel=='et' and year == '2018'):
         print('single top...')
         othersHistogram.Add(singleTopHistogram)
+    othersHistogram.Add(outsideAcceptanceHistogram)
     #print('signal...')
     #othersHistogram.Add(signalHistogram)
     histograms['other'] = othersHistogram    
@@ -315,71 +320,87 @@ for directory in categoryDirectory.GetListOfKeys():
         category = re.search('[a-z,A-Z]*$',theDirectory.GetName()).group(0)
     print(category)
 
-    #keep this around to make our ratio whatever work
-    """
-    dataFileName = 'smh'+year+channel+'_Differential.root'
-    theDataFile = ROOT.TFile(os.environ['CMSSW_BASE']+'/src/auxiliaries/shapes/'+dataFileName)
-
-    if channel == 'em':
-        if args.measurementType == 'pth':
-            theDataFileDirectory = theDataFile.Get('htt_PTH_em')
-        elif args.measurementType == 'njets':
-            theDataFileDirectory = theDataFile.Get('htt_NJ_em')
-        elif args.measurementType == 'ljpt':
-            theDataFileDirectory = theDataFile.Get('htt_J1PT_em')
-    else:
-        if args.measurementType == 'pth':
-            theDataFileDirectory = theDataFile.Get('htt_PTH_'+channel+'_'+category)
-        elif args.measurementType == 'njets':
-            theDataFileDirectory = theDataFile.Get('htt_NJ_'+channel+'_'+category)
-        elif args.measurementType == 'ljpt':            
-            theDataFileDirectory = theDataFile.Get('htt_J1PT_'+channel+'_'+category)
-
-    #dataHistogram = theDirectory.Get('data_obs')
-    dataHistogram = theDataFileDirectory.Get('data_obs')
-    if not args.unblind:
-        BlindDataHistogram(dataHistogram)
-    histograms['data'] = dataHistogram
-    """
-
     #we use this for proper Poisson Error Drawing
     dataGraph = theDirectory.Get("data")    
+    """
     dataHist = ROOT.TH1F("Data","Data",dataGraph.GetN(),0,dataGraph.GetN())
     x = ROOT.Double()
     y = ROOT.Double()
     for i in range(0,dataGraph.GetN()):
         dataGraph.GetPoint(i, x, y)
         dataHist.Fill(x,y)
+    """
         
     histograms['data'] = dataGraph
-    histograms['dataHist'] = dataHist
+    #histograms['dataHist'] = dataHist
 
-    histograms['totalBackground'] = theDirectory.Get('total_background')
+    histograms['total'] = theDirectory.Get('total')
 
     #REBINNING HERE
     rebinScheme = []
     if args.measurementType == 'pth':
         if channel == 'et':
-            pass
+            if category == 'LowTauPt':                
+                rebinScheme = rebinHistogram(histograms,6)
+            elif category == 'IntermediateTauPt':
+                    rebinScheme = rebinHistogram(histograms,6,{1:2})
+            elif category == 'HighTauPt':
+                if year == '2016' or year == '2017':
+                    rebinScheme = rebinHistogram(histograms,7,{1:3,9:2})
+                else:
+                    rebinScheme = rebinHistogram(histograms,7,{1:3})
         elif channel == 'mt':
-            pass
+            if category == 'LowTauPt' or category == 'IntermediateTauPt':
+                rebinScheme = rebinHistogram(histograms,6)
+            elif category == 'HighTauPt':
+                rebinScheme = rebinHistogram(histograms,7,{1:2})
         elif channel == 'tt':
-            pass
-        else:
-            if channel == 'tt' and category == 'HighTauPt':
-                rebinScheme = rebinHistogram(histograms,6)
-            elif (channel == 'mt' or channel == 'et') and (category == 'LowTauPt' or category=='IntermediateTauPt'):
-                rebinScheme = rebinHistogram(histograms,6)
-            else:
+            if category == 'LowTauPt':
+                if year == '2016': 
+                    rebinScheme = rebinHistogram(histograms,7,{61:2})
+                elif year == '2017':
+                    rebinScheme = rebinHistogram(histograms,7,{60:2})
+                else:
+                    rebinScheme = rebinHistogram(histograms,7)
+            elif category == 'IntermediateTauPt':
                 rebinScheme = rebinHistogram(histograms,7)
+            elif category == 'HighTauPt':
+                rebinScheme = rebinHistogram(histograms,6)
+        else:
+            rebinScheme = rebinHistogram(histograms,7)
                 
     elif args.measurementType == 'njets':
         if channel == 'et':
-            pass
+            if category == 'LowTauPt':
+                if year == '2017' or year == '2018':
+                    rebinScheme = rebinHistogram(histograms,5,{1:2})
+                else:
+                    rebinScheme = rebinHistogram(histograms,5)
+            elif category == 'IntermediateTauPt':
+                if year == '2016' or year == '2017':
+                    rebinScheme = rebinHistogram(histograms,5,{1:3})
+                elif year == '2018':
+                    rebinScheme = rebinHistogram(histograms,5,{1:2})
+            elif category == 'HighTauPt':
+                if year == '2016' or year == '2017':
+                    rebinScheme = rebinHistogram(histograms,5,{1:4})
+                elif year == '2018':
+                    rebinScheme = rebinHistogram(histograms,5,{1:3})
         elif channel == 'mt':
-            pass
+            if category == 'LowTauPt':
+                rebinScheme = rebinHistogram(histograms,5)
+            elif category == 'IntermediateTauPt':
+                rebinScheme = rebinHistogram(histograms,5,{1:2})
+            elif category == 'HighTauPt':
+                rebinScheme = rebinHistogram(histograms,5,{1:3})
         elif channel == 'tt':
-            pass
+            if category == 'LowTauPt' or  category == 'IntermediateTauPt':
+                rebinScheme = rebinHistogram(histograms,5)
+            elif category == 'HighTauPt':
+                if year == '2016' or year == '2017':
+                    rebinScheme = rebinHistogram(histograms,5,{5:2})
+                elif year == '2018':
+                    rebinScheme = rebinHistogram(histograms,5,{1:2,4:3})
         else:
             rebinScheme = rebinHistogram(histograms,5)
     elif args.measurementType == 'ljpt':        
@@ -389,12 +410,12 @@ for directory in categoryDirectory.GetListOfKeys():
                     rebinScheme = rebinHistogram(histograms,6,{1:4})            
                 else:
                     rebinScheme = rebinHistogram(histograms,6,{1:3})
-            if category == 'IntermediateTauPt':
+            elif category == 'IntermediateTauPt':
                 if (year == '2016' or year == '2017'):
                     rebinScheme = rebinHistogram(histograms,6,{1:3})
                 else:
                     rebinScheme = rebinHistogram(histograms,6,{1:2})
-            if category == 'LowTauPt':
+            elif category == 'LowTauPt':
                 if year == '2017' or year == '2018':
                     rebinScheme = rebinHistogram(histograms,6,{1:2})
                 else:
@@ -402,7 +423,7 @@ for directory in categoryDirectory.GetListOfKeys():
         elif channel == 'mt':
             if category == 'HighTauPt':
                 rebinScheme = rebinHistogram(histograms,6,{1:3})
-            if category == 'IntermediateTauPt':
+            elif category == 'IntermediateTauPt':
                 rebinScheme = rebinHistogram(histograms,6,{1:2})
             else:
                 rebinScheme = rebinHistogram(histograms,6)
@@ -410,9 +431,9 @@ for directory in categoryDirectory.GetListOfKeys():
             if category == 'HighTauPt':
                 if year == '2016':
                     rebinScheme = rebinHistogram(histograms,6,{1:2,46:2})
-                if year == '2017':
+                elif year == '2017':
                     rebinScheme = rebinHistogram(histograms,6,{46:2})
-                if year == '2018':
+                elif year == '2018':
                     rebinScheme = rebinHistogram(histograms,6,{46:2,49:3})
             else:
                 rebinScheme = rebinHistogram(histograms,6)
@@ -451,7 +472,7 @@ for directory in categoryDirectory.GetListOfKeys():
     
     print('making stack errors...')
     #theStackErrors = utils.MakeStackErrors(theBackgroundStack)
-    theStackErrors = histograms['totalBackground']
+    theStackErrors = histograms['total']
     theStackErrors.SetLineColor(0)
     theStackErrors.SetLineWidth(0)
     theStackErrors.SetMarkerStyle(0)
