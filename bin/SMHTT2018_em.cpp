@@ -689,7 +689,7 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
 	  std::cout<<"Scaled ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu_norm","THU_ggH_Res_norm","THU_ggH_Mig01_norm","THU_ggH_Mig12_norm","THU_ggH_VBF2j_norm",
 		"THU_ggH_VBF3j_norm","THU_ggH_qmtop_norm","THU_ggH_PT60_norm","THU_ggH_PT120_norm"},
-	    JoinStr({ggH_STXS,{"ggH_hww125"}}),
+	    JoinStr({ggH_STXS,{"ggH_hww125","OutsideAcceptance"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);            
