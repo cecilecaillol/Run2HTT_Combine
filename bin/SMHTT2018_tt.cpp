@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 
   //Theory uncertainties
   //Theory uncerts
-  if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
+  if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")||Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt")))
     {
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
