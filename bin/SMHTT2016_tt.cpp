@@ -263,7 +263,7 @@ int main(int argc, char **argv)
   //******************************************
 
   //Theory uncerts
-  if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")))
+  if (not(Input.OptionExists("-x0")||Input.OptionExists("-x1")||Input.OptionExists("-dp")||Input.OptionExists("-dn")||Input.OptionExists("-dm")||Input.OptionExists("-dljpt")))
     {
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_alphas", "lnN", SystMap<>::init(1.0062));
       cb.cp().process(sig_procs).AddSyst(cb, "BR_htt_PU_mq", "lnN", SystMap<>::init(1.0099));
@@ -723,7 +723,7 @@ int main(int argc, char **argv)
 	  std::cout<<"ggH Theory"<<std::endl;
 	  AddShapesIfNotEmpty({"THU_ggH_Mu","THU_ggH_Res","THU_ggH_Mig01","THU_ggH_Mig12","THU_ggH_VBF2j",
 		"THU_ggH_VBF3j","THU_ggH_qmtop","THU_ggH_PT60","THU_ggH_PT120"},
-	    JoinStr({ggH_STXS,{"ggH_hww125"}}),
+	    JoinStr({ggH_STXS,{"ggH_hww125","OutsideAcceptance"}}),
 	    &cb,
 	    1.00,
 	    TheFile,CategoryArgs);            
