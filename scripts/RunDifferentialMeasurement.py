@@ -26,6 +26,7 @@ parser.add_argument('--ComputeGOF',help="Compute saturated GOF use on forcefully
 parser.add_argument('--Unblind',help="Unblind the analysis, and do it for real. BE SURE ABOUT THIS.",action="store_true")
 parser.add_argument('--DontPrintResults',help='For use in unblinding carefully. Doesn\'t print the acutal results to screen or draw them on any plots',action="store_true")
 parser.add_argument('--ComputeImpacts',help="Compute expected impacts on POIs",action="store_true")
+parser.add_argument('--useRecoSignals',help="Use \"reco\" signals isntead of gen based ones in the measurement",action="store_true")
 
 args = parser.parse_args()
 
@@ -58,6 +59,8 @@ for year in args.years:
         DataCardCreationCommand+=" -b "
         if args.RunShapeless:
             DataCardCreationCommand+=' -s '
+        if args.useRecoSignals:
+            DataCardCreationCommand+=' -r '
         #depending on the type of measurement we're running, we also want to pass 
         # a new parameter to the card to handle the new type of signal.
         if args.MeasurementType=='mjj':

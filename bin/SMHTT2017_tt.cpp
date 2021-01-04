@@ -82,23 +82,46 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 
   vector<string> ggH_STXS;
   if (Input.OptionExists("-g")) ggH_STXS = {"ggH_htt125"};
-  else if (Input.OptionExists("-dp")) ggH_STXS = {
-      "ggH_PTH_0_45",
-      "ggH_PTH_45_80",
-      "ggH_PTH_80_120",
-      "ggH_PTH_120_200",
-      "ggH_PTH_200_350",
-      "ggH_PTH_350_450",
-      "ggH_PTH_GT450",
-    };
+  else if (Input.OptionExists("-dp")) 
+    {
+      ggH_STXS = {
+	"ggH_PTH_0_45",
+	"ggH_PTH_45_80",
+	"ggH_PTH_80_120",
+	"ggH_PTH_120_200",
+	"ggH_PTH_200_350",
+	"ggH_PTH_350_450",
+	"ggH_PTH_GT450",
+      };
+      if (Input.OptionExists("-r")) ggH_STXS = {
+	  "ggH_recoPTH_0_45",
+	  "ggH_recoPTH_45_80",
+	  "ggH_recoPTH_80_120",
+	  "ggH_recoPTH_120_200",
+	  "ggH_recoPTH_200_350",
+	  "ggH_recoPTH_350_450",
+	  "ggH_recoPTH_GT450",
+	};
+    }
   //NJets differential Option
-  else if (Input.OptionExists("-dn")) ggH_STXS = {
-      "ggH_NJ_0",
-      "ggH_NJ_1",
-      "ggH_NJ_2",
-      "ggH_NJ_3",
-      "ggH_NJ_GE4",
-    };
+  else if (Input.OptionExists("-dn")) 
+    {
+      ggH_STXS = {
+	"ggH_NJ_0",
+	"ggH_NJ_1",
+	"ggH_NJ_2",
+	"ggH_NJ_3",
+	"ggH_NJ_GE4",
+      };
+      if (Input.OptionExists("-r")) ggH_STXS = {
+	  "ggH_recoNJ_0",
+	  "ggH_recoNJ_1",
+	  "ggH_recoNJ_2",
+	  "ggH_recoNJ_3",
+	  "ggH_recoNJ_GE4",
+	};
+    }
+
   //mjj differential option
   else if (Input.OptionExists("-dm")) ggH_STXS = {
       "ggH_MJJ_0_150",
@@ -110,14 +133,26 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       "ggH_MJJ_1400_1800",
       "ggH_MJJ_GE1800",
     };
-  else if (Input.OptionExists("-dljpt")) ggH_STXS = {
-      "ggH_NJ_0",
-      "ggH_J1PT_30_60",
-      "ggH_J1PT_60_120",
-      "ggH_J1PT_120_200",
-      "ggH_J1PT_200_350",
-      "ggH_J1PT_GT350",
-    };
+  else if (Input.OptionExists("-dljpt"))
+    {
+      ggH_STXS = {
+	"ggH_NJ_0",
+	"ggH_J1PT_30_60",
+	"ggH_J1PT_60_120",
+	"ggH_J1PT_120_200",
+	"ggH_J1PT_200_350",
+	"ggH_J1PT_GT350",
+      };
+      if (Input.OptionExists("-r")) ggH_STXS = {
+	  "ggH_recoNJ_0",
+	  "ggH_recoJ1PT_30_60",
+	  "ggH_recoJ1PT_60_120",
+	  "ggH_recoJ1PT_120_200",
+	  "ggH_recoJ1PT_200_350",
+	  "ggH_recoJ1PT_GT350",
+	};
+
+    }
   else ggH_STXS = {"ggH_PTH_0_200_0J_PTH_10_200_htt125",
 		   "ggH_PTH_0_200_0J_PTH_0_10_htt125",
 		   "ggH_PTH_0_200_1J_PTH_0_60_htt125",
@@ -137,23 +172,46 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
 
   vector<string> qqH_STXS; 
   if(Input.OptionExists("-q")) qqH_STXS = {"qqH_htt125"};
-  else if (Input.OptionExists("-dp")) qqH_STXS = {
-      "xH_PTH_0_45",
-      "xH_PTH_45_80",
-      "xH_PTH_80_120",
-      "xH_PTH_120_200",
-      "xH_PTH_200_350",
-      "xH_PTH_350_450",
-      "xH_PTH_GT450",
-    };
+  else if (Input.OptionExists("-dp")) 
+    {
+      qqH_STXS = {
+	"xH_PTH_0_45",
+	"xH_PTH_45_80",
+	"xH_PTH_80_120",
+	"xH_PTH_120_200",
+	"xH_PTH_200_350",
+	"xH_PTH_350_450",
+	"xH_PTH_GT450",
+      };
+      if (Input.OptionExists("-r")) qqH_STXS = {
+	  "xH_recoPTH_0_45",
+	  "xH_recoPTH_45_80",
+	  "xH_recoPTH_80_120",
+	  "xH_recoPTH_120_200",
+	  "xH_recoPTH_200_350",
+	  "xH_recoPTH_350_450",
+	  "xH_recoPTH_GT450",
+	};
+    }
+
   //NJets differential Option
-  else if (Input.OptionExists("-dn")) qqH_STXS = {
-      "xH_NJ_0",
-      "xH_NJ_1",
-      "xH_NJ_2",
-      "xH_NJ_3",
-      "xH_NJ_GE4",
-    };
+  else if (Input.OptionExists("-dn")) 
+    {
+      qqH_STXS = {
+	"xH_NJ_0",
+	"xH_NJ_1",
+	"xH_NJ_2",
+	"xH_NJ_3",
+	"xH_NJ_GE4",
+      };
+      if(Input.OptionExists("-r")) qqH_STXS = {
+	"xH_recoNJ_0",
+	"xH_recoNJ_1",
+	"xH_recoNJ_2",
+	"xH_recoNJ_3",
+	"xH_recoNJ_GE4",
+      };
+    }
   //mjj differential option
   else if (Input.OptionExists("-dm")) qqH_STXS = {
       "xH_MJJ_0_150",
@@ -165,14 +223,25 @@ if (Input.OptionExists("-dp") || Input.OptionExists("-dn") || Input.OptionExists
       "xH_MJJ_1400_1800",
       "xH_MJJ_GE1800",
     };
-  else if (Input.OptionExists("-dljpt")) qqH_STXS = {
-      "xH_NJ_0",
-      "xH_J1PT_30_60",
-      "xH_J1PT_60_120",
-      "xH_J1PT_120_200",
-      "xH_J1PT_200_350",
-      "xH_J1PT_GT350",
-    };
+  else if (Input.OptionExists("-dljpt")) 
+    {
+      qqH_STXS = {
+	"xH_NJ_0",
+	"xH_J1PT_30_60",
+	"xH_J1PT_60_120",
+	"xH_J1PT_120_200",
+	"xH_J1PT_200_350",
+	"xH_J1PT_GT350",
+      };
+      if(Input.OptionExists("-r")) qqH_STXS = {
+	  "xH_recoNJ_0",
+	  "xH_recoJ1PT_30_60",
+	  "xH_recoJ1PT_60_120",
+	  "xH_recoJ1PT_120_200",
+	  "xH_recoJ1PT_200_350",
+	  "xH_recoJ1PT_GT350",
+	};
+    }
   else qqH_STXS = {"qqH_0J_htt125",
 		   "qqH_1J_htt125",
 		   "qqH_GE2J_MJJ_0_60_htt125",
