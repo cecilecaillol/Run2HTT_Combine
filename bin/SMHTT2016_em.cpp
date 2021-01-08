@@ -1055,6 +1055,8 @@ int main(int argc, char **argv)
   if(not Input.OptionExists("-e"))
     {
 
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_emu_2016", "shape", SystMap<>::init(1.00));
+
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_2016","lnN",SystMap<>::init(1.010));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_embedded_2016","lnN",SystMap<>::init(1.01732));

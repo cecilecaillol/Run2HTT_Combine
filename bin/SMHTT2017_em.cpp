@@ -1038,7 +1038,8 @@ cb.cp().process({ggH_STXS}).bin({"em_0jet"}).AddSyst(cb,"pdf_Higgs_gg_ACCEPT","l
   //************************************************************************************************************
   if(not Input.OptionExists("-e"))
     {      
-      
+      cb.cp().process({"embedded"}).AddSyst(cb,"CMS_EmbeddedZeroJet_emu_2017", "shape", SystMap<>::init(1.00));
+
       //50% correlation with ID unc in MC
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_2017","lnN",SystMap<>::init(1.010));
       cb.cp().process({"embedded"}).AddSyst(cb,"CMS_eff_e_embedded_2017","lnN",SystMap<>::init(1.01732));
